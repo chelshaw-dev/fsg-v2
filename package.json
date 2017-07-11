@@ -1,0 +1,20 @@
+{
+  "name": "fsg-v2",
+  "version": "2.0.0",
+  "description": "Free Shit Guide 2018",
+  "main": "index.js",
+  "author": "Chelsea Shaw",
+  "license": "MIT",
+  "dependencies": {
+    "angular": "^1.6.4",
+    "angular-ui-router": "0.3.2",
+    "firebase": "^4.1.1",
+    "gulp-concat": "^2.6.1"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-clean": "^0.3.2",
+    "gulp-sass": "^3.1.0",
+    "gulp-sourcemaps": "^2.6.0"
+  }
+}
