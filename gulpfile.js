@@ -8,14 +8,29 @@ gulp.task('clean', function(){
   return gulp.src('public', {read: false})
     .pipe(clean());
 })
+gulp.task('images', function() {
+  return gulp.src('app/images/*.*')
+    .pipe(gulp.dest('public/images'))
+});
 
 gulp.task('views', function() {
   return gulp.src('app/views/*.html')
     .pipe(gulp.dest('public/views'))
 });
+
 gulp.task('html', ['views'], function() {
   return gulp.src('app/index.html')
     .pipe(gulp.dest('public'))
+});
+
+gulp.task('css', function() {
+  return gulp.src([
+    'app/vendor/font-awesome/css/font-awesome.min.css',
+    'app/vendor/bootstrap-social/bootstrap-social.css',
+    'app/vendor/bootstrap/css/bootstrap.css'
+  ])
+    .pipe(concat('vendor.css'))
+    .pipe(gulp.dest('public/css'));
 });
 
 gulp.task('sass', function() {
@@ -30,7 +45,8 @@ gulp.task('vendor-scripts', function() {
     'node_modules/angular-ui-router/release/angular-ui-router.js'
   ])
     .pipe(gulp.dest('public/lib'));
-})
+});
+
 gulp.task('scripts', function() {
   return gulp.src([
     'app/js/app.js',
@@ -48,8 +64,10 @@ gulp.task('watch', function() {
 });
 
 gulp.task('build', ['clean'], function() {
+  gulp.start('css');
   gulp.start('sass');
   gulp.start('html');
+  gulp.start('images');
   gulp.start('vendor-scripts');
   gulp.start('scripts');
 })

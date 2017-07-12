@@ -1,0 +1,166 @@
+<section>
+  <div id="map"><!-- zoom="19" -->
+    <ng-map center="{{mc.userPosition.latitude}},{{mc.userPosition.longitude}}" zoom="14" pan-control="false" street-view-control="false" map-type-control="false" zoom-control="true" styles="{{mc.mapStyle}}">
+      <custom-marker ng-if="userLocation" id="center" position="{{mc.userPosition.latitude}},{{mc.userPosition.longitude}}">
+        <div class="map-pin pin-current" data-pin-id="user-loc">
+          <svg id="pin-img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30.54 67.27"><g><path d="M15.27,19.07A14.27,14.27,0,0,0,1,33.35c0,7.88,14.27,33.92,14.27,33.92s14.27-26,14.27-33.92A14.27,14.27,0,0,0,15.27,19.07Zm0,19a4.19,4.19,0,1,1,4.19-4.19A4.19,4.19,0,0,1,15.27,38Z" stroke="#0f1e3d" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/></g></svg>
+        </div>
+      </custom-marker>
+      <custom-marker ng-repeat="pin in events | dateFilter2016:mc.filter.date | onMap:bounds | searchAll:mc.filter.search | foodFilter:mc.filter.food | drinkFilter:mc.filter.drink | swagFilter:mc.filter.swag | rechargeFilter:mc.filter.recharge | musicFilter:mc.filter.music | credentialFilter:mc.filter.badge | musicTagFilter:mc.filter.musicTags | favesFilter:mc.filter.faves | RSVPFilter:mc.filter.rsvp" id="pin-{{pin.eid}}"
+      position="{{pin.locationCoord.lat}},{{pin.locationCoord.lng}}"
+      title="{{pin.title}}">
+          <div class="map-pin" ng-click="mc.fooPin(pin.eid)" data-pin-id="{{pin.eid}}" ng-class="{'pin__active': selectedEvent===pin.eid}">
+            <svg id="pin-img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30.54 67.27">
+              <g><path id="map-pin" d="M15.27,19.07A14.27,14.27,0,0,0,1,33.35c0,7.88,14.27,33.92,14.27,33.92s14.27-26,14.27-33.92A14.27,14.27,0,0,0,15.27,19.07Z" stroke="#0f1e3d" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+              <text transform="translate(6.32 39.59) scale(0.99 1)" font-size="16.57" fill="#0f1e3d" font-family="Roboto-Bold, Roboto" font-weight="700" letter-spacing="-0.05em">{{$index+1}}</text></g>
+            </svg>
+          </div>
+      </custom-marker>
+    </ng-map>
+    <!-- To Do: add center btn
+    <div class="center-btn"><span class="sr-only">Center to me</span>
+      <object data="images/icon-map-center.svg" type="image/svg+xml">
+        <img src="images/icon-map-center.png" />
+      </object>
+    </div>
+    -->
+  </div>
+  <div id="map-sidebar">
+    <button ng-if="bootStatus" class="btn btn-square btn-primary map-filters-toggle" ng-click="toggleFilters()"><span ng-hide="showFilters">Open Filters &raquo;</span><span ng-show="showFilters">Close Filters &laquo;</span></button>
+    <div id="search-container" class="map-search" ng-show="showFilters" >
+      <div id="search-btn" class="show-sm-up" ng-click="mc.filter.search = ''" ng-class="{'searching': mc.filter.search !== ''}"></div>
+      <input id="search" class="form-control show-sm-up" placeholder="Search events…" ng-model="mc.filter.search" ng-model-options="{ debounce: 200 }"/>
+    </div>
+
+    <div class="clearfix"></div>
+    <div class="map-filters" ng-class="{'show-filters':showFilters}">
+      <a ng-click="showHappeningNow()" ng-class="{'active':mc.filter.date=='now'}" class="btn btn-outline-pink btn-square btn-white-bg pull-left map-happening-now"><small>Happening Now</small></a>
+      <div id="search-container" class="map-search">
+        <div id="search-btn" class="hidden-sm-up" ng-click="mc.filter.search = ''" ng-class="{'searching': mc.filter.search !== ''}" ng-show="showFilters" ></div>
+        <input id="search" class="form-control hidden-sm-up pull-right" placeholder="Search events…" ng-model="mc.filter.search" ng-model-options="{ debounce: 200 }" ng-show="showFilters" />
+      </div>
+
+      <div class="clearfix"></div>
+
+      <div class="filterset">
+        <div class="title purple-bg" ng-click="toggleFilter($event,'filters-closed')">Free Stuff <div class="arrow pull-right"></div></div>
+        <fieldset class="form-group form-inline">
+          <input type="checkbox" name="food" id="free-food" ng-model="mc.filter.food" /> <label for="free-food">Food</label>
+          <input type="checkbox" name="drink" id="free-drink" ng-model="mc.filter.drink" /> <label for="free-drink">Drink</label>
+          <input type="checkbox" name="swag" id="free-swag" ng-model="mc.filter.swag" /> <label for="free-swag">Swag</label>
+          <input type="checkbox" name="recharge" id="free-recharge" ng-model="mc.filter.recharge" /> <label for="free-recharge">Recharge Station</label>
+          <input type="checkbox" name="music" id="free-music" ng-model="mc.filter.music" /> <label for="free-music">Music</label>
+        </fieldset>
+      </div>
+
+      <div class="filterset filters-closed">
+        <div class="title purple-bg" ng-click="toggleFilter($event,'filters-closed')">Date <div class="arrow pull-right"></div></div>
+        <fieldset class="form-group form-inline">
+          <input type="radio" name="date-now" id="date-now" ng-model="mc.filter.date" value="now"> <label for="date-now">Happening Now </label>
+          <input type="radio" name="date-310" id="date-310" ng-model="mc.filter.date" value="03102016"> <label for="date-310">Friday 3/10 </label>
+          <input type="radio" name="date-311" id="date-311" ng-model="mc.filter.date" value="03112016"> <label for="date-311">Saturday 3/11 </label>
+          <input type="radio" name="date-312" id="date-312" ng-model="mc.filter.date" value="03122016"> <label for="date-312">Sunday 3/12 </label>
+          <input type="radio" name="date-313" id="date-313" ng-model="mc.filter.date" value="03132016"> <label for="date-313">Monday 3/13 </label>
+          <input type="radio" name="date-314" id="date-314" ng-model="mc.filter.date" value="03142016"> <label for="date-314">Tuesday 3/14 </label>
+          <input type="radio" name="date-315" id="date-315" ng-model="mc.filter.date" value="03152016"> <label for="date-315">Wednesday 3/15 </label>
+          <input type="radio" name="date-316" id="date-316" ng-model="mc.filter.date" value="03162016"> <label for="date-316">Thursday 3/16 </label>
+          <input type="radio" name="date-317" id="date-317" ng-model="mc.filter.date" value="03172016"> <label for="date-317">Friday 3/17 </label>
+          <input type="radio" name="date-318" id="date-318" ng-model="mc.filter.date" value="03182016"> <label for="date-318">Saturday 3/18 </label>
+          <input type="radio" name="date-319" id="date-319" ng-model="mc.filter.date" value="03192016"> <label for="date-319">Sunday 3/19 </label>
+          <input type="radio" name="date-all" id="date-all" ng-model="mc.filter.date" value="all"> <label for="date-all">Any day</label>
+        </fieldset>
+      </div>
+
+      <div class="filterset filters-closed">
+        <div class="title purple-bg" ng-click="toggleFilter($event,'filters-closed')">Favorites <div class="arrow pull-right"></div></div>
+        <fieldset class="form-group form-inline">
+          <input type="radio" name="all-faves" id="all-faves" ng-model="mc.filter.faves" value="all"> <label for="all-faves">Any </label>
+          <input type="radio" name="faves" id="faves" ng-model="mc.filter.faves" value="yes"> <label for="faves">Favorited</label>
+          <input type="radio" name="no-faves" id="no-faves" ng-model="mc.filter.faves" value="no"> <label for="no-faves">Not Favorited</label>
+        </fieldset>
+      </div>
+
+      <div class="filterset filters-closed">
+        <div class="title purple-bg" ng-click="toggleFilter($event,'filters-closed')">RSVP'd <div class="arrow pull-right"></div></div>
+        <fieldset class="form-group form-inline">
+          <input type="radio" name="all-rsvp" id="all-rsvp" ng-model="mc.filter.rsvp" value="all"> <label for="all-rsvp">Any </label>
+          <input type="radio" name="rsvp" id="rsvp" ng-model="mc.filter.rsvp" value="yes"> <label for="rsvp">RSVP'd</label>
+          <input type="radio" name="no-rsvp" id="no-rsvp" ng-model="mc.filter.rsvp" value="no"> <label for="no-rsvp">Not RSVP'd</label>
+        </fieldset>
+      </div>
+
+      <div class="filterset filters-closed">
+        <div class="title purple-bg" ng-click="toggleFilter($event,'filters-closed')">Badge Level <div class="arrow pull-right"></div></div>
+        <fieldset class="form-group form-inline">
+          <input type="radio" ng-model="mc.filter.badge" name="badgeLevel" id="badge-any" value="-1"> <label for="badge-any">All</label>
+          <input type="radio" ng-model="mc.filter.badge" name="badgeLevel" id="badge-walk-in" value="0"> <label for="badge-walk-in">Walk In</label>
+          <input type="radio" ng-model="mc.filter.badge" name="badgeLevel" id="badge-rsvp" value="10"> <label for="badge-rsvp">RSVP</label>
+          <input type="radio" ng-model="mc.filter.badge" name="badgeLevel" id="badge-wb-priority" value="20"> <label for="badge-wb-priority">Wristband/Badge Priority</label>
+          <input type="radio" ng-model="mc.filter.badge" name="badgeLevel" id="badge-wb-only" value="30"> <label for="badge-wb-only">Wristband/Badge Only</label>
+          <input type="radio" ng-model="mc.filter.badge" name="badgeLevel" id="badge-only" value="40"> <label for="badge-only">Badge Only</label>
+        </fieldset>
+      </div>
+
+      <div class="filterset filters-closed">
+        <div class="title purple-bg" ng-click="toggleFilter($event,'filters-closed')">Music Tags <div class="arrow pull-right"></div></div>
+        <fieldset class="form-group form-inline">
+          <p><span class="music-tag" ng-repeat="tag in exampleTags">
+            <a class="btn btn-outline" ng-click="addMusicTags(tag)" ng-class="{'added':mc.inMusicTags(tag) >= 0}">{{tag}}</a>
+          </span></p>
+        </fieldset>
+      </div>
+      <button class="pull-left btn btn-small btn-danger" ng-click="toggleFilters()">Done</button>
+      <button class="pull-right btn btn-small btn-white-bg btn-outline" ng-click="mc.filterReset()">Clear</button>
+    </div>
+    <div id="map-events">
+      <!--<div class="map-card info">
+        <div class="inner">
+          <pre>{{events | json}}</pre>
+        </div>
+      </div>-->
+      <div class="map-card info" ng-if="!bootStatus">
+        <div class="inner">
+          <p class="padtop-1 text-center"><strong>{{mapStatus}}</strong></p>
+        </div>
+      </div>
+      <div class="map-card info" ng-if="bootStatus && (events | onMap:bounds | dateFilter2016:mc.filter.date | searchAll:mc.filter.search | foodFilter:mc.filter.food | drinkFilter:mc.filter.drink | swagFilter:mc.filter.swag | rechargeFilter:mc.filter.recharge | musicFilter:mc.filter.music | credentialFilter:mc.filter.badge | musicTagFilter:mc.filter.musicTags | favesFilter:mc.filter.faves | RSVPFilter:mc.filter.rsvp).length == 0">
+        <div class="inner">
+          <p ng-hide="mc.filter.date === 'now'" class="padtop-1 text-center"><strong>Darn, nothing matched! <br/>Try zooming out or using different filters</strong></p>
+          <p ng-show="mc.filter.date === 'now'" class="padtop-1 text-center"><strong>Silly goose!<br/>SXSW hasn't event started yet!</strong></p>
+        </div>
+      </div>
+      <div class="map-card" id="detail-{{event.eid}}" ng-class="{'detail__active': selectedEvent==event.eid}" ng-click="updateSelected(event.eid)" ng-repeat="event in events | onMap:bounds | dateFilter2016:mc.filter.date | searchAll:mc.filter.search | foodFilter:mc.filter.food | drinkFilter:mc.filter.drink | swagFilter:mc.filter.swag | rechargeFilter:mc.filter.recharge | musicFilter:mc.filter.music | credentialFilter:mc.filter.badge | musicTagFilter:mc.filter.musicTags | favesFilter:mc.filter.faves | RSVPFilter:mc.filter.rsvp" >
+        <div class="number">{{$index+1}}</div>
+        <div class="inner">
+          <strong>{{event.title}}</strong>
+          <free-icons></free-icons>
+          <div class="detail--more" ng-show="selectedEvent==event.eid">
+            <div>
+              <event-location></event-location>
+            </div>
+            <div class="pull-left">
+              <p class="card-date">
+                <small>{{cardDateDisplay(event.days) | date:'MMMM d'}}</small>
+                <span ng-if="mc.filter.date !== 'now'"><br/><small>{{event.days[mc.filter.date].start_0 | date:'h:mm a'}} – {{event.days[mc.filter.date].end_0 | date:'h:mm a'}}</small></span>
+              </p>
+            </div>
+            <!--<p class="details-link pull-left"><a ui-sref="events/{{eid}}">See full details &raquo;</a></p>-->
+            <div class="card-buttons pull-right" ng-controller="userEventsCtrl as uec">
+              <span ng-if="!event.RSVPLink" class="credential-level gray-text pull-right text-right">
+                <em>No RSVP<br/>Required</em>
+              </span>
+              <div ng-if="event.RSVPLink" class="pull-right rsvp-btn" ng-class="inRSVP(event.eid) ? 'active' : ''" ng-click="uec.toggleRSVP($event,currentUser.uid,event.eid,event.RSVPLink,event.title)">
+                <span>&#x2713;</span>RSVP
+              </div>
+              <div class="fave-btn pull-right" ng-class="inFavorites(event.eid) ? 'active' : ''" ng-click="uec.toggleFavorite($event,currentUser.uid,event.eid)">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30"><g><circle id="fave-circle" cx="15" cy="15" r="14.09" stroke-miterlimit="10"/><path id="fave-heart" d="M23.12,12s0-.07,0-.09A4.67,4.67,0,0,0,18.7,8h-.15A4.69,4.69,0,0,0,15,9.65a4.69,4.69,0,0,0-8.25,3.07A4.65,4.65,0,0,0,8.05,16s6.43,7.17,6.92,7.17S21.91,16,21.91,16l.09-.1A4.62,4.62,0,0,0,23.12,12Z" stroke-miterlimit="10"/></g></svg>
+              </div>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="clearfix"></div>
+</section>

@@ -1,0 +1,209 @@
+<div id="content">
+<h4 class="show-for-print-only text-center">Free Shit Guide: 2017 Events</h4>
+<p class="show-for-print-only text-center">Printing {{currentPage * pageSize + 1}} - <span ng-if="((currentPage+1) * pageSize) > filteredEvents.length">{{filteredEvents.length}}</span><span ng-if="((currentPage+1) * pageSize) <= filteredEvents.length">{{(currentPage+1) * pageSize}}</span> of {{filteredEvents.length}} events</p>
+<div id="top-spacer" class="hide-for-print"></div>
+<div class="container-fluid banner-bg hide-for-print">
+  <div class="row expanded padtop-1 padbot-3">
+    <div class="col-xs-6 col-xs-offset-3 col-sm-4 col-sm-offset-4">
+      <img class="img-max-300 img-center" src="images/events-banner-scrubbed.png" alt="SXSW Events 2017"/>
+      <h1 class="sr-only">SXSW Events 2017</h1>
+    </div>
+  </div>
+</div>
+<div id="top" class="hide-for-print"></div>
+
+<section class="gray-bg padtop-1 padbot-2">
+  <div class="container-fluid full-height">
+    <div class="row hide-for-print">
+      <div class="xs-width col-sm-6">
+        <a ng-click="showHappeningNow()" ng-class="{'active':filter.date=='now'}" class="btn btn-outline-pink happening-now pull-left">Happening Now</a>
+        <div class="fave-btn large pull-left pad-left" ng-class="{'active': filter.faves == 'yes'}" ng-click="showFavorites()">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30"><g><circle id="fave-circle" cx="15" cy="15" r="14.09" stroke-miterlimit="10"/><path id="fave-heart" d="M23.12,12s0-.07,0-.09A4.67,4.67,0,0,0,18.7,8h-.15A4.69,4.69,0,0,0,15,9.65a4.69,4.69,0,0,0-8.25,3.07A4.65,4.65,0,0,0,8.05,16s6.43,7.17,6.92,7.17S21.91,16,21.91,16l.09-.1A4.62,4.62,0,0,0,23.12,12Z" stroke-miterlimit="10"/></g></svg>
+        </div>
+        <a class="mobile-filter-nav hidden-md-up pull-left" ng-click="toggleFilters()">Filter</a>
+      </div>
+      <div class="xs-width col-sm-6">
+        <div id="search-container" class="pull-right">
+          <div id="search-btn" class="show-md-up" ng-click="filter.search = ''" ng-class="{'searching': filter.search !== ''}"></div>
+          <input id="search" class="form-control show-md-up pull-right" placeholder="Search the guide…" ng-model="filter.search" ng-model-options="{ debounce: 200 }" />
+        </div>
+      </div>
+    </div>
+
+    <div id="filter-sidebar" class="hide-for-print" ng-class="{'mobile-show':filterMenu}">
+      <div id="filter-sidebar--inner" class="padbot-1">
+        <div id="search-container">
+          <div id="search-btn" class="hidden-md-up" ng-click="filter.search = ''" ng-class="{'searching': filter.search !== ''}"></div>
+          <input id="search" class="hidden-md-up form-control marbot-1" placeholder="Search the guide…" ng-model="filter.search" ng-model-options="{ debounce: 200 }" />
+          <div class="clearfix"></div>
+        </div>
+
+        <div class="filterset">
+          <div class="title purple-bg" ng-click="toggleFilter($event,'filters-closed')">Free Stuff <div class="arrow pull-right"></div></div>
+          <fieldset class="form-group form-inline">
+            <input type="checkbox" name="food" id="free-food" ng-model="filter.food" /> <label for="free-food">Food</label>
+            <input type="checkbox" name="drink" id="free-drink" ng-model="filter.drink" /> <label for="free-drink">Drink</label>
+            <input type="checkbox" name="swag" id="free-swag" ng-model="filter.swag" /> <label for="free-swag">Swag</label>
+            <input type="checkbox" name="recharge" id="free-recharge" ng-model="filter.recharge" /> <label for="free-recharge">Recharge Station</label>
+            <input type="checkbox" name="music" id="free-music" ng-model="filter.music" /> <label for="free-music">Music</label>
+          </fieldset>
+        </div>
+
+        <div class="filterset filters-closed">
+          <div class="title purple-bg" ng-click="toggleFilter($event,'filters-closed')">Date <div class="arrow pull-right"></div></div>
+          <fieldset class="form-group form-inline">
+            <input type="radio" name="date-all" id="date-all" ng-model="filter.date" value="all"> <label for="date-all">All </label>
+            <div ng-if="dataYear == '2017'">
+              <!-- 2017 -->
+              <input type="radio" name="date-307" id="date-307" ng-model="filter.date" value="2017-03-07"> <label for="date-307">Tuesday 3/07 </label>
+              <input type="radio" name="date-308" id="date-308" ng-model="filter.date" value="2017-03-08"> <label for="date-308">Wednesday 3/08 </label>
+              <input type="radio" name="date-309" id="date-309" ng-model="filter.date" value="2017-03-09"> <label for="date-309">Thursday 3/09 </label>
+              <input type="radio" name="date-310" id="date-310" ng-model="filter.date" value="2017-03-10"> <label for="date-310">Friday 3/10 </label>
+              <input type="radio" name="date-311" id="date-311" ng-model="filter.date" value="2017-03-11"> <label for="date-311">Saturday 3/11 </label>
+              <input type="radio" name="date-312" id="date-312" ng-model="filter.date" value="2017-03-12"> <label for="date-312">Sunday 3/12 </label>
+              <input type="radio" name="date-313" id="date-313" ng-model="filter.date" value="2017-03-13"> <label for="date-313">Monday 3/13 </label>
+              <input type="radio" name="date-314" id="date-314" ng-model="filter.date" value="2017-03-14"> <label for="date-314">Tuesday 3/14 </label>
+              <input type="radio" name="date-315" id="date-315" ng-model="filter.date" value="2017-03-15"> <label for="date-315">Wednesday 3/15 </label>
+              <input type="radio" name="date-316" id="date-316" ng-model="filter.date" value="2017-03-16"> <label for="date-316">Thursday 3/16 </label>
+              <input type="radio" name="date-317" id="date-317" ng-model="filter.date" value="2017-03-17"> <label for="date-317">Friday 3/17 </label>
+              <input type="radio" name="date-318" id="date-318" ng-model="filter.date" value="2017-03-18"> <label for="date-318">Saturday 3/18 </label>
+              <input type="radio" name="date-319" id="date-319" ng-model="filter.date" value="2017-03-19"> <label for="date-319">Sunday 3/19 </label>
+              <input type="radio" name="date-320" id="date-320" ng-model="filter.date" value="2017-03-20"> <label for="date-320">Monday 3/20 </label>
+              <input type="radio" name="date-321" id="date-321" ng-model="filter.date" value="2017-03-21"> <label for="date-321">Tuesday 3/21 </label>
+              <input type="radio" name="date-322" id="date-322" ng-model="filter.date" value="2017-03-22"> <label for="date-322">Wednesday 3/22 </label>
+            </div>
+            <div ng-if="dataYear == '2016'">
+              <!-- 2016 -->
+              <input type="radio" name="date-310" id="date-310" ng-model="filter.date" value="03102016"> <label for="date-310">Friday 3/10 </label>
+              <input type="radio" name="date-311" id="date-311" ng-model="filter.date" value="03112016"> <label for="date-311">Saturday 3/11 </label>
+              <input type="radio" name="date-312" id="date-312" ng-model="filter.date" value="03122016"> <label for="date-312">Sunday 3/12 </label>
+              <input type="radio" name="date-313" id="date-313" ng-model="filter.date" value="03132016"> <label for="date-313">Monday 3/13 </label>
+              <input type="radio" name="date-314" id="date-314" ng-model="filter.date" value="03142016"> <label for="date-314">Tuesday 3/14 </label>
+              <input type="radio" name="date-315" id="date-315" ng-model="filter.date" value="03152016"> <label for="date-315">Wednesday 3/15 </label>
+              <input type="radio" name="date-316" id="date-316" ng-model="filter.date" value="03162016"> <label for="date-316">Thursday 3/16 </label>
+              <input type="radio" name="date-317" id="date-317" ng-model="filter.date" value="03172016"> <label for="date-317">Friday 3/17 </label>
+              <input type="radio" name="date-318" id="date-318" ng-model="filter.date" value="03182016"> <label for="date-318">Saturday 3/18 </label>
+              <input type="radio" name="date-319" id="date-319" ng-model="filter.date" value="03192016"> <label for="date-319">Sunday 3/19 </label>
+            </div>
+            <input type="radio" name="date-now" id="date-now" ng-model="filter.date" value="now"> <label for="date-now">Happening Now </label>
+          </fieldset>
+        </div>
+
+        <div class="filterset filters-closed">
+          <div class="title purple-bg" ng-click="toggleFilter($event,'filters-closed')">Favorites <div class="arrow pull-right"></div></div>
+          <fieldset class="form-group form-inline">
+            <input type="radio" name="all-faves" id="all-faves" ng-model="filter.faves" value="all"> <label for="all-faves">Any </label>
+            <input type="radio" name="faves" id="faves" ng-model="filter.faves" value="yes"> <label for="faves">Favorited</label>
+            <input type="radio" name="no-faves" id="no-faves" ng-model="filter.faves" value="no"> <label for="no-faves">Not Favorited</label>
+          </fieldset>
+        </div>
+
+        <div class="filterset filters-closed">
+          <div class="title purple-bg" ng-click="toggleFilter($event,'filters-closed')">RSVP'd <div class="arrow pull-right"></div></div>
+          <fieldset class="form-group form-inline">
+            <input type="radio" name="all-rsvp" id="all-rsvp" ng-model="filter.rsvp" value="all"> <label for="all-rsvp">Any </label>
+            <input type="radio" name="rsvp" id="rsvp" ng-model="filter.rsvp" value="yes"> <label for="rsvp">RSVP'd</label>
+            <input type="radio" name="no-rsvp" id="no-rsvp" ng-model="filter.rsvp" value="no"> <label for="no-rsvp">Not RSVP'd</label>
+          </fieldset>
+        </div>
+
+        <div class="filterset filters-closed">
+          <div class="title purple-bg" ng-click="toggleFilter($event,'filters-closed')">Badge Level <div class="arrow pull-right"></div></div>
+          <fieldset class="form-group form-inline">
+            <input type="radio" ng-model="filter.badge" name="badgeLevel" id="badge-any" value="-1"> <label for="badge-any">All</label>
+            <input type="radio" ng-model="filter.badge" name="badgeLevel" id="badge-walk-in" value="0"> <label for="badge-walk-in">Walk In</label>
+            <input type="radio" ng-model="filter.badge" name="badgeLevel" id="badge-rsvp" value="10"> <label for="badge-rsvp">RSVP</label>
+            <input type="radio" ng-model="filter.badge" name="badgeLevel" id="badge-wb-priority" value="20"> <label for="badge-wb-priority">Wristband/Badge Priority</label>
+            <input type="radio" ng-model="filter.badge" name="badgeLevel" id="badge-only" value="40"> <label for="badge-only">Badge Only</label>
+          </fieldset>
+        </div>
+
+        <div class="filterset filters-closed">
+          <div class="title purple-bg" ng-click="toggleFilter($event,'filters-closed')">Music Tags <div class="arrow pull-right"></div></div>
+          <fieldset class="form-group form-inline">
+            <p><span class="music-tag" ng-repeat="tag in exampleTags">
+              <a class="btn btn-outline" ng-click="addMusicTags(tag)" ng-class="{'added':e.inMusicTags(tag) >= 0}">{{tag | uppercase}}</a>
+            </span></p>
+          </fieldset>
+        </div>
+
+        <div class="filterset filters-closed">
+          <div class="title purple-bg" ng-click="toggleFilter($event,'filters-closed')">Order By <div class="arrow pull-right"></div></div>
+          <fieldset class="form-group form-inline">
+            <input type="radio" ng-model="sortEventsBy" name="sortEventsBy" id="sort-any" value=""> <label for="sort-any">Date &amp; Time</label>
+            <input type="radio" ng-model="sortEventsBy" name="sortEventsBy" id="sort-walk-in" value="title"> <label for="sort-walk-in">Title</label>
+            <input type="radio" ng-model="sortEventsBy" name="sortEventsBy" id="sort-rsvp" value="-createdOn"> <label for="sort-rsvp">Recently Created</label>
+          </fieldset>
+        </div>
+
+        <button class="pull-right btn btn-small btn-outline" ng-click="e.filterReset()">Clear</button>
+        <button class="btn btn-danger btn-small text-center" ng-show="filterMenu" ng-click="toggleFilters()">Done</button>
+        <button class="print-btn btn btn-small btn-outline" onclick="window.print();return false;">Print</button>
+        <div class="clearfix"></div>
+      </div>
+    </div>
+    <div id="events-container">
+      <div ng-if="!bootStatus">
+        <h3 class="text-center gray-text padtop-3">Finding events…</h3>
+      </div>
+
+      <div class="row-fluid">
+        <div class="col-sm-12" ng-if="filteredEvents.length == 0">
+          <h4 class="text-center martop-2">Womp womp, nothing matched! :( <br/>Try using different filters</h4>
+          <!--<h4 ng-show="filter.date === 'now'" class="text-center martop-2">Silly goose! SXSW hasn't event started yet!</h4>-->
+          <p class="text-center"><a class="btn btn-outline" ng-click="e.filterReset()">Clear filters</a></p>
+          <!--<img ng-show="filter.date === 'now'" class="img-max-300 img-center" src="http://www.canadagoosetapes.com/wp-content/themes/cgt/library/images/goosehead.gif" alt="You are a goose" />-->
+        </div>
+        <div class="xs-width col-sm-4 card-outer" id="eid-{{event.eid}}" data-row="{{findRow($index)}}" data-col="{{findCol($index)}}" ng-repeat="event in events | searchAll:filter.search | favesFilter:filter.faves | RSVPFilter:filter.rsvp | foodFilter:filter.food | drinkFilter:filter.drink | swagFilter:filter.swag | rechargeFilter:filter.recharge | musicFilter:filter.music | credentialFilter:filter.badge  | musicTagFilter:filter.musicTags | dateFilter:filter.date | idFilter:e.paramId | orderBy:sortEventsBy | startFrom:(currentPage * pageSize)  | limitTo:pageSize"> <!-- orderBy:'-createdOn' -->
+          <div class="card" ng-click="expandCard(findRow($index),findCol($index),event)" ng-class="{'card--active':activeCard.eid===event.eid}"><!-- ng-click="expandCard(findRow($index),findCol($index),event)"  -->
+            <div ng-if="currentUserIsAdmin === true" style="position:absolute;top:0px;right:0px;" class="hide-for-print"><a ui-sref="editEvent({ eid: event.eid })">Edit</a></div>
+            <div class="card__header">
+              <h3 class="purple-text">{{event.title | uppercase}}</h3>
+              <p class="card-date show-for-print-only"><small>{{printDateDisplayStart(event.days) | date: 'MMMM d • h:mma'}}–{{printDateDisplayEnd(event.days) | date: 'h:mma'}}</small></p>
+            </div>
+            <div class="card__body">
+              <free-icons></free-icons>
+              <event-location></event-location>
+              <p class="card-date hide-for-print"><small>{{cardDateDisplay(event.days) | date:'MMMM d'}}</small></p>
+              <div id="card-description" class="text-light hide-for-print" ng-bind-html="unescapeJson(e.defaultDescription(event.days))"></div>
+              <p class="text-right purple-text hide-for-print"><small><a>Read more</a></small></p>
+              <p class="show-on-expand padbot-2 hide-for-print">{{event.freeNotes}}</p>
+              <div class="card__bottom hide-for-print">
+                <div class="card-disclaimers">
+                  <span ng-if="event.credentialLevel > 10" class="credential-level pink-text" style="margin-right:10px;">
+                    &#9733; {{ credentialsDisplay(event.credentialLevel) | uppercase }}
+                  </span>
+                  <span ng-if="event.age >= 0" class="credential-level pink-text">
+                    &#9733; {{ ageDisplay(event.age) | uppercase }}
+                  </span>
+                </div>
+                <div class="card-buttons" ng-controller="userEventsCtrl as uec">
+                  <span ng-if="!event.RSVPLink" class="credential-level gray-text pull-right text-right">
+                    <em>No RSVP<br/>Required</em>
+                  </span>
+                  <div ng-if="event.RSVPLink" class="pull-right rsvp-btn" ng-class="inRSVP(event.eid) ? 'active' : 'non-active'" ng-click="uec.toggleRSVP($event,currentUser.uid,event.eid,event.RSVPLink,event.title)">
+                    <span>&check;</span>RSVP
+                    <!--<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 30"><g><polygon id="rsvp-box" points="38.81 1.33 38.81 22.66 29.26 22.66 29.26 28.68 21.92 22.66 1.24 22.66 1.24 1.33 38.81 1.33" stroke-miterlimit="10" /><text id="rsvp-text" fill="#000000" transform="translate(11.01 15.05) scale(1.12 1)" font-size="8.95">RSVP</text><polyline id="rsvp-checkmark" points="4.97 12.63 6.87 14.33 9.36 8.88" fill="none" stroke-miterlimit="10" /></g></svg>-->
+                  </div>
+                  <div class="fave-btn pull-left" ng-class="inFavorites(event.eid) ? 'active' : ''" ng-click="uec.toggleFavorite($event,currentUser.uid,event.eid)">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30"><g><circle id="fave-circle" cx="15" cy="15" r="14.09" stroke-miterlimit="10"/><path id="fave-heart" d="M23.12,12s0-.07,0-.09A4.67,4.67,0,0,0,18.7,8h-.15A4.69,4.69,0,0,0,15,9.65a4.69,4.69,0,0,0-8.25,3.07A4.65,4.65,0,0,0,8.05,16s6.43,7.17,6.92,7.17S21.91,16,21.91,16l.09-.1A4.62,4.62,0,0,0,23.12,12Z" stroke-miterlimit="10"/></g></svg>
+                  </div>
+                </div>
+                <div class="clearfix"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="clearfix"></div>
+
+      <div id="events-pagination" class="padtop-2" ng-if="filterEvents().length > 70">
+        <a class="pagination previous" ng-click="setCurrentPage(currentPage-1)" ng-if="currentPage>=1">&lsaquo;</a>
+        <a ng-repeat="i in getNumberAsArray(numberOfPages()) track by $index" ng-click="setCurrentPage($index)" class="pagination" ng-class="{'active':currentPage===$index}">{{$index + 1}}</a>
+        <a class="pagination next" ng-click="setCurrentPage(currentPage+1)" ng-if="numberOfPages()>(currentPage+1)">&rsaquo;</a>
+      </div>
+    </div><!-- events container-->
+  </div>
+  <div class="clearfix"></div>
+</section>
+</div><!-- bootStatus -->

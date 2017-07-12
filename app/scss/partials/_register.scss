@@ -1,0 +1,102 @@
+.register-half{
+  width:100vw;
+  &.left{
+    min-height:50vh;
+  }
+  section{
+    position:relative;
+    width:100%;
+    padding: 2em;
+  }
+  .reg-step{
+    font-size:28px;
+    padding:0 0 10px 0;
+    margin-bottom:8px;
+    .step-num{
+      padding-left:16px;
+      padding-right:16px;
+      text-transform: uppercase;
+      font-weight:bold;
+      border-bottom:3px solid $bright-purple;
+    }
+  }
+  .reg-img{
+    max-width:200px;
+    svg{
+      width:100%;
+    }
+  }
+  .thank-you{
+    h2{
+      font-size:48px;
+      margin-bottom:28px;
+    }
+    p{
+      font-size:18px;
+    }
+  }
+}
+@include bp(sm){
+  .register-half{
+    width:50%;
+    height:100vh;
+    //position:relative;
+    overflow:hidden;
+    float:left;
+    &.right{
+      right:0;
+      section{
+        max-width:575px;
+      }
+    }
+    section{
+      height:100vh;
+      width:100%;
+      padding: 100px 1em 1em 2em;
+      overflow:scroll;
+      &::-webkit-scrollbar {
+          display: none;
+      }
+    }
+  }
+  form.payment-form{
+    max-width:400px;
+    margin:0 auto;
+    margin-top:30px;
+  }
+}
+
+@include bp(md){
+  .register-half section{
+    padding: 160px 3em 3em 6em;
+  }
+}
+
+.slide-up.ng-leave {
+  transition:.5s ease-in-out all;
+  position:relative;
+}
+.slide-up.ng-leave.ng-leave-active {
+  position:relative;
+  margin-top:-100vh;
+}
+.reg-form .fsg-field-group.inline input{
+  width:49%;
+}
+.register-half .sticky-bottom{
+  //max-width:575px;
+}
+#stripe-stamp{
+  display: table;
+  margin:1em auto;
+}
+@include bp(md){
+  #stripe-stamp{
+    padding-left:50px;
+  }
+}
+@include bp(xs){
+  .register-half.left section{
+    padding-top:100px;
+  }
+}

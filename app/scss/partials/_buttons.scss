@@ -1,0 +1,135 @@
+.btn:focus, .btn:active:focus, .btn.active:focus, .btn.focus, .btn:active.focus, .btn.active.focus{
+  outline:none;
+  @include box-shadow(2px, 2px, 4px, lighten($gray,45), false);
+}
+a.link-on-dark,
+a.link-on-dark:hover{
+  color:$aqua;
+}
+a.blue-link{
+  color: $aqua;
+  border:none;
+  &:hover{
+    color: darken($aqua,15);
+    border:none;
+  }
+}
+.btn{
+  padding:8px 18px;
+}
+.btn.btn-width{
+  min-width:150px;
+}
+.btn.btn-small{
+  font-size:11px;
+  min-width:34px;
+}
+/*
+.nav .btn{
+  padding:.5em;
+  margin:1.1em 0;
+  background-color:transparent;
+  border:1px solid $purple;
+  color:$purple;
+}
+*/
+.btn.btn-outline{
+  border:2px solid $purple;
+  background:transparent;
+  color:$purple;
+  &.btn-white-bg{
+    background:white;
+  }
+  &:hover{
+    background:$purple;
+    color:white;
+  }
+  &.login:hover{
+    background:transparent;
+    color:darken($purple,10);
+    border-color:darken($purple,10);
+  }
+  &.pull-right{
+    margin-right:2px;
+  }
+  &.active-btn{
+    background:$purple;
+    color:white;
+  }
+}
+.btn.btn-outline-pink{
+  border:2px solid $pink;
+  background:transparent;
+  color:$pink;
+  &.btn-white-bg{
+    background:white;
+  }
+  &:hover{
+    background:$pink;
+    color:white;
+    box-shadow:none;
+  }
+  &.active{
+    background:$pink;
+    color:white;
+    box-shadow:none;
+    &:hover{
+      background:lighten($pink,15);
+      border-color:lighten($pink,15);
+    }
+  }
+}
+.btn.btn-outline-white{
+  border:2px solid white;
+  background:transparent;
+  color:white;
+  &:hover{
+    background:white;
+    color:$navy;
+  }
+}
+
+.btn.btn-square{
+  border-radius:2px;
+}
+.btn.btn-purple{
+  border:1px solid $purple;
+  background-color:$purple;
+  color:white;
+  &:hover{
+    background-color:darken($purple,10);
+  }
+  a{
+    color:white;
+  }
+}
+.pagination{
+  font-family: $special-font;
+  font-size:18px;
+  padding:.5em;
+  border:none;
+  color: lighten($gray,35);
+  font-weight:bold;
+  &.previous{
+    padding-right:0px;
+  }
+  &.next{
+    padding-left:0px;
+  }
+  &:hover{
+    color:lighten($gray, 10);
+    border-bottom:none;
+  }&.active{
+    color:$navy;
+    border-bottom:none;
+  }
+}
+.social-sign-btns button.btn{
+  margin:10px;
+}
+.btn.btn-social{
+  padding-left:40px;
+}
+.social-btns .btn-social>:first-child{
+  line-height:40px;
+}

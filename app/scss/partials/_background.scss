@@ -1,0 +1,81 @@
+/*
+#main{
+  overflow: scroll;
+  -webkit-overflow-scrolling: touch;
+}
+*/
+#top-spacer{ padding-top:75px; }
+#loading {
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+  background:$lt-gray;
+  z-index:10;
+  overflow:hidden;
+  .hourglass{
+      display:block;
+      background:$lt-gray;
+      margin:40vh auto;
+      width:2em;
+      height:4em;
+      box-shadow:
+          inset $lt-gray 0 0 0 0,
+          inset $bright-purple 0 2em 0 0,
+          inset $lt-gray 0 0 4em 0;
+      animation:hourglass 1s linear infinite;
+  }
+  .outer{
+      fill:$bright-purple;
+  }
+  .middle{
+      fill:$lt-gray;
+  }
+}
+
+.skrollable {
+    position: fixed;
+    z-index: 100;
+}
+.bg-view{
+  z-index:-999;
+  position:fixed;
+  width:100vw;
+  height:100vh;
+  top:0;
+  left:0;
+  overflow:hidden;
+}
+.bg-icons{
+  position:fixed;
+  width:100vw;
+  height:100vh;
+  top:0;
+  left:0;
+  opacity:.5;
+  background-image:url('images/bg-icons.png');
+  background-repeat:repeat-y;
+  background-size:100% auto;
+}
+.bg-confetti{
+  position:fixed;
+  width:100vw;
+  height:100vh;
+  top:0;
+  left:0;
+  opacity:.8;
+  background:url('images/bg-shapes.png') repeat;
+  background-size:100% auto;
+}
+
+.banner-bg{
+  background-image:url('images/banner-bg.png');
+  background-size:cover;
+  background-repeat:no-repeat;
+}
+.pattern-bg{
+  background-image:url('images/bg-combined.png');
+  background-repeat:repeat-y;
+  background-size:100% auto;
+}

@@ -1,0 +1,187 @@
+<div class="container-fluid" ng-if="currentUserIsAdmin">
+  <div class="row-fluid martop-5 marbot-5">
+    <div class="col-sm-12 padbot-2">
+      <div class="pull-right">
+        <fieldset>
+          <select ng-model="eventType" title="event type">
+            <option value="2017">Regular Event (2017)</option>
+            <option value="demo">Demo Event</option>
+          </select>
+        </fieldset>
+      </div>
+      <h1><strong>Create new event</strong></h1>
+    </div>
+
+    <form name="addEvent" novalidate>
+      <div class="col-sm-6">
+        <!-- Title -->
+        <fieldset class="marbot-1">
+          <label for="title"><strong>Title: </strong></label>
+          <input type="text" ng-model="newEvent.title" class="form-width" name="title" required aria-label="Event Title" />
+        </fieldset>
+
+        <!-- Location (autocomplete via google) -->
+        <fieldset class="marbot-1">
+          <label><strong>Location</strong></label>
+          <input class="form-width" type="text" g-places-autocomplete ng-model="fc.autocomplete" ng-blur="fc.getLocationInfo(fc.autocomplete)" />
+        </fieldset>
+      </div>
+      <div class="col-sm-6">
+        <!-- Food/Drink/Swag/Recharge/Music -->
+        <fieldset class="marbot-1">
+          <input type="checkbox" ng-model="newEvent.food" id="Food" />
+          <label for="Food">Food</label>
+           |
+          <input type="checkbox" ng-model="newEvent.drink" id="Drink" />
+          <label for="Drink">Drink</label>
+           |
+          <input type="checkbox" ng-model="newEvent.swag" id="Swag" />
+          <label for="Swag">Swag</label>
+           |
+          <input type="checkbox" ng-model="newEvent.recharge" id="Recharge" />
+          <label for="Recharge">Recharge</label>
+          |
+         <input type="checkbox" ng-model="newEvent.music" id="Music" />
+         <label for="Music">Music</label>
+        <p><strong>Free Notes:</strong></p>
+          <textarea ng-model="newEvent.freeNotes" col="100" row="4" style="width:100%;"></textarea>
+        </fieldset>
+      </div>
+      <div class="col-sm-6">
+        <!-- Credential Level -->
+        <fieldset class="marbot-1 stacked-options">
+          <p><strong>Badge Level</strong></p>
+          <label ng-repeat="option in fc.badgeOptions" for="badge-{{option.val}}">
+            <input id="badge-{{option.val}}" type="radio" ng-model="newEvent.credentialLevel" ng-value="option.val">
+            {{option.name}}
+          </label>
+        </fieldset>
+      </div>
+      <div class="col-sm-6">
+        <!-- Age Level -->
+        <fieldset class="marbot-1 stacked-options">
+          <p><strong>Ages Allowed</strong></p>
+          <label for="age-unknown">
+            <input id="age-unknown" type="radio" ng-model="newEvent.age" ng-value="-1">
+            Age Limits Unknown
+          </label>
+          <label for="all-ages">
+            <input id="all-ages" type="radio" ng-model="newEvent.age" ng-value="0">
+            All Ages
+          </label>
+          <label for="age-18">
+            <input id="age-18" type="radio" ng-model="newEvent.age" ng-value="18">
+            18+
+          </label>
+          <label for="age-21">
+            <input id="age-21" type="radio" ng-model="newEvent.age" ng-value="21">
+            21+
+          </label>
+        </fieldset>
+
+        <!-- Links -->
+        <fieldset class="marbot-1">
+          <label for="rsvp">RSVP Link</label>
+          <input class="form-width" type="text" ng-model="newEvent.RSVPLink" id="rsvp" required />
+          <br/>
+          <label for="rsvp">Details Link</label>
+          <input class="form-width" type="text" ng-model="newEvent.detailsLink" id="details" required />
+        </fieldset>
+      </div>
+      <div class="col-sm-12">
+        <fieldset class="marbot-1" ng-repeat="day in newEvent.eventDays">
+          <h4>Day {{$index+1}}</h4>
+          <label>Date</label>
+          <select ng-model="newEvent.eventDays[$index].date" title="date" required>
+            <option value="">TBD</option>
+            <option ng-repeat="option in fc.sxswDates" value="{{option.val}}">{{option.day}}</option>
+          </select>
+          <input type="checkbox" ng-model="newEvent.eventDays[$index].allday" id="allday" />
+          <label for="allday">All Day Event</label>
+          <br/>
+          <div ng-show="newEvent.eventDays[$index].date && !newEvent.eventDays[$index].allday">
+            <label>Start (military)</label>
+            <input type="text" ng-model="newEvent.eventDays[$index].start" placeholder="17:00"/>
+            <label>End (military)</label>
+            <input type="text" ng-model="newEvent.eventDays[$index].end" placeholder="01:00"/>
+          </div>
+          <trix-editor angular-trix class="wysiwyg" ng-model="newEvent.eventDays[$index].description"></trix-editor>
+
+          <div ng-show="newEvent.eventDays[$index].date">
+            <div ng-repeat="band in newEvent.bands[newEvent.eventDays[$index].date]">
+              <input class="form-width" type="text" ng-model="band.artist" placeholder="Band/Artist name" ng-blur="getTags(band)" />
+              <button ng-click="removeBand(band.date,$index)">Remove {{band.artist}}</button>
+              <label class="pink-text"><span ng-show="band.tags.length == 0 && band.artist.length > 0">Deselect to find tags</span>
+              <span ng-show="band.tags.length > 0"><span ng-repeat="tag in band.tags">{{tag.name}}, </span></span></label>
+            </div>
+            <button ng-show="newEvent.music" class="marbot-1 btn" ng-click="bandsInit(newEvent.eventDays[$index].date)">Add Band</button>
+          </div>
+          <br/>
+
+          <button class="btn btn-primary" ng-click="removeDay($index)" ng-hide="newEvent.eventDays.length<=1">Remove Day</button>
+          <button class="btn btn-warning" ng-click="addDay()" ng-show="$last">Add Day</button>
+        </fieldset>
+        <button class="btn btn-danger martop-2 marbot-2" ng-click="reviewEvent()" type="submit">Review {{eventType}} Data &raquo;</button>
+      </div>
+    </form>
+
+    <div class="col-sm-12 martop-3 marbot-3">
+      <hr/>
+    </div>
+
+    <div class="col-sm-12" ng-if="reviewReady">
+      <div class="alert alert-info marbot-2">This is a review. If changes need to be made, change them above and click "review" again</div>
+    </div>
+    <div class="col-sm-6" ng-if="reviewReady">
+      <h3>{{event.title || '**TITLE NEEDED**'}}</h3>
+      <ul class="free-icons">
+        <li>
+          <div class="icon food" ng-class="{active: event.food==1}">
+            <span class="sr-only">food</span>
+          </div>
+        </li>
+        <li>
+          <div class="icon drink" ng-class="{active: event.drink}">
+            <span class="sr-only">drink</span>
+          </div>
+        </li>
+        <li>
+          <div class="icon swag" ng-class="{active: event.swag}">
+            <span class="sr-only">swag</span>
+          </div>
+        </li>
+        <li>
+          <div class="icon recharge" ng-class="{active: event.recharge}">
+            <span class="sr-only">recharge</span>
+          </div>
+        </li>
+        <li>
+          <div class="icon music" ng-class="{active: event.music!==undefined && event.music !== false}">
+            <span class="sr-only">music</span>
+          </div>
+        </li>
+        <div class="clearfix"></div>
+      </ul>
+      <p>{{event.freeNotes}}</p>
+      <p class="card-location marbot-1">
+        <span class="card-location-name" ng-if="event.locationName.length > 0"><strong>{{ event.locationName}}</strong><br/></span>
+        <span class="card-location-address"><em>{{ event.locationAddress || 'Location TBD' }}</em></span>
+        <br/>
+        <small><em>Coordinates: {{ event.locationCoord | json }}</em></small>
+      </p>
+      <div ng-repeat="day in event.days">
+        <strong>{{ day.start | date:'MMMM d'}}</strong> {{ day.start | date:'hh:mm a'}} – {{ day.end | date:'hh:mm a'}}
+        <p ng-bind-html="unescapeJson(day.description)"></p>
+      </div>
+    </div>
+    <div class="col-sm-6" ng-if="reviewReady">
+      <h4 class="gray-text">Object preview</h4>
+      <pre>
+        {{ event | json}}
+      </pre>
+    </div>
+    <div class="col-sm-12 martop-3 marbot-3" ng-if="reviewReady">
+      <button class="btn btn-danger" ng-click="createEvent(event)">SUBMIT {{eventType | uppercase}} DATA</button>
+    </div>
+  </div>
+</div>

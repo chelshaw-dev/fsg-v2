@@ -1,0 +1,18 @@
+<div class="container height">
+  <div class="row-fluid martop-5 marbot-5">
+    <div class="col-sm-12 text-center padbot-2">
+      <h1 class="purple-text"><strong>FSG in the Know</strong></h1>
+      <p ng-cloak class="text-center" ng-if="currentUserIsAdmin === true"><a ui-sref="newPost">New Blog</a></p>
+    </div>
+    <div class="col-sm-6" ng-repeat="post in posts | orderBy:'-timestamp'">
+      <div class="blog-snippet">
+        <h3><a ui-sref="blogPost({ postSlug: post.slug })">{{post.title}}</a></h3>
+        <p><small class="gray-text">Posted {{post.timestamp | date:'MMM dd, yyyy'}}</small></p>
+        <div class="inner">
+          <p ng-bind-html="blogSnippet(post.content)"></p>
+          <a class="btn btn-danger martop-1" ui-sref="blogPost({ postSlug: post.slug })">Read More</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,4 +1,23 @@
-$bg: #f6f6f7;
-body {
-  background: $bg;
-}
+// vendor libraries
+//@import "../vendor/bootstrap-social/bootstrap-social.css";
+//@import "../vendor/bootstrap/css/bootstrap.min.css";
+//@import "../vendor/font-awesome/font-awesome.min.css";
+
+// mixins
+@import "bourbon/bourbon";
+
+// app styles
+@import "partials/variables";
+@import "partials/typography";
+@import "partials/background";
+@import "partials/buttons";
+@import "partials/event-cards";
+@import "partials/card-popout";
+@import "partials/map";
+@import "partials/forms";
+@import "partials/homepage";
+@import "partials/blog";
+@import "partials/nav";
+@import "partials/footer";
+@import "partials/register";
+@import "partials/helper";

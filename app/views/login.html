@@ -1,0 +1,56 @@
+<div id="login" class="register-section pattern-bg">
+  <div class="register-half left gray-bg">
+    <section class="text-center white-text">
+      <object class="reg-img align-center" data="images/reg-step-3.svg" type="image/svg+xml">
+        <img src="images/reg-step-3.png" />
+      </object>
+      <p class="text-center purple-text special-text reg-step">
+        Hey there rockstar!
+      </p>
+    </section>
+  </div>
+  <div class="register-half right">
+    <section ng-show="currentUser">
+      <h4 class="text-center martop-6">You're logged in!</h4>
+      <p class="text-center">Hey {{currentUser.displayName}}! No need to do this again ;)</p>
+      <p class="text-center">{{currentUser.email}}</p>
+    </section>
+    <section ng-hide="currentUser">
+      <h2 class="text-center special-text">Nice to see you again!</h2>
+      <form type="post" class="form-login martop-2 marbot-1" name="loginForm" ng-submit="lc.logInPassword()">
+        <h4 class="special-text text-center">Sign in with email/password</h4>
+        <div class="fsg-field-group">
+          <label class="sr-only">Email Address</label>
+          <input type="email" name="email" placeholder="EMAIL ADDRESS" ng-model="logEmail" ng-required="true" />
+        </div>
+        <div class="fsg-field-outer" ng-class="{ 'valid' : (registerForm.password.$valid && !registerForm.password.$pristine), 'invalid' : (registerForm.password.$invalid && !registerForm.password.$pristine) }">
+          <label for="log-pass">PASSWORD</label>
+          <input id="log-pass" type="password" name="password" ng-model="logPass" ng-required="true" />
+        </div>
+        <input type="submit" ng-disabled="loginForm.$invalid || loginProcessing" class="button btn btn-danger pull-right" value="Log In" />
+        <div ng-show="loginProcessing" class="pull-right"><img style="padding: 5px;" src="/images/loading.gif" width="40" height="40" /></div>
+        <p class="pull-left martop-1" ng-control="accountCtrl as ac"><em><a class="reset-link" ui-sref="account({mode:'sendResetEmail'})">Reset password</a></em></p>
+      </form>
+      <div class="clearfix"></div>
+      <div class="social-btns text-center martop-2">
+        <button class="btn btn-social btn-facebook marbot-1" ng-click="lc.logInFB()">
+          <span class="fa fa-facebook"></span> Sign in with Facebook
+        </button>
+        <button class="btn btn-social btn-twitter marbot-1" ng-click="lc.logInTwitter()">
+          <span class="fa fa-twitter"></span> Sign in with Twitter
+        </button>
+      </div>
+      <div class="text-center form-alert pink-bg white-text" ng-show="loginError">
+        <button type="button" class="close" ng-click="loginError=false" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <span ng-show="loginError == 'wrong-password'">Incorrect email or password. (It's possible you registered through Twitter or Facebook)</span>
+        <span ng-show="loginError == 'wrong-method'">That account is registered with a different password or social media account.</span>
+        <span ng-show="loginError == 'user-not-found'">Looks like you don't have an account yet! <br/><a class="white-text" ui-sref="register">Register now &rsaquo;</a></span>
+        <span ng-show="loginError == 'browser-unsupported'">Hey, looks like you're in private mode! Please browse in normal (instructions for <a class="white-text" target="_blank" href="https://support.apple.com/en-us/HT203036">Safari</a> and <a class="white-text" target="_blank" href="http://www.guidingtech.com/10985/ways-to-achieve-private-browsing-on-android/">Android</a>) mode and try again.</span>
+        <span ng-show="loginError == 'default'">Uh-oh, something seems to have gone wrong. Please try again later.</span>
+      </div>
+      <p ng-show="loginTries >= 3" class="text-center pink-text">Need help? Reach out to us at <a href="mailto:hey@freeshitguide.com">hey@freeshitguide.com</a>!</p>
+      <p class="text-center martop-4"><em>Need to <a ui-sref="register">register first</a>?</em></p>
+    </section>
+  </div>
+  <div class="clearfix"></div>
+</div>

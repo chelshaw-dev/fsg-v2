@@ -1,0 +1,51 @@
+.wysiwyg{
+  min-height:30vh;
+}
+.blog-snippet{
+  min-height:320px;
+  .inner {
+    max-height:300px;
+    overflow:hidden;
+    p,h1,h2,h3,h4,h5,h6{
+      font-size: 16px;
+      line-height: 1.42857143;
+      margin-top:0px;
+      margin-bottom:0px;
+    }
+  }
+}
+#blog-post blockquote{
+  width:90%;
+  max-width:512px;
+  margin:1.5em auto;
+  border:5px solid #ffef00;
+  -moz-border-image: -moz-linear-gradient(left, $turq 0%, $pink 50%, $purple 100%);
+  -webkit-border-image: -webkit-linear-gradient(left, $turq 0%, $pink 50%, $purple 100%);
+  border-image: linear-gradient(to right, $turq 0%, $pink 50%, $purple 100%);
+  border-image-slice: 1;
+  color:$navy;
+  font-weight:bold;
+  font-size:26px;
+  padding:1em;
+  position:relative;
+  text-align:center;
+  &:before{
+    content:open-quote;
+    color:$navy;
+  }
+  &:after{
+    content:close-quote;
+    color:&navy;
+  }
+}
+.blog-img{
+  width:100%;
+  height:250px;
+  background-size:cover;
+  background-position:center;
+}
+@include bp(sm){
+  .blog-img{
+    height:400px;
+  }
+}

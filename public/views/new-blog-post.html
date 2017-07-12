@@ -1,0 +1,33 @@
+<div class="container" ng-if="currentUserIsAdmin">
+  <div class="row martop-5 marbot-2">
+    <div class="col-sm-12">
+      <p class="text-left"><a ui-sref="blog">&laquo; Back to Blog</a></p>
+      <div ng-show="postResult" class="alert alert-success" role="alert">
+        {{postResult}}
+      </div>
+      <form class="new-post" ng-hide="results" name="blogForm" ng-submit="submitPost(newPost)">
+        <fieldset class="form-group">
+          <label>Title</label>
+          <input type="text" name="title" class="form-control" ng-model="newPost.title" required />
+        </fieldset>
+        <fieldset class="form-group">
+          <label>Post URL (after /blog/)</label>{{newPostSlug}}
+          <input type="text" name="slug" class="form-control" ng-model="newPost.slug" required />
+        </fieldset>
+
+        <label>Blog Content</label>
+        <trix-editor angular-trix class="wysiwyg" ng-model="newPost.content"></trix-editor>
+
+        <fieldset class="form-group">
+          <label>Featured Image (url)</label>
+          <input type="url" name="image" class="form-control" ng-model="newPost.image" />
+        </fieldset>
+        <fieldset class="form-group">
+          <label>Featured Video (embed snippet)</label>
+          <textarea name="video" class="form-control" ng-model="newPost.video"></textarea>
+        </fieldset>
+        <input type="submit" class="button btn btn-danger martop-1" value="Submit Post" required />
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,48 @@
+#footer{
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 60px;
+  background-color: $aqua;
+}
+body.map footer,
+body.demoMap footer{
+  display:none;
+}
+body.events footer,
+body.demoEvents footer{
+  background-color:$lt-gray;
+}
+body.register footer,
+body.signin footer,
+body.login footer{
+  display:none;
+}
+
+a.footer-link,a{
+  color:$purple;
+  border-bottom:1px solid $aqua;
+  &:hover{
+    text-decoration: none;
+    border-bottom:1px dashed $aqua;
+    cursor: pointer;
+  }
+}
+.footer-icon{
+  margin:0 auto;
+  float:none;
+  text-align:center;
+  img{
+    height:38px;
+  }
+}
+@include bp(md){
+  .footer-icon.icon-fsg{
+    float:left;
+    text-align:left;
+  }
+  .footer-icon.icon-atx{
+    float:right;
+    text-align:right;
+  }
+}

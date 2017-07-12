@@ -1,0 +1,79 @@
+<div id="top-spacer"></div>
+<h1>Events page</h1>
+
+<div class="container">
+  <div id="filters" class="row expanded">
+    <div class="col-sm-12">
+      <fieldset class="form-inline form-group">
+        <h4 class="text-inline">Filter By: <a class="btn" ng-click="e.swagReset()">Reset</a> <a class="btn" ng-click="e.saveFilter()">Save current filters</a></h4>
+        <label for="search">Search:</label>
+        <input class="form-control" type="text" name="search" ng-model="e.filter.search" />
+      </fieldset>
+      <fieldset class="form-inline form-group">
+        <input class="form-control" type="checkbox" name="food" ng-model="e.filter.food" /> <label for="food">food</label>
+        <input class="form-control" type="checkbox" name="drink" ng-model="e.filter.drink" /> <label for="drink">drink</label>
+        <input class="form-control" type="checkbox" name="swag" ng-model="e.filter.swag" /> <label for="swag">swag</label>
+        <input class="form-control" type="checkbox" name="recharge" ng-model="e.filter.recharge" /> <label for="recharge">recharge</label>
+        <input class="form-control" type="checkbox" name="music" ng-model="e.filter.music" /> <label for="music">music</label>
+        <input class="form-control" type="checkbox" name="today" ng-model="e.filter.today" ng-true-value="'today'" ng-false-value="'all'" /> <label for="today">is today (03/12/16)</label>
+      </fieldset>
+      <fieldset class="form-inline form-group">
+        <label for="badge">Badge Level</label>
+        <select ng-model="e.filter.badge" class="form-control" title="badge" required>
+          <!--<option value=-1>Choose credential level</option>-->
+          <option ng-repeat="option in e.badgeOptions" value="{{option.val}}">{{option.name}}</option>
+        </select>
+
+        <select ng-model="e.filter.faves" class="form-control" title="Favorite" required>
+          <option value="all">Favorites Filter</option>
+          <option value="1">Favorited</option>
+          <option value="-1">Not Favorited</option>
+        </select>
+        <select ng-model="e.filter.rsvp" title="RSVP Status" required>
+          <option value="all">Select RSVP status</option>
+          <option value="1">Have RSVP'd</option>
+          <option value="-1">Have not RSVP'd</option>
+        </select>
+      </fieldset>
+
+    </div>
+  </div>
+</div><!-- end filters -->
+
+<div class="events-container">
+  <p>{{(events).length}}</p>
+  <!-- | searchAll:e.filter.search | isToday:e.filter.today | favesFilter:e.filter.faves | rsvpFilter:e.filter.rsvp | foodFilter:e.filter.food | drinkFilter:e.filter.drink | swagFilter:e.filter.swag | rechargeFilter:e.filter.recharge | musicFilter:e.filter.music | credentialFilter:e.filter.badge | orderBy:event.title).length}}/{{events.length}}</p>-->
+  <div class="event-card" ng-repeat="event in events">
+    <!-- | searchAll:e.filter.search | isToday:e.filter.today | favesFilter:e.filter.faves | rsvpFilter:e.filter.rsvp | foodFilter:e.filter.food | drinkFilter:e.filter.drink | swagFilter:e.filter.swag | rechargeFilter:e.filter.recharge | musicFilter:e.filter.music | credentialFilter:e.filter.badge">-->
+    <div class="event-card--header" ng-class="'badge-'+event.credentialLevel">
+      <h2>{{event.title | uppercase | limitTo: 46}}</h2>
+    </div>
+    <div class="event-card--body">
+      <div class="event-card--sidebar">
+        <ul class="icon-group">
+          <li class="icon food" ng-class="{active: event.food==1}">
+            <span class="sr-only">food</span></li>
+          <li class="icon drink" ng-class="{active: event.drink==1}">
+            <span class="sr-only">drink</span></li>
+          <li class="icon swag" ng-class="{active: event.swag==1}">
+            <span class="sr-only">swag</span></li>
+          <li class="icon recharge" ng-class="{active: event.recharge==1}">
+            <span class="sr-only">recharge</span></li>
+        </ul>
+      </div>
+      <div class="event-card--content">
+        <p class="event-card__location">{{event.locationName || 'Location TBA'}} <br/>
+          {{event.locationAddress}}</p>
+        <p ng-show="event.description">{{event.description | limitTo:150}}...<a href="#!/events"> More &raquo;</a></p>
+        <h6>{{event.credentialLevel }}</h6>
+        <p>{{cardTimeDisplay(event.eventDates)}}<br/>
+          <small>{{event.days | json}}</small></p>
+      </div>
+    </div>
+    <div class="event-card--footer">
+      <span ng-show="isRsvp(event.eid)">&#10003;</span> <a ng-href="{{event.RSVPLink}}" target="_blank" >RSVP</a></div>
+      <div class="event-card--sidebar">
+        <span ng-show="isFavorite(event.eid)" class="glyphicon glyphicon-star"/></span><button ng-click="toggleFavorite(event.eid)">fave</button>
+      </div>
+    </div>
+  </div>

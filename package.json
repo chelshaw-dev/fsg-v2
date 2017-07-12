@@ -6,14 +6,16 @@
   "author": "Chelsea Shaw",
   "license": "MIT",
   "dependencies": {
-    "angular": "^1.6.4",
+    "angular": "1.4.9",
+    "angular-animate": "^1.6.5",
+    "angular-sanitize": "^1.6.5",
     "angular-ui-router": "0.3.2",
-    "firebase": "^4.1.1",
-    "gulp-concat": "^2.6.1"
+    "firebase": "^4.1.1"
   },
   "devDependencies": {
     "gulp": "^3.9.1",
     "gulp-clean": "^0.3.2",
+    "gulp-concat": "^2.6.1",
     "gulp-sass": "^3.1.0",
     "gulp-sourcemaps": "^2.6.0"
   }
