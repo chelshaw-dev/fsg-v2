@@ -16,9 +16,8 @@
 
   <script src="lib/angular.js"></script>
   <script src="lib/angular-ui-router.js"></script>
-
 </head>
-<body>
+<body ng-controller="appController">
   <!-- Navigation -->
   <nav id="fsg-nav" class="navbar navbar-default hide-for-print">
     <div class="container-fluid">
@@ -125,8 +124,21 @@
   <div ui-view></div>
 
   <!-- Footer -->
-  <footer>
-    <h6>Some footer stuff</h6>
+  <footer ng-if="bootStatus" class="hide-for-print" ng-class="page">
+    <div class="container-fluid">
+      <div class="row-fluid martop-1 marbot-1">
+        <div class="col-xs-12 col-sm-3">
+          <div class="footer-icon icon-fsg"><img src="images/footer-fsg.png" alt="Free Shit Guide" /></div>
+        </div>
+        <div class="col-xs-12 col-sm-6">
+          <p class="text-center"><span class="xs-block"><a href="mailto:hey@freeshitguide.com">hey@freeshitguide.com</a></span> <span class="aqua-text" style="padding-left:1em;padding-right:1em;">&#9733;</span> <span class="xs-block"><a ui-sref="blog">read the blog</a></span></p>
+        </div>
+        <div class="col-xs-12 col-sm-3">
+          <div class="footer-icon icon-atx"><img src="images/footer-atx.png" alt="Austin, TX" /></div>
+        </div>
+        <div class="clearfix"></div>
+      </div>
+    </div>
   </footer>
 
 

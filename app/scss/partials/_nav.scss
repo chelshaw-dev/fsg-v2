@@ -158,8 +158,8 @@ ul.social-links{
       height:30px;
       width:30px;
       border-bottom:none;
-      background: url('images/social-sprites.png');
-      background: url('images/social-sprites.svg'),
+      background: url('/images/social-sprites.png');
+      background: url('/images/social-sprites.svg'),
         linear-gradient(transparent, transparent);
       background-repeat:no-repeat;
       background-size:200% auto;
@@ -246,7 +246,7 @@ ul.social-links{
 .mobile-nav-brand{
   height:37px;
   width:25px;
-  background-image:url('images/fsg-nav-logo.png');
+  background-image:url('/images/fsg-nav-logo.png');
   background-repeat:no-repeat;
   background-position:top left;
   background-size:auto 100%;

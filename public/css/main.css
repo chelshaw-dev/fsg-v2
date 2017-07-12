@@ -276,7 +276,7 @@ body {
   top: 0;
   left: 0;
   opacity: .5;
-  background-image: url("images/bg-icons.png");
+  background-image: url("/images/bg-icons.png");
   background-repeat: repeat-y;
   background-size: 100% auto; }
 
@@ -287,16 +287,16 @@ body {
   top: 0;
   left: 0;
   opacity: .8;
-  background: url("images/bg-shapes.png") repeat;
+  background: url("/images/bg-shapes.png") repeat;
   background-size: 100% auto; }
 
 .banner-bg {
-  background-image: url("images/banner-bg.png");
+  background-image: url("/images/banner-bg.png");
   background-size: cover;
   background-repeat: no-repeat; }
 
 .pattern-bg {
-  background-image: url("images/bg-combined.png");
+  background-image: url("/images/bg-combined.png");
   background-repeat: repeat-y;
   background-size: 100% auto; }
 
@@ -564,20 +564,20 @@ ul.free-icons {
       background-repeat: no-repeat;
       background-size: contain; }
       ul.free-icons li .icon.food {
-        background-image: url("images/free-icon_food.png");
-        background: url("images/free-icon_food.svg"), linear-gradient(transparent, transparent); }
+        background-image: url("/images/free-icon_food.png");
+        background: url("/images/free-icon_food.svg"), linear-gradient(transparent, transparent); }
       ul.free-icons li .icon.drink {
-        background-image: url("images/free-icon_drink.png");
-        background: url("images/free-icon_drink.svg"), linear-gradient(transparent, transparent); }
+        background-image: url("/images/free-icon_drink.png");
+        background: url("/images/free-icon_drink.svg"), linear-gradient(transparent, transparent); }
       ul.free-icons li .icon.swag {
-        background-image: url("images/free-icon_swag.png");
-        background: url("images/free-icon_swag.svg"), linear-gradient(transparent, transparent); }
+        background-image: url("/images/free-icon_swag.png");
+        background: url("/images/free-icon_swag.svg"), linear-gradient(transparent, transparent); }
       ul.free-icons li .icon.recharge {
-        background-image: url("images/free-icon_recharge.png");
-        background: url("images/free-icon_recharge.svg"), linear-gradient(transparent, transparent); }
+        background-image: url("/images/free-icon_recharge.png");
+        background: url("/images/free-icon_recharge.svg"), linear-gradient(transparent, transparent); }
       ul.free-icons li .icon.music {
-        background-image: url("images/free-icon_music.png");
-        background: url("images/free-icon_music.svg"), linear-gradient(transparent, transparent); }
+        background-image: url("/images/free-icon_music.png");
+        background: url("/images/free-icon_music.svg"), linear-gradient(transparent, transparent); }
       ul.free-icons li .icon.active {
         background-color: #4dffe0; }
   ul.free-icons:after {
@@ -585,16 +585,16 @@ ul.free-icons {
 
 .card-location {
   padding-left: 24px;
-  background: url("images/card-icon-location.png");
-  background: url("images/card-icon-location.svg"), linear-gradient(transparent, transparent);
+  background: url("/images/card-icon-location.png");
+  background: url("/images/card-icon-location.svg"), linear-gradient(transparent, transparent);
   background-repeat: no-repeat;
   background-size: auto 17px;
   background-position: 0px 3px; }
 
 .card-date {
   padding-left: 24px;
-  background: url("images/card-icon-date.png");
-  background: url("images/card-icon-date.svg"), linear-gradient(transparent, transparent);
+  background: url("/images/card-icon-date.png");
+  background: url("/images/card-icon-date.svg"), linear-gradient(transparent, transparent);
   background-repeat: no-repeat;
   background-size: auto 17px;
   background-position: 0px 3px; }
@@ -1029,7 +1029,7 @@ custom-marker .map-pin {
   cursor: pointer;
   background-color: #3a1772;
   display: block;
-  background-image: url("images/icon-map-center.svg");
+  background-image: url("/images/icon-map-center.svg");
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center; }
@@ -1175,7 +1175,7 @@ input.form-width {
   right: 0px;
   height: 36px;
   width: 36px;
-  background: url("images/search-sprite.png?version=1226-1") no-repeat;
+  background: url("/images/search-sprite.png?version=1226-1") no-repeat;
   background-size: auto 100%;
   background-position: -2px 0px;
   border-left: 2px solid #0f1e3d;
@@ -1210,7 +1210,7 @@ input#search {
 
 select#soflow-color {
   color: #0f1e3d;
-  background: url("images/select-icon.png") center right no-repeat;
+  background: url("/images/select-icon.png") center right no-repeat;
   background-size: auto 100%;
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -1586,8 +1586,8 @@ h1 {
   height: 200px;
   margin: 0 auto;
   margin-top: 3em;
-  background-image: url("images/fsg-logo.png");
-  background: url("images/fsg-logo.svg"), linear-gradient(transparent, transparent);
+  background-image: url("/images/fsg-logo.png");
+  background: url("/images/fsg-logo.svg"), linear-gradient(transparent, transparent);
   background-size: contain;
   background-position: top center;
   background-repeat: no-repeat; }
@@ -1830,13 +1830,13 @@ h1 {
       font-size: 18px; } }
 
 .number-01 {
-  background-image: url("images/numbers-01.png"); }
+  background-image: url("/images/numbers-01.png"); }
 
 .number-02 {
-  background-image: url("images/numbers-02.png"); }
+  background-image: url("/images/numbers-02.png"); }
 
 .number-03 {
-  background-image: url("images/numbers-03.png"); }
+  background-image: url("/images/numbers-03.png"); }
 
 .spacer {
   width: 40px;
@@ -1920,18 +1920,18 @@ p.social-proof {
   margin: 1em auto;
   position: relative; }
   .feature__dot.map {
-    background: url("images/icon-map.png");
-    background: url("images/icon-map.svg"), linear-gradient(transparent, transparent);
+    background: url("/images/icon-map.png");
+    background: url("/images/icon-map.svg"), linear-gradient(transparent, transparent);
     background-color: #4dffe0;
     background-size: contain; }
   .feature__dot.events {
-    background: url("images/icon-cards.png");
-    background: url("images/icon-cards.svg"), linear-gradient(transparent, transparent);
+    background: url("/images/icon-cards.png");
+    background: url("/images/icon-cards.svg"), linear-gradient(transparent, transparent);
     background-color: #4dffe0;
     background-size: contain; }
   .feature__dot.fave {
-    background: url("images/icon-heart.png");
-    background: url("images/icon-heart.svg"), linear-gradient(transparent, transparent);
+    background: url("/images/icon-heart.png");
+    background: url("/images/icon-heart.svg"), linear-gradient(transparent, transparent);
     background-color: #4dffe0;
     background-size: contain; }
 
@@ -2154,8 +2154,8 @@ ul.social-links {
       height: 30px;
       width: 30px;
       border-bottom: none;
-      background: url("images/social-sprites.png");
-      background: url("images/social-sprites.svg"), linear-gradient(transparent, transparent);
+      background: url("/images/social-sprites.png");
+      background: url("/images/social-sprites.svg"), linear-gradient(transparent, transparent);
       background-repeat: no-repeat;
       background-size: 200% auto; }
       ul.social-links li a.twitter {
@@ -2224,7 +2224,7 @@ ul.social-links {
 .mobile-nav-brand {
   height: 37px;
   width: 25px;
-  background-image: url("images/fsg-nav-logo.png");
+  background-image: url("/images/fsg-nav-logo.png");
   background-repeat: no-repeat;
   background-position: top left;
   background-size: auto 100%; }

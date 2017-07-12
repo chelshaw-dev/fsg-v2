@@ -44,8 +44,8 @@ h1{
   height:200px;
   margin:0 auto;
   margin-top:3em;
-  background-image:url('images/fsg-logo.png');
-  background: url('images/fsg-logo.svg'),
+  background-image:url('/images/fsg-logo.png');
+  background: url('/images/fsg-logo.svg'),
     linear-gradient(transparent, transparent);
   background-size:contain;
   background-position:top center;
@@ -292,13 +292,13 @@ h1{
   }
 }
 .number-01{
-  background-image:url('images/numbers-01.png');
+  background-image:url('/images/numbers-01.png');
 }
 .number-02{
-  background-image:url('images/numbers-02.png');
+  background-image:url('/images/numbers-02.png');
 }
 .number-03{
-  background-image:url('images/numbers-03.png');
+  background-image:url('/images/numbers-03.png');
 }
 .spacer{
   width:40px;
@@ -388,22 +388,22 @@ p.social-proof{
   margin:1em auto;
   position:relative;
   &.map{
-    background: url('images/icon-map.png');
-    background: url('images/icon-map.svg'),
+    background: url('/images/icon-map.png');
+    background: url('/images/icon-map.svg'),
       linear-gradient(transparent, transparent);
     background-color:$aqua;
     background-size:contain;
   }
   &.events{
-    background: url('images/icon-cards.png');
-    background: url('images/icon-cards.svg'),
+    background: url('/images/icon-cards.png');
+    background: url('/images/icon-cards.svg'),
       linear-gradient(transparent, transparent);
     background-color:$aqua;
     background-size:contain;
   }
   &.fave{
-    background: url('images/icon-heart.png');
-    background: url('images/icon-heart.svg'),
+    background: url('/images/icon-heart.png');
+    background: url('/images/icon-heart.svg'),
       linear-gradient(transparent, transparent);
     background-color:$aqua;
     background-size:contain;

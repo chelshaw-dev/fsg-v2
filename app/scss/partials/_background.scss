@@ -54,7 +54,7 @@
   top:0;
   left:0;
   opacity:.5;
-  background-image:url('images/bg-icons.png');
+  background-image:url('/images/bg-icons.png');
   background-repeat:repeat-y;
   background-size:100% auto;
 }
@@ -65,17 +65,17 @@
   top:0;
   left:0;
   opacity:.8;
-  background:url('images/bg-shapes.png') repeat;
+  background:url('/images/bg-shapes.png') repeat;
   background-size:100% auto;
 }
 
 .banner-bg{
-  background-image:url('images/banner-bg.png');
+  background-image:url('/images/banner-bg.png');
   background-size:cover;
   background-repeat:no-repeat;
 }
 .pattern-bg{
-  background-image:url('images/bg-combined.png');
+  background-image:url('/images/bg-combined.png');
   background-repeat:repeat-y;
   background-size:100% auto;
 }

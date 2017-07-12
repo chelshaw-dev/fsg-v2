@@ -155,28 +155,28 @@ ul.free-icons{
       background-repeat:no-repeat;
       background-size:contain;
       &.food{
-        background-image:url('images/free-icon_food.png');
-        background: url('images/free-icon_food.svg'),
+        background-image:url('/images/free-icon_food.png');
+        background: url('/images/free-icon_food.svg'),
           linear-gradient(transparent, transparent);
       }
       &.drink{
-        background-image:url('images/free-icon_drink.png');
-        background: url('images/free-icon_drink.svg'),
+        background-image:url('/images/free-icon_drink.png');
+        background: url('/images/free-icon_drink.svg'),
           linear-gradient(transparent, transparent);
       }
       &.swag{
-        background-image:url('images/free-icon_swag.png');
-        background: url('images/free-icon_swag.svg'),
+        background-image:url('/images/free-icon_swag.png');
+        background: url('/images/free-icon_swag.svg'),
           linear-gradient(transparent, transparent);
       }
       &.recharge{
-        background-image:url('images/free-icon_recharge.png');
-        background: url('images/free-icon_recharge.svg'),
+        background-image:url('/images/free-icon_recharge.png');
+        background: url('/images/free-icon_recharge.svg'),
           linear-gradient(transparent, transparent);
       }
       &.music{
-        background-image:url('images/free-icon_music.png');
-        background: url('images/free-icon_music.svg'),
+        background-image:url('/images/free-icon_music.png');
+        background: url('/images/free-icon_music.svg'),
           linear-gradient(transparent, transparent);
       }
       &.active{
@@ -190,8 +190,8 @@ ul.free-icons{
 }
 .card-location{
   padding-left:24px;
-  background: url('images/card-icon-location.png');
-  background: url('images/card-icon-location.svg'),
+  background: url('/images/card-icon-location.png');
+  background: url('/images/card-icon-location.svg'),
     linear-gradient(transparent, transparent);
   background-repeat:no-repeat;
   background-size:auto 17px;
@@ -199,8 +199,8 @@ ul.free-icons{
 }
 .card-date{
   padding-left:24px;
-  background: url('images/card-icon-date.png');
-  background: url('images/card-icon-date.svg'),
+  background: url('/images/card-icon-date.png');
+  background: url('/images/card-icon-date.svg'),
     linear-gradient(transparent, transparent);
   background-repeat:no-repeat;
   background-size:auto 17px;
