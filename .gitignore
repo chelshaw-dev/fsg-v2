@@ -1,6 +1,6 @@
 logs/*
 !.gitkeep
-node_modules/
+node_modules
 bower_components/
 tmp
 .DS_Store
@@ -12,5 +12,5 @@ initialize.js
 firebase.json
 .firebaserc
 database.rules.json
-functions/
+functions
 firebase-debug.log

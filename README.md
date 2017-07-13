@@ -12,11 +12,11 @@ To get you started you can simply clone the repository and install the dependenc
 You need git to clone the free-shit-guide repository. You can get git from
 [http://git-scm.com/](http://git-scm.com/).
 
-You must have node.js and its package manager (npm) installed.  You can get them from [http://nodejs.org/](http://nodejs.org/). This project uses yarn as the package manager [http://yarnpkg.com/](http://yarnpkg.com/) and gulp to build. Firebase CLI also recommended.
+You must have node.js and its package manager (npm) installed.  You can get them from [http://nodejs.org/](http://nodejs.org/). This project uses [yarn](http://yarnpkg.com/) as the package manager and [gulp](http://gulpjs.com/) to build. [Firebase CLI](https://firebase.google.com/docs/cli/) also recommended.
 
 ### Clone repository
 
-Clone the free-shit-guide repository using [git][git]:
+Clone the free-shit-guide repository using [git](http://git-scm.com/):
 
 ```
 git clone https://github.com/chelshaw-dev/fsg-v2.git
@@ -54,15 +54,17 @@ firebase init
 ```
 
 When it asks which directory to serve the public app, make sure to put `public`.
-From the project directory, create `initialize.js` file. This will run before the main app and set up the firebase app.
+From the project directory, create `initialize.js` file. This will run before the main app and initialize firebase.
 
 ```
 touch initilize.js
 ```
 
-Create a new project in the [firebase console](https://console.firebase.google.com/) and copy the web initialization code into your new file.
+Create a new project in the [firebase console](https://console.firebase.google.com/) and copy the web initialization code into your new file. Should look like:
 
 ```
+'use strict';
+
 // Initialize Firebase
 var config = {
   apiKey: "your-key-here",
@@ -75,7 +77,7 @@ var config = {
 firebase.initializeApp(config);
 ```
 
-Run `gulp build` to make sure the new file is in `public`.
+Run `gulp build`.
 
 ### Run the Application
 
