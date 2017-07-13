@@ -42,7 +42,8 @@ gulp.task('sass', function() {
 gulp.task('vendor-scripts', function() {
   gulp.src([
     'node_modules/angular/angular.js',
-    'node_modules/angular-ui-router/release/angular-ui-router.js'
+    'node_modules/angular-ui-router/release/angular-ui-router.js',
+    'node_modules/skrollr/dist/skrollr.min.js'
   ])
     .pipe(gulp.dest('public/lib'));
 });
@@ -70,4 +71,6 @@ gulp.task('build', ['clean'], function() {
   gulp.start('images');
   gulp.start('vendor-scripts');
   gulp.start('scripts');
+  gulp.src(['initialize.js'])
+    .pipe(gulp.dest('public/js'));
 })

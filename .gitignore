@@ -7,3 +7,5 @@ tmp
 .idea
 app/.sass-cache/
 firebase-debug.log
+public/
+initialize.js

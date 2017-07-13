@@ -1985,6 +1985,10 @@ signal-exit@^3.0.0:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/signal-exit/-/signal-exit-3.0.2.tgz#b5fdc08f1287ea1178628e415e25132b73646c6d"
 
+skrollr@^0.6.26:
+  version "0.6.26"
+  resolved "https://registry.yarnpkg.com/skrollr/-/skrollr-0.6.26.tgz#65d1aafcc69fc6d27e6cff0f086c25b31b20ab18"
+
 sntp@1.x.x:
   version "1.0.9"
   resolved "https://registry.yarnpkg.com/sntp/-/sntp-1.0.9.tgz#6541184cc90aeea6c6e7b35e2659082443c66198"

@@ -10,7 +10,8 @@
     "angular-animate": "^1.6.5",
     "angular-sanitize": "^1.6.5",
     "angular-ui-router": "0.3.2",
-    "firebase": "^4.1.1"
+    "firebase": "^4.1.1",
+    "skrollr": "^0.6.26"
   },
   "devDependencies": {
     "gulp": "^3.9.1",

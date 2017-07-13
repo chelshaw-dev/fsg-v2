@@ -1,0 +1,74 @@
+<div id="pop-down" class="col-xs-12 marbot-1">
+  <div class="arrow {{activeCard.arrow}}"></div>
+  <div class="navy-bg white-text padtop-1 padbot-1">
+    <button type="button" class="popout--close" aria-label="Close" ng-click="destroyPopout($event)">&times;</button>
+    <div class="row">
+      <div class="col-sm-6 popdown-content--left">
+        <div class="card-header">
+          <h3 class="white-text">{{activeCard.eventInfo.title}}</h3>
+        </div>
+        <div class="visible-xs-block">
+          <p class="white-text"><strong>Event Details and Times</strong></p>
+          <div ng-if="dataYear == '2016'">
+          <!-- 2016 -->
+            <fieldset class="form-group" ng-if="checkLength(activeCard.eventInfo.days)">
+              <select id="soflow-color" class="form-control" ng-model="activeCard.daySelected" ng-options="id as day.start_0|date:'MMMM dd' for (id, day) in activeCard.eventInfo.days"
+                required>
+              </select>
+            </fieldset>
+          </div>
+          <div ng-if="dataYear == '2017'">
+            <!-- 2017 -->
+            <fieldset class="form-group" ng-if="checkLength(activeCard.eventInfo.days)">
+              <select id="soflow-color" class="form-control uppercase" ng-model="activeCard.daySelected" ng-options="id as (popoutDateDisplay(id,day)) for (id, day) in activeCard.eventInfo.days"
+                required>
+              </select>
+            </fieldset>
+          </div>
+          <p class="white-text date-time" ng-if="!checkLength(activeCard.eventInfo.days)" ng-bind-html="displayDate(activeCard.eventInfo.days)"></p>
+        </div>
+        <p ng-bind-html="unescapeJson(activeCard.days[activeCard.daySelected].description) || unescapeJson(defaultDescription(activeCard.eventInfo.days))"></p>
+        <p class="text-right" ng-if="activeCard.eventInfo.detailsLink"><a ng-href="{{activeCard.eventInfo.detailsLink}}" target="_blank">More info here</a></p>
+        <p ng-if="activeCard.eventInfo.freeNotes">{{activeCard.eventInfo.freeNotes}}</p>
+        <div id="map" ng-if="checkCoords(activeCard.eventInfo.locationCoord)">
+          <ng-map center="{{activeCard.eventInfo.locationCoord.lat}},{{activeCard.eventInfo.locationCoord.lng}}" options="{{mapOptions}}" styles="{{mapStyle}}">
+            <custom-marker position="{{activeCard.eventInfo.locationCoord.lat}},{{activeCard.eventInfo.locationCoord.lng}}">
+              <div class="map-pin pin__active" data-pin-id="event-loc">
+                <svg id="pin-img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30.54 67.27"><g><path d="M15.27,19.07A14.27,14.27,0,0,0,1,33.35c0,7.88,14.27,33.92,14.27,33.92s14.27-26,14.27-33.92A14.27,14.27,0,0,0,15.27,19.07Zm0,19a4.19,4.19,0,1,1,4.19-4.19A4.19,4.19,0,0,1,15.27,38Z" stroke="#0f1e3d" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/></g></svg>
+              </div>
+            </custom-marker>
+          </ng-map>
+        </div>
+      </div>
+      <div class="col-sm-6 popdown-content--right">
+        <div class="hidden-xs">
+          <p class="white-text"><strong>Event Details and Times</strong></p>
+          <div ng-if="dataYear == '2016'">
+          <!-- 2016 -->
+            <fieldset class="form-group" ng-if="checkLength(activeCard.eventInfo.days)">
+              <select id="soflow-color" class="form-control" ng-model="activeCard.daySelected" ng-options="id as day.start_0|date:'MMMM dd' for (id, day) in activeCard.eventInfo.days"
+                required>
+              </select>
+            </fieldset>
+          </div>
+          <div ng-if="dataYear == '2017'">
+            <!-- 2017 -->
+            <fieldset class="form-group" ng-if="checkLength(activeCard.eventInfo.days)">
+              <select id="soflow-color" class="form-control uppercase" ng-model="activeCard.daySelected" ng-options="id as (popoutDateDisplay(id,day)) for (id, day) in activeCard.eventInfo.days"
+                required>
+              </select>
+            </fieldset>
+          </div>
+
+          <p class="aqua-text date-time" ng-if="!checkLength(activeCard.eventInfo.days)" ng-bind-html="displayDate(activeCard.eventInfo.days)"></p>
+        </div>
+        <div ng-if="activeCard.days[activeCard.daySelected].music">
+          <p class="white-text martop-1"><strong>Musical Artists</strong></p>
+          <p class="music-list" ng-repeat="music in activeCard.days[activeCard.daySelected].music"><strong>{{music.artist}}</strong> <span ng-if="music.tags.length > 0">(</span><span class="music-tags" ng-repeat="tag in music.tags track by $index"><em>{{tag}}<span ng-if="!$last">, </span></em></span><span ng-if="music.tags.length > 0">)</span></p>
+        </div>
+        <p ng-show="!activeCard.eventInfo.music" class="white-text">This event does not feature music.</p>
+        <p ng-show="activeCard.eventInfo.music === true" class="white-text"><em>Lineup to be announced.</em></p>
+      </div>
+    </div>
+  </div>
+</div>

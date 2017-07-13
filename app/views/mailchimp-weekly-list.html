@@ -1,0 +1,14 @@
+<div class="modal-body" id="modal-body">
+  <h4 class="text-center">Which email would you like weekly updates sent to?</h4>
+  <form class="form-subscribe martop-1" ng-hide="ctrl.results" name="subscribeForm" ng-submit="ctrl.subscribe(ctrl.email)">
+    <div class="fsg-field-group" ng-class="{ 'has-error' : subscribeForm.email.$invalid }">
+      <label class="sr-only">Email</label>
+      <input type="email" placeholder="Email por favor" name="email" class="form-style" ng-model="ctrl.email">
+      <p class="help-block" ng-if="subscribeForm.email.$invalid">Are you sure that's your email?</p>
+    </div>
+    <p class="text-center"><input type="submit" ng-disabled="!ctrl.email" class="button btn btn-primary" value="Sign me up!" /></p>
+  </form>
+  <div ng-show="ctrl.results !== false" class="text-center pink-text marbot-1"><strong>
+    {{ctrl.results}}
+  </strong></div>
+</div>
