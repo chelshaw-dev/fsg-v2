@@ -9,3 +9,8 @@ app/.sass-cache/
 firebase-debug.log
 public/
 initialize.js
+firebase.json
+.firebaserc
+database.rules.json
+functions/
+firebase-debug.log
