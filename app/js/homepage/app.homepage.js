@@ -3,6 +3,10 @@
 
   var home = angular.module('app.homepage', []);
 
+  home.controller('homeCtrl', ['$scope','skrollrService', function($scope,skrollrService) {
+    $scope.showFeature = 'map';
+  }]);
+
   home.service('skrollrService', ['$document', '$q', '$rootScope', '$window',
     function($document, $q, $rootScope, $window){
       var defer = $q.defer();
@@ -49,9 +53,5 @@
       };
     }
   ]);
-
-  home.controller('homeCtrl', ['$scope','skrollrService', function($scope,skrollrService) {
-   $scope.showFeature = 'events';
-  }]);
 
 })();

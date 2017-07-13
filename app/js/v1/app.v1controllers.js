@@ -228,7 +228,7 @@ v1old.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, 
         }
       })
       .state('adminPanel', {
-        url: "/admin/p3705",
+        url: "/admin",
         templateUrl: "views/admin.html",
         controller: "panelCtrl",
         controllerAs: "pc",
@@ -238,13 +238,6 @@ v1old.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, 
           requireAdmin: true
         }
       })
-      var config = { // store config keys as vars outside dir
-        apiKey: "AIzaSyDp0tenVtXevo5vAjYQECgH7uJOtg8cuDE",
-        authDomain: "free-shit-guide.firebaseapp.com",
-        databaseURL: "https://free-shit-guide.firebaseio.com",
-        storageBucket: "free-shit-guide.appspot.com",
-      };
-      firebase.initializeApp(config);
 }]);
 
 v1old.run(['$rootScope','$state','$location','userService','$q', function ($rootScope,$state,$location,userService,$q) {

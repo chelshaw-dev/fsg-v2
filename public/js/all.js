@@ -3,9 +3,10 @@
 
   var myApp = angular.module('app', [
     'app.core',
+    'app.routes',
     'app.homepage',
     'app.register',
-    'app.demo'
+    //'app.demo'
   ]);
 
 })();
@@ -15,30 +16,451 @@
 
   var reg = angular.module('app.register', []);
 
-  reg.controller('registerCtrl', ['$scope', function(){
-    console.log('register controller');
+  reg.controller('signupFormController', ['$log','$scope','$state', function($log,$scope,$state){
+    var $ctrl = this;
+    $ctrl.status = 'ready';
+
+    /* PART 1 -- EMAIL/TWITTER/FACEBOOK SIGNUP */
+    var sendMailchimp = function(user){
+      var pLoad = {
+      email_address: user.email,
+      f_name: user.fname,
+      l_name: user.lname,
+      list_id: '695fa0275a'
+      };
+      $log.debug('Mailing list signup deactivated');
+      /* Custom mailchimp subscribe server
+      $http({
+        url: 'https://my.url.com',
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        data: pLoad
+      }).success(function(data, status, headers, config){
+        $log.debug(status);
+      }).error(function(err){
+        $log.err(err);
+      });
+      */
+    }
+
+    $ctrl.registerUserEmail = function(regObject){
+      $ctrl.status = 'processing';
+      var fname = regObject.firstname || '',
+          lname = regObject.lastname || '',
+          p = regObject.password || '',
+          email = regObject.email || '',
+          userID,
+          subscriber = {
+            email: email,
+            fname: fname,
+            lname: lname
+          },
+          newUser = {
+            email: email,
+            displayName: fname + ' ' + lname
+          };
+
+      sendMailchimp(subscriber);
+      if(2 === 3){
+        fbq('track', 'CompleteRegistration');
+      }
+      $log.debug('creating auth for '+email);
+      firebase.auth().createUserWithEmailAndPassword(email, p).then(function(result){
+        $log.debug(result);
+        userID = result.uid;
+        //$scope.user = result;
+        // updated profile with displayName
+        firebase.auth().currentUser.updateProfile({ displayName: fname + ' ' + lname, customVal: 'hello' }).then(function(result) { /* Update successful */ }, function(error) { /* Error happened */ });
+        //$scope.user.info = userService.createUser(userID,newUser);
+        $scope.register.processing = false;
+        $state.go('register');
+      }).catch(function(error) {
+        console.error(error);
+        if(error.code = 'auth/email-already-in-use'){
+          $scope.$apply( $scope.errMessage.loginRedirect = true);
+          $ctrl.status = 'error';
+        } else {
+          $scope.$apply( $scope.errMessage.generic = error.message);
+          $ctrl.status = 'error';
+        }
+      });
+    }
+
   }]);
-  
+
+  reg.controller('registerCtrl', ['$scope', function($scope){
+
+  }]);
+
+  reg.controller('oldRegisterCtrl', ['$rootScope', '$document', '$scope', '$http', 'stripe', 'promoFactory','userService','$state', '$stateParams', function($rootScope, $document, $scope, $http, stripe, promoFactory, userService,$state,$stateParams){
+    var rc = this;
+    var taor = $rootScope.taor || false;
+
+    $scope.showRegForm = false;
+    var page = $rootScope.page;
+    $scope.errMessage = {
+      loginRedirect: false,
+      generic: false
+    };
+    $scope.register = {
+      processing: false
+    };
+    $scope.payment = {
+      expected_charge: 10,
+      promo_code: '',
+      processing:false
+    };
+    $scope.cardError = {
+      count: 0,
+      message: ''
+    }
+    $scope.user = {};
+    var saveUserInfo = function(data){
+      $scope.user.info = data;
+    }
+    // Watch currentUser for changes so we can update the page
+    $rootScope.$watch('currentUser', function(newVal,oldVal){
+      $scope.user = newVal;
+      if(newVal && newVal.email){
+        $scope.payment.email = newVal.email;
+        $scope.payment.uid = newVal.uid;
+      }
+      //Finds user data from db -- do we need this?
+      if(newVal && newVal.uid){
+        var userRef = firebase.database().ref('users/' + newVal.uid);
+        userRef.on('value', function(snapshot) {
+          saveUserInfo(snapshot.val());
+        });
+      }
+    })
+
+    /* PART 1 -- EMAIL/TWITTER/FACEBOOK SIGNUP */
+    var sendMailchimp = function(user){
+      var pLoad = {
+      email_address: user.email,
+      f_name: user.fname,
+      l_name: user.lname,
+      list_id: '695fa0275a'
+      };
+      //Call the services
+      $http({
+        url: 'https://fsg.pythonanywhere.com/mailchimp_subscribe_json',
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        data: pLoad
+      }).success(function(data, status, headers, config){
+        //console.log(status);
+      }).error(function(err){
+        //console.error(err);
+      });
+    }
+
+    $scope.registerUser = function(regObject){
+      $scope.register.processing = true;
+      var fname = regObject.firstname;
+      var lname = regObject.lastname;
+      var p = regObject.password;
+      var email = regObject.email;
+      var subscriber = {
+        email: email,
+        fname: fname,
+        lname: lname
+      };
+      var newUser = {
+        email: email,
+        displayName: fname + ' ' + lname
+      };
+      var userID;
+      sendMailchimp(subscriber);
+      if(2 === 3){
+        fbq('track', 'CompleteRegistration');
+      }
+      firebase.auth().createUserWithEmailAndPassword(email, p).then(function(result){
+        userID = result.uid;
+        $scope.user = result;
+        // updated profile with displayName
+        firebase.auth().currentUser.updateProfile({ displayName: fname + ' ' + lname }).then(function(result) { /* Update successful */ }, function(error) { /* Error happened */ });
+        $scope.user.info = userService.createUser(userID,newUser);
+        $scope.register.processing = false;
+        if(page !== 'register'){
+          $state.go('register');
+        }
+      }).catch(function(error) {
+        console.error(error);
+        if(error.code = 'auth/email-already-in-use'){
+          $scope.$apply( $scope.errMessage.loginRedirect = true);
+          $scope.register.processing = false;
+        } else {
+          $scope.$apply( $scope.errMessage.generic = error.message);
+          $scope.$apply( $scope.register.processing = false );
+        }
+      });
+    }
+    $scope.logInFB = function(){
+      var provider = new firebase.auth.FacebookAuthProvider();
+      firebase.auth().signInWithPopup(provider).then(function(result) {
+        var user = result.user;
+        var subscriber = {
+          email: '',
+          fname: '',
+          lname: ''
+        };
+        user.providerData.forEach(function (profile) {
+          var name = profile.displayName;
+          subscriber.email = profile.email;
+          var split = name.indexOf(' ');
+          subscriber.fname = name.substring(0,split);
+          subscriber.lname = name.substring(split+1,name.length);
+        });
+        if(subscriber.email !== ''){
+          sendMailchimp(subscriber);
+        }
+        userService.userExists(user.uid).then(function(result){
+          // User exists! continue as normal
+        })
+        .catch(function(userID){
+          // User does not yet exist in DB. Create...
+          userService.createUser(userID,user);
+        });
+        if(2 === 3){
+          fbq('track', 'CompleteRegistration');
+        }
+        $scope.user = user;
+        if(page !== 'register'){
+          $state.go('register');
+        }
+      }).catch(function(error) {
+        $scope.$apply( $scope.errMessage.generic = error.message);
+      });
+    }
+
+    $scope.logInTwitter = function(){
+      var provider = new firebase.auth.TwitterAuthProvider();
+      firebase.auth().signInWithPopup(provider).then(function(result) {
+        var user = result.user;
+        var subscriber = {
+          email: '',
+          fname: '',
+          lname: ''
+        };
+        user.providerData.forEach(function (profile) {
+          var name = profile.displayName;
+          subscriber.email = profile.email;
+          var split = name.indexOf(' ');
+          subscriber.fname = name.substring(0,split);
+          subscriber.lname = name.substring(split+1,name.length);
+        });
+        if(subscriber.email !== ''){
+          sendMailchimp(subscriber);
+        }
+        userService.userExists(user.uid).then(function(result){
+          // User exists! continue as normal
+          }).catch(function(userID){
+            // User does not yet exist in DB. Create...
+            userService.createUser(userID,user);
+          });
+        if(2 === 3){
+          fbq('track', 'CompleteRegistration');
+        }
+        $scope.user = user;
+        if(page !== 'register'){
+          $state.go('register');
+        }
+      }).catch(function(error) {
+        console.error(error);
+        $scope.$apply( $scope.errMessage.generic = 'Uh-oh, something went wrong.');
+      });
+    }
+
+    /* PART 2 -- PAYMENT */
+    $scope.findPromo = function(code){
+      code = code.toUpperCase();
+      promoFactory.getDiscount(code).then(function(result){
+        $scope.payment.expected_charge = result.price;
+        $scope.payment.message = result.message;
+      }).catch(function(err){
+        $scope.payment.message = err;
+      });
+    }
+    $scope.paymentBypass = function(){
+      var info = $scope.payment;
+      var uid = $scope.user.uid;
+      var ref = firebase.database().ref('/users/'+uid);
+      ref.once('value').then(function(snapshot) {
+        ref.child('paid').set(info.promo_code);
+        promoFactory.applyDiscount(info.promo_code);
+        $scope.$apply($scope.user.info.paid = info.promo_code);
+      }).catch(function(err){
+        console.error(err);
+      })
+    }
+    $scope.charge = function () {
+      $scope.payment.processing = true;
+
+      stripe.card.createToken($scope.payment.card)
+        .then(function (response) {
+          var payment = angular.copy($scope.payment);
+          delete payment.card; // = void 0;
+          delete payment.error;
+          payment.livemode = response.livemode;
+          payment.stripe_token = response.id;
+          payment.promo_code = payment.promo_code.toUpperCase();
+          // SEND PAYMENT TO SERVER
+          $http({
+              url: 'https://fsg.pythonanywhere.com/complete_payment',
+              method: "POST",
+              data: payment
+              //headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+          }).then(function (response) {
+            if(false === response.data.error){
+              promoFactory.applyDiscount(payment.promo_code);
+              if(taor){
+                var refer = {
+                  referredBy: taor,
+                  paid: payment.expected_charge,
+                  uid: payment.uid
+                };
+                promoFactory.postReferral(refer).then(function(result){ /* successful referral */ })
+              }
+              if(2 === 3){
+                fbq('track', 'Purchase', {
+                  value: payment.price,
+                  currency: 'USD'
+                });
+              }
+              delete $scope.payment.card;
+              $scope.payment.processing = false;
+            } else {
+              $scope.cardError.message = response.data.error.message || 'There was a problem processing the payment. Please double-check your card info';
+              $scope.payment.processing = false;
+            }
+          }, function (err) { //data, status, headers, config
+            $scope.cardError.message = response.data.error || 'There was a problem processing the payment. Please try again later';
+            $scope.payment.processing = false;
+          });
+          //delete $scope.payment.card;
+        }).catch(function(err){
+          $scope.cardError.count++;
+          $scope.cardError.message = err.message;
+          $scope.payment.processing = false;
+        });
+    };
+  }]);
+
 })();
 
 (function() {
   'use strict';
 
-  angular.module('app.core', [
-    'ui.router'
-      /*
-       * Angular modules
-       */
-      //'ngAnimate', 'ngRoute', 'ngSanitize',
+  angular.module('app.core', ['app.users'])
 
-      /*
-       * Our reusable cross app code modules
-       */
-      //'blocks.exception', 'blocks.logger', 'blocks.router',
-      /*
-       * 3rd Party modules
-       */
-      //'ngplus'
+  .config(function($logProvider){
+    $logProvider.debugEnabled(true);
+  })
+
+  .factory('getReferralCode', ['$location',function($location){
+    var taor = $location.search().taor;
+    if(undefined !== taor){
+      return taor.toLowerCase().replace(/[^a-zA-Z0-9]/g,'-');
+    } else {
+      return false;
+    }
+  }])
+
+  .run(['$log','$rootScope','$state','getReferralCode','userStatus', function ($log,$rootScope,$state,getReferralCode,userStatus) {
+    // Set Referral for visit
+    $rootScope.taor = getReferralCode;
+
+    var currentUser = false,
+        isAdmin = false,
+        tryCount = 0;
+
+    // function to fetch info for current user
+    function getCurrentUserData(){
+      var user;
+      userStatus.getCurrent().then(function(result){
+        if(result !== 'anonymous' && result.uid){
+          user = {
+            uid: result.uid,
+            isPaid: false,
+            isAdmin: false
+          };
+          userStatus.isAdmin(result.uid).then(function(res){
+            isAdmin = true;
+            currentUser.isAdmin = true;
+          }).catch(function(res){
+            isAdmin = false;
+            currentUser.isAdmin = false;
+          });
+        } else {
+          user = {
+            uid: 'anonymous',
+            isPaid: false,
+            isAdmin: false
+          }
+        }
+        currentUser = user;
+      }).catch(function(err){
+        $rootScope.globalError = 'Cannot get user data at the moment. Please try again later';
+        console.error(err);
+      });
+    }
+
+    // on state change, check if current user info loaded
+    // if so, proceed with checks
+    function goToPage(name){
+      $state.go(name);
+      $rootScope.page = name;
+    }
+    function checkCreds(page,reqLogin,reqAdmin,reqPayment){
+      if(!currentUser){
+        setTimeout(checkCreds(),300);
+      } else {
+        if(currentUser.isAdmin){
+          goToPage(page);
+        } else if(reqAdmin){
+          goToPage('404');
+        } else if (reqPayment && !currentUser.paid) {
+          goToPage('register');
+        } else if (reqLogin && currentUser.uid == 'anonymous') {
+          goToPage('login');
+        } else {
+          $log.debug('State error - scenario not found');
+        }
+      }
+    }
+
+    $rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
+      $log.debug('state change start');
+      var reqLogin = toState.data.requireLogin || false,
+          reqAdmin = toState.data.requireAdmin || false,
+          reqPayment = toState.data.requirePayment || false;
+
+      if(reqLogin || reqAdmin || reqPayment){
+        event.preventDefault();
+        checkCreds(toState,reqLogin,reqAdmin,reqPayment);
+      }
+    });
+
+    $rootScope.$on('$stateChangeSuccess', function() {
+     document.body.scrollTop = document.documentElement.scrollTop = 0;
+    });
+
+    // Watch for auth changes and update current user
+    firebase.auth().onAuthStateChanged(function(user) {
+      $log.debug('state changed');
+      getCurrentUserData();
+    });
+
+  }]);
+  /* end core.module.js */
+})();
+
+(function() {
+  'use strict';
+
+  angular.module('app.routes', [
+    'ui.router'
   ])
 
   .config(["$locationProvider", function($locationProvider) {
@@ -56,7 +478,7 @@
         requirePayment:false,
         requireAdmin:false
       }
-    }
+    };
     var demoEvents = {
       name: 'demoEvents',
       url: "/demo/events",
@@ -68,45 +490,48 @@
         requirePayment:false,
         requireAdmin:false
       }
-    }
+    };
+    var loginState = {
+      name: 'login',
+      url: '/signin',
+      templateUrl: 'views/login.html',
+      controller: 'loginCtrl',
+      controllerAs: 'lc',
+      data: {
+        requireLogin: false,
+        requirePayment:false,
+        requireAdmin:false
+      }
+    };
+    var registerState = {
+      name: 'register',
+      url: '/register?taor',
+      templateUrl: 'views/register.html',
+      controller: 'registerCtrl',
+      controllerAs: 'rc',
+      data: {
+        requireLogin: false,
+        requirePayment:false,
+        requireAdmin:false
+      }
+    };
+    var errorState = {
+      name: '404',
+      url: '/404',
+      templateUrl: 'views/404.html',
+      data: {
+        requireLogin: false,
+        requirePayment:false,
+        requireAdmin:false
+      }
+    };
 
     $urlRouterProvider.otherwise("/");
     $stateProvider.state(homeState);
-    $stateProvider.state(demoEvents);
+    $stateProvider.state(registerState);
+    $stateProvider.state(errorState);
     /*
-    $stateProvider
-      .state('home', {
-        url: "/",
-        templateUrl: "views/home.html",
-        controller: 'homeCtrl',
-        data: {
-          requireLogin: false,
-          requirePayment:false,
-          requireAdmin:false
-        }
-      })
-      .state('login', {
-        url: '/signin',
-        templateUrl: 'views/login.html',
-        controller: 'loginCtrl',
-        controllerAs: 'lc',
-        data: {
-          requireLogin: false,
-          requirePayment:false,
-          requireAdmin:false
-        }
-      })
-      .state('register', {
-        url: '/register?taor',
-        templateUrl: 'views/register.html',
-        controller: 'registerCtrl',
-        controllerAs: 'rc',
-        data: {
-          requireLogin: false,
-          requirePayment:false,
-          requireAdmin:false
-        }
-      })
+
       .state('events', {
         url: "/events?data",
         templateUrl: "views/events.html?version1112",
@@ -207,6 +632,44 @@
 
 })();
 
+'use strict';
+
+angular.module('app.users', [])
+
+.factory('userStatus', ['$q', function($q){
+  function getCurrent(){
+    var deferred = $q.defer();
+    firebase.auth().onAuthStateChanged(function(user) {
+       if (user) {
+         deferred.resolve(user);
+       } else {
+         deferred.resolve('anonymous');
+       }
+     });
+    return deferred.promise;
+  }
+  function isAdmin(uid){
+    var deferred = $q.defer();
+    var adminRef = firebase.database().ref('admin/');
+    adminRef.once('value').then(function(snapshot) {
+      var admins = snapshot.val();
+      if(admins[uid]){
+        deferred.resolve(true);
+      } else {
+        deferred.reject(false);
+      }
+    }).catch(function(err){
+      deferred.reject(false);
+    });
+    return deferred.promise;
+  }
+
+  return {
+    getCurrent: getCurrent,
+    isAdmin: isAdmin
+  }
+}]);
+
 (function(){
   'use strict';
 
@@ -222,6 +685,10 @@
   'use strict';
 
   var home = angular.module('app.homepage', []);
+
+  home.controller('homeCtrl', ['$scope','skrollrService', function($scope,skrollrService) {
+    $scope.showFeature = 'map';
+  }]);
 
   home.service('skrollrService', ['$document', '$q', '$rootScope', '$window',
     function($document, $q, $rootScope, $window){
@@ -269,10 +736,6 @@
       };
     }
   ]);
-
-  home.controller('homeCtrl', ['$scope','skrollrService', function($scope,skrollrService) {
-   $scope.showFeature = 'events';
-  }]);
 
 })();
 
@@ -516,7 +979,7 @@ v1old.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, 
         }
       })
       .state('adminPanel', {
-        url: "/admin/p3705",
+        url: "/admin",
         templateUrl: "views/admin.html",
         controller: "panelCtrl",
         controllerAs: "pc",
@@ -526,13 +989,6 @@ v1old.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, 
           requireAdmin: true
         }
       })
-      var config = { // store config keys as vars outside dir
-        apiKey: "AIzaSyDp0tenVtXevo5vAjYQECgH7uJOtg8cuDE",
-        authDomain: "free-shit-guide.firebaseapp.com",
-        databaseURL: "https://free-shit-guide.firebaseio.com",
-        storageBucket: "free-shit-guide.appspot.com",
-      };
-      firebase.initializeApp(config);
 }]);
 
 v1old.run(['$rootScope','$state','$location','userService','$q', function ($rootScope,$state,$location,userService,$q) {
