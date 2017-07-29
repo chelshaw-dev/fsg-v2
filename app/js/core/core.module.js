@@ -18,9 +18,13 @@
 
   .run(['$log','$rootScope','$state','getReferralCode','userStatus', function ($log,$rootScope,$state,getReferralCode,userStatus) {
     // Set Referral for visit
+    $rootScope.globalError = false;
     $rootScope.taor = getReferralCode;
-
-    var currentUser = false,
+    var updateRootUser = function(user){
+      $rootScope.currentUser = user;
+      console.log($rootScope.currentUser);
+    }
+    var currentUser = {},
         isAdmin = false,
         tryCount = 0;
 
@@ -36,10 +40,10 @@
           };
           userStatus.isAdmin(result.uid).then(function(res){
             isAdmin = true;
-            currentUser.isAdmin = true;
+            user.isAdmin = true;
           }).catch(function(res){
             isAdmin = false;
-            currentUser.isAdmin = false;
+            user.isAdmin = false;
           });
         } else {
           user = {
@@ -49,6 +53,7 @@
           }
         }
         currentUser = user;
+        updateRootUser(user);
       }).catch(function(err){
         $rootScope.globalError = 'Cannot get user data at the moment. Please try again later';
         console.error(err);

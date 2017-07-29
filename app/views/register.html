@@ -1,6 +1,10 @@
 <div class="pattern-bg register">
 
-<div id="register-1" class="register-section slide-up" ng-show="!user.uid">
+<div id="register-0" ng-hide="regStep > 0">
+  <h1>Loading...</h1>
+</div>
+
+<div id="register-1" class="register-section slide-up" ng-show="regStep === 1">
   <div class="register-half left gray-bg">
     <section class="text-center white-text padtop-3">
       <object class="reg-img align-center" data="images/reg-step-1.svg" type="image/svg+xml">
@@ -60,7 +64,7 @@
   </div>
 </div>
 
-<div id="register-2" class="register-section slide-up" ng-if="user.uid && !user.info.paid">
+<div id="register-2" class="register-section slide-up" ng-if="regStep == 2">
   <div class="register-half left">
     <section class="text-center gray-bg padtop-3">
       <object class="reg-img align-center" data="images/reg-step-2.svg" type="image/svg+xml">
@@ -75,8 +79,8 @@
       <h2 class="text-center special-text">Payment info</h2>
       <p class="text-center">Almost there! Just enter your card info below</p>
       <p class="gray-text text-center disclaimer"><em>We never keep any of your credit card information. <br/>By continuing you agree to our <a href="https://freeshitguide.com/privacy" target="_blank">privacy policy</a> and <a href="https://freeshitguide.com/terms" target="_blank">terms of use</a>.</em></p>
-      <form class="payment-form" name="paymentForm" ng-submit="charge()" novalidate ng-if="cardError.count<3">
-        <div class="form-alert pink-bg text-center white-text" ng-show="cardError.message">
+      <form class="payment-form" name="paymentForm" ng-submit="charge()" novalidate>
+        <div class="form-alert pink-bg text-center white-text" ng-show="cardError.message" ng-if="cardError.count<3">
           <button type="button" class="close" ng-click="cardError.message=''" aria-label="Close"><span aria-hidden="true">&times;</span></button>
           {{cardError.message}}
         </div>
@@ -124,7 +128,7 @@
   </div>
 </div>
 
-<div id="register-3" class="register-section slide-up" ng-if="user.uid && user.info.paid">
+<div id="register-3" class="register-section slide-up" ng-if="regStep == 3">
   <div class="register-half left">
     <section class="text-center gray-bg padtop-3">
       <object class="reg-img align-center" data="images/reg-step-3.svg" type="image/svg+xml">
@@ -145,4 +149,7 @@
 </div>
 
 <div class="clearfix"></div>
+<div id="register-4" class="register-section slide-up" ng-if="regStep > 3">
+  Hey! that's wrong!
+</div>
 </div>

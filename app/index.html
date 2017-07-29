@@ -6,6 +6,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <base href="/">
   <title>Free Shit Guide v2</title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -39,24 +40,24 @@
             </ul>
           </div>
           <ul class="nav navbar-right">
-            <li ng-cloak class="nav-link" ng-if="currentUser && (currentUser.info.paid || currentUserIsAdmin)">
+            <li ng-cloak class="nav-link">
               <a ui-sref="events">Events</a>
             </li>
-            <li ng-cloak class="nav-link" ng-if="currentUser && (currentUser.info.paid || currentUserIsAdmin)">
+            <li ng-cloak class="nav-link">
               <a ui-sref="map">Map</a>
             </li>
-            <li class="nav-link" ng-if="!currentUser || (currentUser && !currentUser.info.paid)"><a ui-sref="demoEvents">Demo</a></li>
+            <li class="nav-link"><a ui-sref="demoEvents">Demo</a></li>
             <li class="nav-link"><a ui-sref="blog">Blog</a></li>
             <!--<li class="nav-link"><a ui-sref="account">Account</a></li>-->
             <!-- login btn -->
-            <li ng-cloak class="nav-link btn btn-outline login" ng-if="!currentUser"><a ui-sref="login">
+            <li ng-cloak class="nav-link btn btn-outline login"><a ui-sref="login">
               <span class="login-icon">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 22"><g><circle cx="8" cy="9.86" r="3.43" fill="none" stroke="#3a1772" stroke-miterlimit="10" stroke-width="2"/><path d="M8,21.56H1.55l.76-1.71c2.53-5.65,8.85-5.65,11.38,0l.76,1.71Z" fill="none" stroke="#3a1772" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/></g></svg>
               </span>
               Login</a>
             </li>
             <!-- -->
-            <li ng-cloak class="nav-link btn btn-outline login" ng-if="currentUser" ng-controller="loginCtrl as lc"><a ng-click="lc.logOut()">
+            <li ng-cloak class="nav-link btn btn-outline login" ng-controller="loginCtrl as lc"><a ng-click="logOut()">
               <span class="login-icon">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 22"><g><circle cx="8" cy="9.86" r="3.43" fill="none" stroke="#3a1772" stroke-miterlimit="10" stroke-width="2"/><path d="M8,21.56H1.55l.76-1.71c2.53-5.65,8.85-5.65,11.38,0l.76,1.71Z" fill="none" stroke="#3a1772" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/></g></svg>
               </span>

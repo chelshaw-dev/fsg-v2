@@ -1,0 +1,82 @@
+<div class="spacer"></div>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-12">
+      <h1 class="text-center">Add Demo Event</h1>
+    </div>
+  </div>
+
+  <form name="addEvent">
+    <div class="row form-horizontal marbot-2">
+      <div class="form-group">
+        <label for="eventTitle" class="col-sm-2 control-label">Event Title</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="eventTitle" placeholder="My Awesome Event">
+        </div>
+      </div>
+    </div>
+
+    <div class="row form-horizontal marbot-2">
+      <label class="col-sm-2 control-label">Free Stuff</label>
+      <div class="col-sm-10">
+        <div class="checkbox">
+          <label>
+            <input type="checkbox"> Free Food
+          </label>
+          <label>
+            <input type="checkbox"> Free Drinks
+          </label>
+          <label>
+            <input type="checkbox"> Free Swag
+          </label>
+          <label>
+            <input type="checkbox"> Live Music
+          </label>
+          <label>
+            <input type="checkbox"> Charging Station
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="row form-horizontal marbot-2">
+      <label for="eventDescription" class="col-sm-2 control-label">Event Description</label>
+      <div class="col-sm-10">
+        <textarea id="eventDescription" class="form-control" rows="3"></textarea>
+      </div>
+    </div>
+
+    <div class="row form-horizontal marbot-2">
+      <label for="eventLocation" class="col-sm-2 control-label">Event Location</label>
+      <div class="col-sm-10 marbot-1">
+        <input type="text" id="eventLocation" class="form-control" placeholder="Search for location..." g-places-autocomplete />
+      </div>
+      <div class="col-sm-3 col-sm-offset-2">
+        <img src="http://placehold.it/300x220/" alt="map" />
+      </div>
+      <div class="col-sm-6">
+        123 Address Ln <br/>
+        Austin, TX 78704 <br/>
+        lat: -97.9827484, lng: 23.4898663
+      </div>
+    </div>
+
+    <div class="row form-horizontal marbot-2" ng-repeat="date in newEvent.dates">
+      <label for="eventDates" class="col-sm-2 control-label">Event Dates</label>
+      <div class="col-sm-5">
+        <label for="date" class="sr-only">Date</label>
+        <select name="date" ng-model="date.date" placeholder="Date">
+          <option ng-repeat="val in sxswDates" value="03-{{ val.date }}-2017">March {{ val.date }} - {{ val.day }}</option>
+        </select>
+        <label for="start">Start Time</label>
+        <input id="start" type="time" ng-model="date.startTime" />
+        <label for="end">End Time</label>
+        <input id="end" type="time" ng-model="date.endTime" />
+      </div>
+    </div>
+
+  </form>
+
+  </div>
+</div>

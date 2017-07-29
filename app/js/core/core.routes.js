@@ -6,7 +6,7 @@
   ])
 
   .config(["$locationProvider", function($locationProvider) {
-    //$locationProvider.html5Mode(true);
+    $locationProvider.html5Mode(true);
   }])
 
   .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
@@ -25,12 +25,24 @@
       name: 'demoEvents',
       url: "/demo/events",
       templateUrl: "views/demo-events.html",
-      controller: 'demoCtrl',
+      controller: 'demoCardController',
       controllerAs: "e",
       data: {
         requireLogin: false,
         requirePayment:false,
         requireAdmin:false
+      }
+    };
+    var addDemoEvents = {
+      name: 'addDemoEvents',
+      url: "/demo/add",
+      templateUrl: "views/demo-add.html",
+      controller: 'demoAddController',
+      controllerAs: "add",
+      data: {
+        requireLogin: false, //true,
+        requirePayment: false,
+        requireAdmin: false //true
       }
     };
     var loginState = {
@@ -47,10 +59,10 @@
     };
     var registerState = {
       name: 'register',
-      url: '/register?taor',
+      url: '/register?taor&step',
       templateUrl: 'views/register.html',
-      controller: 'registerCtrl',
-      controllerAs: 'rc',
+      controller: 'registerController',
+      controllerAs: 'reg',
       data: {
         requireLogin: false,
         requirePayment:false,
@@ -70,8 +82,10 @@
 
     $urlRouterProvider.otherwise("/");
     $stateProvider.state(homeState);
-    $stateProvider.state(registerState);
+    $stateProvider.state(demoEvents);
+    //$stateProvider.state(registerState);
     $stateProvider.state(errorState);
+    $stateProvider.state(addDemoEvents);
     /*
 
       .state('events', {

@@ -57,8 +57,7 @@
         userID = result.uid;
         //$scope.user = result;
         // updated profile with displayName
-        firebase.auth().currentUser.updateProfile({ displayName: fname + ' ' + lname, customVal: 'hello' }).then(function(result) { /* Update successful */ }, function(error) { /* Error happened */ });
-        //$scope.user.info = userService.createUser(userID,newUser);
+        firebase.auth().currentUser.updateProfile({ displayName: fname + ' ' + lname }).then(function(result) { /* Update successful */ }, function(error) { /* Error happened */ });
         $scope.register.processing = false;
         $state.go('register');
       }).catch(function(error) {
@@ -75,8 +74,38 @@
 
   }]);
 
-  reg.controller('registerCtrl', ['$scope', function($scope){
+  reg.controller('registerController', ['$scope', 'userStatus', function($scope, userStatus){
+    var $ctrl = this;
+    $scope.regState = 0;
 
+    var goToStep = function(step){
+      console.log(step);
+      $scope.regState = step;
+    }
+    //var step = $location.search().step || 'none';
+    //$scope.regStep = step;
+    userStatus.getCurrent().then(function(result){
+      if(result == 'anonymous'){
+        goToStep(1);
+        console.log('stay step 1');
+      } else {
+        console.log(result);
+        userStatus.getInfo(result.uid).then(function(data){
+          if(null == data){
+            goToStep(2);
+            console.log('go to step 2');
+          } else {
+            goToStep(3);
+            console.log('go to step 3');
+          }
+          console.log(data);
+        }).catch(function(err){
+          console.log(err);
+        });
+      }
+    }).catch(function(err){
+      console.error(err);
+    })
   }]);
 
   reg.controller('oldRegisterCtrl', ['$rootScope', '$document', '$scope', '$http', 'stripe', 'promoFactory','userService','$state', '$stateParams', function($rootScope, $document, $scope, $http, stripe, promoFactory, userService,$state,$stateParams){

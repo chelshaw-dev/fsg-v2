@@ -5,8 +5,10 @@
     'app.core',
     'app.routes',
     'app.homepage',
-    'app.register',
-    //'app.demo'
+    //'app.register',
+    'app.login',
+    'app.demo',
+    'demo.data'
   ]);
 
 })();

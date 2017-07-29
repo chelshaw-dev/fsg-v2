@@ -1,21 +1,20 @@
-<div id="content">
-
 <div id="top-spacer"></div>
+
 <div class="container-fluid banner-bg">
   <div class="row expanded padtop-1 padbot-3">
     <div class="col-xs-12 col-md-6 col-md-offset-3 text-center">
       <h1 class="special-font purple-text"><strong>Play with me!</strong></h1>
-      <p style="font-size:20px;">This is our demo page that functions exactly like the real events page, except this is just a selected set of 2016 events. There are tons of 2017 events waiting for you on the other side of <strong><a ui-sref="register">sign-up</a></strong>!</p>
+      <p class="lead">This is our demo page that functions exactly like the real events page, except this is just a selected set of 2016 events. There are tons of 2017 events waiting for you on the other side of <strong><a ui-sref="register">sign-up</a></strong>!</p>
       <p><a class="btn btn-outline" ui-sref="demoMap">Play with the map, too</a></p>
     </div>
   </div>
 </div>
+
 <div id="top"></div>
-<div>
-</div>
+
 <section class="gray-bg padtop-1 padbot-2">
   <div class="container-fluid full-height">
-    <div class="row">
+    <div id="top-filter-buttons" class="row">
       <div class="xs-width col-sm-6">
         <a ng-click="showHappeningNow()" ng-class="{'active':filter.date=='now'}" class="btn btn-outline-pink happening-now pull-left">Happening Now</a>
         <div class="fave-btn large pull-left pad-left" ng-class="{'active': filter.faves == 'yes'}" ng-click="showFavorites()">
@@ -54,38 +53,22 @@
           <div class="title purple-bg" ng-click="toggleFilter($event,'filters-closed')">Date <div class="arrow pull-right"></div></div>
           <fieldset class="form-group form-inline">
             <input type="radio" name="date-all" id="date-all" ng-model="filter.date" value="all"> <label for="date-all">All </label>
-            <div ng-if="dataYear == '2017'">
-              <!-- 2017 -->
-              <input type="radio" name="date-307" id="date-307" ng-model="filter.date" value="2017-03-07"> <label for="date-307">Tuesday 3/07 </label>
-              <input type="radio" name="date-308" id="date-308" ng-model="filter.date" value="2017-03-08"> <label for="date-308">Wednesday 3/08 </label>
-              <input type="radio" name="date-309" id="date-309" ng-model="filter.date" value="2017-03-09"> <label for="date-309">Thursday 3/09 </label>
-              <input type="radio" name="date-310" id="date-310" ng-model="filter.date" value="2017-03-10"> <label for="date-310">Friday 3/10 </label>
-              <input type="radio" name="date-311" id="date-311" ng-model="filter.date" value="2017-03-11"> <label for="date-311">Saturday 3/11 </label>
-              <input type="radio" name="date-312" id="date-312" ng-model="filter.date" value="2017-03-12"> <label for="date-312">Sunday 3/12 </label>
-              <input type="radio" name="date-313" id="date-313" ng-model="filter.date" value="2017-03-13"> <label for="date-313">Monday 3/13 </label>
-              <input type="radio" name="date-314" id="date-314" ng-model="filter.date" value="2017-03-14"> <label for="date-314">Tuesday 3/14 </label>
-              <input type="radio" name="date-315" id="date-315" ng-model="filter.date" value="2017-03-15"> <label for="date-315">Wednesday 3/15 </label>
-              <input type="radio" name="date-316" id="date-316" ng-model="filter.date" value="2017-03-16"> <label for="date-316">Thursday 3/16 </label>
-              <input type="radio" name="date-317" id="date-317" ng-model="filter.date" value="2017-03-17"> <label for="date-317">Friday 3/17 </label>
-              <input type="radio" name="date-318" id="date-318" ng-model="filter.date" value="2017-03-18"> <label for="date-318">Saturday 3/18 </label>
-              <input type="radio" name="date-319" id="date-319" ng-model="filter.date" value="2017-03-19"> <label for="date-319">Sunday 3/19 </label>
-              <input type="radio" name="date-320" id="date-320" ng-model="filter.date" value="2017-03-20"> <label for="date-320">Monday 3/20 </label>
-              <input type="radio" name="date-321" id="date-321" ng-model="filter.date" value="2017-03-21"> <label for="date-321">Tuesday 3/21 </label>
-              <input type="radio" name="date-322" id="date-322" ng-model="filter.date" value="2017-03-22"> <label for="date-322">Wednesday 3/22 </label>
-            </div>
-            <div ng-if="dataYear == '2016'">
-              <!-- 2016 -->
-              <input type="radio" name="date-310" id="date-310" ng-model="filter.date" value="03102016"> <label for="date-310">Friday 3/10 </label>
-              <input type="radio" name="date-311" id="date-311" ng-model="filter.date" value="03112016"> <label for="date-311">Saturday 3/11 </label>
-              <input type="radio" name="date-312" id="date-312" ng-model="filter.date" value="03122016"> <label for="date-312">Sunday 3/12 </label>
-              <input type="radio" name="date-313" id="date-313" ng-model="filter.date" value="03132016"> <label for="date-313">Monday 3/13 </label>
-              <input type="radio" name="date-314" id="date-314" ng-model="filter.date" value="03142016"> <label for="date-314">Tuesday 3/14 </label>
-              <input type="radio" name="date-315" id="date-315" ng-model="filter.date" value="03152016"> <label for="date-315">Wednesday 3/15 </label>
-              <input type="radio" name="date-316" id="date-316" ng-model="filter.date" value="03162016"> <label for="date-316">Thursday 3/16 </label>
-              <input type="radio" name="date-317" id="date-317" ng-model="filter.date" value="03172016"> <label for="date-317">Friday 3/17 </label>
-              <input type="radio" name="date-318" id="date-318" ng-model="filter.date" value="03182016"> <label for="date-318">Saturday 3/18 </label>
-              <input type="radio" name="date-319" id="date-319" ng-model="filter.date" value="03192016"> <label for="date-319">Sunday 3/19 </label>
-            </div>
+            <input type="radio" name="date-307" id="date-307" ng-model="filter.date" value="2017-03-07"> <label for="date-307">Tuesday 3/07 </label>
+            <input type="radio" name="date-308" id="date-308" ng-model="filter.date" value="2017-03-08"> <label for="date-308">Wednesday 3/08 </label>
+            <input type="radio" name="date-309" id="date-309" ng-model="filter.date" value="2017-03-09"> <label for="date-309">Thursday 3/09 </label>
+            <input type="radio" name="date-310" id="date-310" ng-model="filter.date" value="2017-03-10"> <label for="date-310">Friday 3/10 </label>
+            <input type="radio" name="date-311" id="date-311" ng-model="filter.date" value="2017-03-11"> <label for="date-311">Saturday 3/11 </label>
+            <input type="radio" name="date-312" id="date-312" ng-model="filter.date" value="2017-03-12"> <label for="date-312">Sunday 3/12 </label>
+            <input type="radio" name="date-313" id="date-313" ng-model="filter.date" value="2017-03-13"> <label for="date-313">Monday 3/13 </label>
+            <input type="radio" name="date-314" id="date-314" ng-model="filter.date" value="2017-03-14"> <label for="date-314">Tuesday 3/14 </label>
+            <input type="radio" name="date-315" id="date-315" ng-model="filter.date" value="2017-03-15"> <label for="date-315">Wednesday 3/15 </label>
+            <input type="radio" name="date-316" id="date-316" ng-model="filter.date" value="2017-03-16"> <label for="date-316">Thursday 3/16 </label>
+            <input type="radio" name="date-317" id="date-317" ng-model="filter.date" value="2017-03-17"> <label for="date-317">Friday 3/17 </label>
+            <input type="radio" name="date-318" id="date-318" ng-model="filter.date" value="2017-03-18"> <label for="date-318">Saturday 3/18 </label>
+            <input type="radio" name="date-319" id="date-319" ng-model="filter.date" value="2017-03-19"> <label for="date-319">Sunday 3/19 </label>
+            <input type="radio" name="date-320" id="date-320" ng-model="filter.date" value="2017-03-20"> <label for="date-320">Monday 3/20 </label>
+            <input type="radio" name="date-321" id="date-321" ng-model="filter.date" value="2017-03-21"> <label for="date-321">Tuesday 3/21 </label>
+            <input type="radio" name="date-322" id="date-322" ng-model="filter.date" value="2017-03-22"> <label for="date-322">Wednesday 3/22 </label>
             <input type="radio" name="date-now" id="date-now" ng-model="filter.date" value="now"> <label for="date-now">Happening Now </label>
           </fieldset>
         </div>
@@ -141,6 +124,7 @@
         <div class="clearfix"></div>
       </div>
     </div>
+
     <div id="events-container">
       <div ng-if="!bootStatus">
         <h3 class="text-center gray-text padtop-3">Preparing demo…</h3>
@@ -260,4 +244,3 @@
   </div>
   <div class="clearfix"></div>
 </section>
-</div><!-- bootStatus -->
