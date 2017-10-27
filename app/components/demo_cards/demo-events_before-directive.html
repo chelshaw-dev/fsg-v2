@@ -136,7 +136,10 @@
           <p class="text-center"><a class="btn btn-outline" ng-click="e.filterReset()">Clear filters</a></p>
           <img ng-show="filter.date === 'now'" class="img-max-300 img-center" src="http://www.canadagoosetapes.com/wp-content/themes/cgt/library/images/goosehead.gif" alt="You are a goose" />
         </div>
-        <div class="xs-width col-sm-4 card-outer" id="eid-{{event.eid}}" data-row="{{findRow($index)}}" data-col="{{findCol($index)}}" ng-repeat="event in events | searchAll:filter.search | demoFavesFilter:filter.faves:userFaves | demoRSVPFilter:filter.rsvp:userRSVP | foodFilter:filter.food | drinkFilter:filter.drink | swagFilter:filter.swag | rechargeFilter:filter.recharge | musicFilter:filter.music | credentialFilter:filter.badge  | musicTagFilter:filter.musicTags | dateFilter:filter.date | idFilter:e.paramId | orderBy:sortEventsBy | startFrom:(currentPage * pageSize)  | limitTo:pageSize"> <!-- orderBy:'-createdOn' -->
+        <div class="xs-width col-sm-4 card-outer" id="eid-{{event.eid}}"
+             data-row="{{findRow($index)}}" data-col="{{findCol($index)}}"
+             ng-repeat="event in events | limitTo:33">
+          <!-- | searchAll:filter.search | demoFavesFilter:filter.faves:userFaves | demoRSVPFilter:filter.rsvp:userRSVP | foodFilter:filter.food | drinkFilter:filter.drink | swagFilter:filter.swag | rechargeFilter:filter.recharge | musicFilter:filter.music | credentialFilter:filter.badge  | musicTagFilter:filter.musicTags | dateFilter:filter.date | idFilter:e.paramId | orderBy:sortEventsBy | startFrom:(currentPage * pageSize) | orderBy:'-createdOn' | limitTo:pageSize -->
           <div class="card" ng-click="expandCard(findRow($index),findCol($index),event)" ng-class="{'card--active':activeCard.eid===event.eid}">
             <div class="card__header">
               <h3 class="purple-text">{{event.title | uppercase}}</h3>

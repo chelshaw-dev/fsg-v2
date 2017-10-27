@@ -13,7 +13,7 @@
     var homeState = {
       name: 'home',
       url: '/',
-      templateUrl: "views/home.html",
+      templateUrl: "views/homepage/landingView.html",
       controller: 'homeCtrl',
       data: {
         requireLogin: false,
@@ -24,7 +24,7 @@
     var demoEvents = {
       name: 'demoEvents',
       url: "/demo/events",
-      templateUrl: "views/demo-events.html",
+      templateUrl: "views/demo_cards/demo-events.html",
       controller: 'demoCardController',
       controllerAs: "e",
       data: {
@@ -36,7 +36,7 @@
     var addDemoEvents = {
       name: 'addDemoEvents',
       url: "/demo/add",
-      templateUrl: "views/demo-add.html",
+      templateUrl: "views/admin/demo-add.html",
       controller: 'demoAddController',
       controllerAs: "add",
       data: {
@@ -48,7 +48,7 @@
     var loginState = {
       name: 'login',
       url: '/signin',
-      templateUrl: 'views/login.html',
+      templateUrl: 'views/login/loginPage.html',
       controller: 'loginCtrl',
       controllerAs: 'lc',
       data: {
@@ -60,7 +60,7 @@
     var registerState = {
       name: 'register',
       url: '/register?taor&step',
-      templateUrl: 'views/register.html',
+      templateUrl: 'views/register/registerPage.html',
       controller: 'registerController',
       controllerAs: 'reg',
       data: {
@@ -72,7 +72,7 @@
     var errorState = {
       name: '404',
       url: '/404',
-      templateUrl: 'views/404.html',
+      templateUrl: 'views/core/404.html',
       data: {
         requireLogin: false,
         requirePayment:false,

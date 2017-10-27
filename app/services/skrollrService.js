@@ -1,17 +1,14 @@
 (function(){
   'use strict';
 
-  var home = angular.module('app.homepage', []);
+  var svc = angular.module('app.services', []);
 
-  home.controller('homeCtrl', ['$scope','skrollrService', function($scope,skrollrService) {
-    $scope.showFeature = 'map';
-  }]);
-
-  home.service('skrollrService', ['$document', '$q', '$rootScope', '$window',
-    function($document, $q, $rootScope, $window){
+  svc.service('skrollrService', ['$document', '$q', '$rootScope', '$window', function($document, $q, $rootScope, $window)
+    {
       var defer = $q.defer();
 
-      function onScriptLoad() {
+      function onScriptLoad()
+      {
           // Load client in the browser
           var winWidth = window.innerWidth;
           var mobile;

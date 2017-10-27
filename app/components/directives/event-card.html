@@ -1,0 +1,40 @@
+<h1>Name: {{card.name}}</h1>
+<!--
+<div class="xs-width col-sm-4 card-outer">
+  <div class="card" ng-click="expandCard(findRow($index),findCol($index),event)" ng-class="{'card--active':activeCard.eid===event.eid}">
+    <div class="card__header">
+      <h3 class="purple-text">{{event.title | uppercase}}</h3>
+    </div>
+    <div class="card__body">
+      <free-icons></free-icons>
+      <event-location></event-location>
+      <p class="card-date"><small>{{cardDateDisplay(event.days) | date:'MMMM d'}}</small></p>
+      <div id="card-description" class="text-light" ng-bind-html="unescapeJson(e.defaultDescription(event.days))"></div>
+      <p class="text-right purple-text"><small><a>Read more</a></small></p>
+      <p class="show-on-expand padbot-2">{{event.freeNotes}}</p>
+      <div class="card__bottom">
+        <div class="card-disclaimers">
+          <span ng-if="event.credentialLevel > 10" class="credential-level pink-text" style="margin-right:10px;">
+            &#9733; {{ credentialsDisplay(event.credentialLevel) | uppercase }}
+          </span>
+          <span ng-if="event.age >= 0" class="credential-level pink-text">
+            &#9733; {{ ageDisplay(event.age) | uppercase }}
+          </span>
+        </div>
+        <div class="card-buttons">
+          <span ng-if="!event.RSVPLink" class="credential-level gray-text pull-right text-right">
+            <em>No RSVP<br/>Required</em>
+          </span>
+          <div ng-if="event.RSVPLink" class="pull-right rsvp-btn" ng-class="inRSVP(event.eid) ? 'active' : 'non-active'" ng-click="toggleRSVP($event,event.eid,event.RSVPLink,event.title)">
+            <span>&check;</span>RSVP
+          </div>
+          <div class="fave-btn pull-left" ng-class="inFavorites(event.eid) ? 'active' : ''" ng-click="toggleFavorite($event,event.eid)">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30"><g><circle id="fave-circle" cx="15" cy="15" r="14.09" stroke-miterlimit="10"/><path id="fave-heart" d="M23.12,12s0-.07,0-.09A4.67,4.67,0,0,0,18.7,8h-.15A4.69,4.69,0,0,0,15,9.65a4.69,4.69,0,0,0-8.25,3.07A4.65,4.65,0,0,0,8.05,16s6.43,7.17,6.92,7.17S21.91,16,21.91,16l.09-.1A4.62,4.62,0,0,0,23.12,12Z" stroke-miterlimit="10"/></g></svg>
+          </div>
+        </div>
+        <div class="clearfix"></div>
+      </div>
+    </div>
+  </div>
+</div>
+-->

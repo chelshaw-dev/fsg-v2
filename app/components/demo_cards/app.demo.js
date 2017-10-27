@@ -1,10 +1,14 @@
 (function(){
   'use strict';
 
-  var demo = angular.module('app.demo', []);
+  var demo = angular.module('app.demo', ['app.cards','demo.data']);
 
-  demo.controller('demoCardController', ['$scope', function($scope){
+  demo.controller('demoCardController', ['$scope','demoDataService', function($scope,demoDataService){
     console.log('demo controller');
+    $scope.testEvents = [
+      { name: 'Naomi', address: '1600 Amphitheatre' },
+      { name: 'Igor', address: '123 Somewhere' }
+    ];
     $scope.bootStatus = false;
     var $ctrl = this;
     // Filters
@@ -33,6 +37,10 @@
       $scope.bootStatus = true;
       console.log('boot status');
     },2000)
+
+    demoDataService.demoData(function(data){
+      console.log('done!');
+    });
   }]);
 
 })();
