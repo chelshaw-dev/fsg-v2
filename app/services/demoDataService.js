@@ -3,7 +3,7 @@
 
   var demo = angular.module('demo.data', ['ngSanitize','data.fetch']);
 
-  demo.factory('demoDataService', ['$q', 'firebaseFetch', function($q, firebaseFetch){
+  demo.factory('demoDataService', ['$q', 'fetchService', function($q, fetchService){
     var cachedData;
 
     function postNewEvent(data){
@@ -17,8 +17,8 @@
     function demoData(callback) {
       var deferred = $q.defer(),
           data;
-      firebaseFetch.getDemoData().then(function(data){
-        console.log('getDemoData successful')
+      fetchService.getData().then(function(data){
+        console.log('getData successful')
         console.log(data);
       });
       var ref = firebase.database().ref('2017/events/');

@@ -126,7 +126,27 @@
     </div>
 
     <div id="events-container">
-      <fsg-card ng-repeat="event in testEvents" event="event"></fsg-card>
+      <!-- NG-REPEAT: event in events | searchAll:filter.search | favesFilter:filter.faves | RSVPFilter:filter.rsvp | foodFilter:filter.food | drinkFilter:filter.drink | swagFilter:filter.swag | rechargeFilter:filter.recharge | musicFilter:filter.music | credentialFilter:filter.badge  | musicTagFilter:filter.musicTags | dateFilter:filter.date | idFilter:e.paramId | orderBy:sortEventsBy | startFrom:(currentPage * pageSize)  | limitTo:pageSize -->
+      <div class="xs-width col-sm-4 card-outer" id="eid-{{event.eid}}" data-row="{{findRow($index)}}" data-col="{{findCol($index)}}" ng-repeat="event in events | limitTo: 60"> <!-- orderBy:'-createdOn' -->
+        <div class="card" ng-click="expandCard(findRow($index),findCol($index),event)" ng-class="{'card--active':activeCard.eid===event.eid}"><!-- ng-click="expandCard(findRow($index),findCol($index),event)"  -->
+          <div ng-if="currentUserIsAdmin === true" style="position:absolute;top:0px;right:0px;" class="hide-for-print"><a ui-sref="editEvent({ eid: event.eid })">Edit</a></div>
+          <div class="card__header">
+            <h3 class="purple-text">{{event.title | uppercase}}</h3>
+            <p class="card-date show-for-print-only"><small>{{printDateDisplayStart(event.days) | date: 'MMMM d • h:mma'}}–{{printDateDisplayEnd(event.days) | date: 'h:mma'}}</small></p>
+          </div>
+          <div class="card__body">
+            <free-icons food="event.food" drink="event.drink" swag="event.swag" recharge="event.recharge" music="event.music"></free-icons>
+            <card-location name="event.locationName" addr="event.locationAddress"></card-location>
+            <!--<p class="card-date hide-for-print"><small>{{cardDateDisplay(event.days) | date:'MMMM d'}}</small></p>-->
+            <p class="text-right purple-text hide-for-print"><small><a>Read more</a></small></p>
+            <div class="card__bottom hide-for-print">
+              <card-disclaimer credential="event.credentialLevel" age="event.age"></card-disclaimer>
+              <card-user-buttons rsvp="event.RSVPLink" eid="event.eid"></card-user-buttons>
+              <div class="clearfix"></div>
+            </div>
+          </div>
+        </div>
+      </div>
       <div ng-if="!bootStatus">
         <h3 class="text-center gray-text padtop-3">Preparing demo…</h3>
       </div>
@@ -134,14 +154,9 @@
         <div class="col-sm-12" ng-if="filteredEvents.length == 0">
           <h4 ng-hide="filter.date === 'now'" class="text-center martop-2">Womp womp, nothing matched! :( <br/>Try using different filters</h4>
           <h4 ng-show="filter.date === 'now'" class="text-center martop-2">Silly goose! SXSW hasn't event started yet!</h4>
-          <p class="text-center"><a class="btn btn-outline" ng-click="e.filterReset()">Clear filters</a></p>
+          <p class="text-center"><a class="btn btn-outline" ng-click="$demoCtrl.filterReset()">Clear filters</a></p>
           <img ng-show="filter.date === 'now'" class="img-max-300 img-center" src="http://www.canadagoosetapes.com/wp-content/themes/cgt/library/images/goosehead.gif" alt="You are a goose" />
         </div>
-        <!--
-        <fsg-card id="eid-{{event.eid}}"
-             data-row="{{findRow($index)}}" data-col="{{findCol($index)}}"
-             ng-repeat="event in events | limitTo:33" info="event"></fsg-card>
-             <!-- | searchAll:filter.search | demoFavesFilter:filter.faves:userFaves | demoRSVPFilter:filter.rsvp:userRSVP | foodFilter:filter.food | drinkFilter:filter.drink | swagFilter:filter.swag | rechargeFilter:filter.recharge | musicFilter:filter.music | credentialFilter:filter.badge  | musicTagFilter:filter.musicTags | dateFilter:filter.date | idFilter:e.paramId | orderBy:sortEventsBy | startFrom:(currentPage * pageSize) | orderBy:'-createdOn' | limitTo:pageSize -->
         <div class="col-sm-12 card-outer" ng-if="bootStatus">
           <!-- TO-DO LATER
           <div class="card info" ng-controller="mailchimpCtrl as $ctrl">

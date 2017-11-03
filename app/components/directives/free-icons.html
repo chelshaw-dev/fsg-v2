@@ -1,0 +1,45 @@
+<ul class="free-icons hide-for-print">
+  <li>
+    <div class="icon food" ng-class="{active: food==1}">
+      <span class="sr-only">food</span>
+    </div>
+  </li>
+  <li>
+    <div class="icon drink" ng-class="{active: drink==1}">
+      <span class="sr-only">drink</span>
+    </div>
+  </li>
+  <li>
+    <div class="icon swag" ng-class="{active: swag==1}">
+      <span class="sr-only">swag</span>
+    </div>
+  </li>
+  <li>
+    <div class="icon recharge" ng-class="{active: recharge==1}">
+      <span class="sr-only">recharge</span>
+    </div>
+  </li>
+  <li>
+    <div class="icon music" ng-class="{active: music !== false && music !== undefined}">
+      <span class="sr-only">music</span>
+    </div>
+  </li>
+  <div class="clearfix"></div>
+</ul>
+<ul class="free-icons-print">
+  <li>
+    <img ng-if="food==1" src="/images/free-icon_food.png" alt="food" />
+  </li>
+  <li>
+    <img ng-if="drink==1" src="/images/free-icon_drink.png" alt="drink" />
+  </li>
+  <li>
+    <img ng-if="swag==1" src="/images/free-icon_swag.png" alt="swag" />
+  </li>
+  <li>
+    <img ng-if="recharge==1" src="/images/free-icon_recharge.png" alt="recharge" />
+  </li>
+  <li>
+    <img ng-if="music !== false && music !== undefined" src="/images/free-icon_music.png" alt="music" />
+  </li>
+</ul>

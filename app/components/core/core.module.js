@@ -1,7 +1,7 @@
 (function() {
   'use strict';
 
-  angular.module('app.core', ['app.users'])
+  angular.module('app.core', ['app.users','data.fetch'])
 
   .config(function($logProvider){
     $logProvider.debugEnabled(true);
@@ -16,7 +16,8 @@
     }
   }])
 
-  .run(['$log','$rootScope','$state','getReferralCode','userStatus', function ($log,$rootScope,$state,getReferralCode,userStatus) {
+  // Added fetchService
+  .run(['$log','$rootScope','$state','getReferralCode','userStatus','fetchService', function ($log,$rootScope,$state,getReferralCode,userStatus,fetchService) {
     // Set Referral for visit
     $rootScope.globalError = false;
     $rootScope.taor = getReferralCode;
@@ -33,6 +34,9 @@
       var user;
       userStatus.getCurrent().then(function(result){
         if(result !== 'anonymous' && result.uid){
+          formattedData.getData().then(function(data){
+            console.log('formatted data acquired');
+          });
           user = {
             uid: result.uid,
             isPaid: false,
@@ -46,6 +50,7 @@
             user.isAdmin = false;
           });
         } else {
+          fetchService.clearCache();
           user = {
             uid: 'anonymous',
             isPaid: false,

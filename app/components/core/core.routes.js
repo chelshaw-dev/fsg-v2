@@ -26,7 +26,7 @@
       url: "/demo/events",
       templateUrl: "views/demo_cards/demo-events.html",
       controller: 'demoCardController',
-      controllerAs: "e",
+      controllerAs: "$demoCtrl",
       data: {
         requireLogin: false,
         requirePayment:false,

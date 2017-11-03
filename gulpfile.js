@@ -35,7 +35,12 @@ gulp.task('sass', function() {
     .pipe(gulp.dest('public/css'));
 });
 
-gulp.task('vendor-scripts', function() {
+gulp.task('static', function(){
+  return gulp.src('static/*.*')
+    .pipe(gulp.dest('public/static'));
+});
+
+gulp.task('vendor-scripts', ['static'], function() {
   gulp.src([
     'node_modules/angular/angular.js',
     'node_modules/angular-ui-router/release/angular-ui-router.js',

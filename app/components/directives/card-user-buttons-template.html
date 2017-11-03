@@ -1,0 +1,11 @@
+<div class="card-buttons" ng-controller="cardUserButtonsController as userBtnCtrl">
+  <span ng-if="!rsvp" class="credential-level gray-text pull-right text-right">
+    <em>No RSVP<br/>Required</em>
+  </span>
+  <div ng-if="rsvp" class="pull-right rsvp-btn" ng-class="inRSVP(eid) ? 'active' : 'non-active'" ng-click="userBtnCtrl.toggleRSVP($event,currentUser.uid,event.eid,event.RSVPLink,event.title)">
+    <span>&check;</span>RSVP
+  </div>
+  <div class="fave-btn pull-left" ng-class="inFavorites(eid) ? 'active' : ''" ng-click="userBtnCtrl.toggleFavorite($event,currentUser.uid,eid)">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30"><g><circle id="fave-circle" cx="15" cy="15" r="14.09" stroke-miterlimit="10"/><path id="fave-heart" d="M23.12,12s0-.07,0-.09A4.67,4.67,0,0,0,18.7,8h-.15A4.69,4.69,0,0,0,15,9.65a4.69,4.69,0,0,0-8.25,3.07A4.65,4.65,0,0,0,8.05,16s6.43,7.17,6.92,7.17S21.91,16,21.91,16l.09-.1A4.62,4.62,0,0,0,23.12,12Z" stroke-miterlimit="10"/></g></svg>
+  </div>
+</div>

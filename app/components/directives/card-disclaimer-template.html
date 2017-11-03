@@ -1,0 +1,8 @@
+<div class="card-disclaimers" ng-controller="cardBottomController">
+  <span ng-if="credential > 10" class="credential-level pink-text" style="margin-right:10px;">
+    &#9733; {{ credentialsDisplay(credential) | uppercase }}
+  </span>
+  <span ng-if="event.age >= 0" class="credential-level pink-text">
+    &#9733; {{ ageDisplay(age) | uppercase }}
+  </span>
+</div>
