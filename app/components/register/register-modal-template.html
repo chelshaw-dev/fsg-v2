@@ -1,0 +1,58 @@
+<div class="card info" ng-controller="registerWidgetController as regCtrl"><!-- registerCtrl as rc -->
+  <h2 class="text-center special-text"><strong>Ready to be ready for the festival?</strong></h2>
+  <div class="row martop-1">
+    <div class="col-sm-6">
+      <div class="text-center">
+        <p class="special-text marbot-1 dk-gray-text"><strong>Sign up with email…</strong></p>
+      </div>
+      <form class="reg-form" name="registerForm" ng-submit="registerUser(register)" novalidate>
+        <div ng-show="formError.show" class="form-alert pink-bg white-text">
+          <button type="button" class="close" ng-click="formError.show = false" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          {{ formError.message }}
+        </div>
+
+        <div class="fsg-field-group inline">
+          <label class="sr-only">First Name</label>
+          <input type="text" name="FName" placeholder="FIRST NAME" ng-model="register.firstname" ng-required="true" ng-model-options="{ debounce: 500 }" ng-class="{ 'valid' : (registerForm.FName.$valid && registerForm.FName.$dirty), 'invalid' : (registerForm.FName.$invalid && !registerForm.FName.$pristine) }"/>
+          <label class="sr-only">Last Name</label>
+          <input type="text" name="LName" class="pull-right" placeholder="LAST NAME" ng-model="register.lastname" ng-required="true" ng-model-options="{ debounce: 500 }" ng-class="{ 'valid' : (registerForm.LName.$valid && registerForm.LName.$dirty), 'invalid' : (registerForm.LName.$invalid && !registerForm.LName.$pristine) }"/>
+        </div>
+        <div class="fsg-field-group">
+          <label class="sr-only">Email Address</label>
+          <input type="email" name="email" placeholder="EMAIL ADDRESS" ng-model="register.email" ng-required="true" ng-model-options="{ debounce: 300 }" ng-class="{ 'valid' : (registerForm.email.$valid && registerForm.email.$dirty), 'invalid' : (registerForm.email.$invalid && !registerForm.email.$pristine) }"/>
+        </div>
+        <div class="fsg-field-outer" ng-class="{ 'valid' : (registerForm.password.$valid && !registerForm.password.$pristine), 'invalid' : (registerForm.password.$invalid && !registerForm.password.$pristine) }">
+          <label for="reg-pass">PASSWORD</label>
+          <input type="password" id="reg-pass" name="password" ng-model="register.password" ng-minlength="9" ng-model-options="{ debounce: 300 }" pattern="[a-zA-Z0-9\!\?\~\%\$\#\+\-\_\*]+" ng-required="true" />
+        </div>
+        <p class="pink-text">
+          <span ng-show="registerForm.email.$invalid && !registerForm.email.$pristine">
+            <small><em>Hey, your email doesn't look right!</em></small><br/>
+          </span>
+          <span ng-show="registerForm.password.$invalid && !registerForm.password.$pristine" class="pink-text">
+            <small><em><span ng-show="registerForm.password.$error.minlength">Password must be at least 9 characters long. </span>Numbers, letters, and these characters are allowed: ! ? ~ % $ # + - _ *</em></small>
+          </span>
+        </p>
+        <button type="submit" class="btn btn-purple pull-right" ng-disabled="registerForm.$invalid || register.processing">Hells yes!</button>
+        <div class="clearfix marbot-1"></div>
+      </form>
+      <div class="text-center form-alert pink-bg white-text" ng-show="regError">
+        <button type="button" class="close" ng-click="regError=false" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        {{regError}}
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="text-center">
+        <p class="special-text dk-gray-text marbot-1"><strong>or social media!</strong></p>
+      </div>
+      <div class="social-btns text-center">
+        <a class="btn btn-social btn-facebook marbot-1" ng-click="logInFB()">
+          <span class="fa fa-facebook"></span> Sign up with Facebook
+        </a>
+        <a class="btn btn-social btn-twitter marbot-1" ng-click="logInTwitter()">
+          <span class="fa fa-twitter"></span> Sign up with Twitter
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

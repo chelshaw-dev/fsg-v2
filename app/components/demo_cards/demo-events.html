@@ -20,7 +20,7 @@
         <div class="fave-btn large pull-left pad-left" ng-class="{'active': filter.faves == 'yes'}" ng-click="showFavorites()">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30"><g><circle id="fave-circle" cx="15" cy="15" r="14.09" stroke-miterlimit="10"/><path id="fave-heart" d="M23.12,12s0-.07,0-.09A4.67,4.67,0,0,0,18.7,8h-.15A4.69,4.69,0,0,0,15,9.65a4.69,4.69,0,0,0-8.25,3.07A4.65,4.65,0,0,0,8.05,16s6.43,7.17,6.92,7.17S21.91,16,21.91,16l.09-.1A4.62,4.62,0,0,0,23.12,12Z" stroke-miterlimit="10"/></g></svg>
         </div>
-        <a class="mobile-filter-nav hidden-md-up pull-right" ng-click="toggleFilters()">Filters</a>
+        <a class="mobile-filter-nav hidden-md-up pull-right" ng-click="showFilterMenu = !showFilterMenu">Filters</a>
       </div>
       <div class="xs-width col-sm-6">
         <div id="search-container" class="pull-right">
@@ -30,7 +30,7 @@
       </div>
     </div>
 
-    <div id="filter-sidebar" ng-class="{'mobile-show':filterMenu}">
+    <div id="filter-sidebar" ng-class="{'mobile-show':showFilterMenu}">
       <div id="filter-sidebar--inner" class="padbot-1">
         <div id="search-container">
           <div id="search-btn" class="hidden-md-up" ng-click="filter.search = ''" ng-class="{'searching': filter.search !== ''}"></div>
@@ -39,7 +39,7 @@
         </div>
 
         <div class="filterset">
-          <div class="title purple-bg" ng-click="toggleFilter($event,'filters-closed')">Free Stuff <div class="arrow pull-right"></div></div>
+          <div class="title purple-bg" ng-click="toggleFilter($event)">Free Stuff <div class="arrow pull-right"></div></div>
           <fieldset class="form-group form-inline">
             <input type="checkbox" name="food" id="free-food" ng-model="filter.food" /> <label for="free-food">Food</label>
             <input type="checkbox" name="drink" id="free-drink" ng-model="filter.drink" /> <label for="free-drink">Drink</label>
@@ -50,31 +50,16 @@
         </div>
 
         <div class="filterset filters-closed">
-          <div class="title purple-bg" ng-click="toggleFilter($event,'filters-closed')">Date <div class="arrow pull-right"></div></div>
+          <div class="title purple-bg" ng-click="toggleFilter($event)">Date <div class="arrow pull-right"></div></div>
           <fieldset class="form-group form-inline">
             <input type="radio" name="date-all" id="date-all" ng-model="filter.date" value="all"> <label for="date-all">All </label>
-            <input type="radio" name="date-307" id="date-307" ng-model="filter.date" value="2017-03-07"> <label for="date-307">Tuesday 3/07 </label>
-            <input type="radio" name="date-308" id="date-308" ng-model="filter.date" value="2017-03-08"> <label for="date-308">Wednesday 3/08 </label>
-            <input type="radio" name="date-309" id="date-309" ng-model="filter.date" value="2017-03-09"> <label for="date-309">Thursday 3/09 </label>
-            <input type="radio" name="date-310" id="date-310" ng-model="filter.date" value="2017-03-10"> <label for="date-310">Friday 3/10 </label>
-            <input type="radio" name="date-311" id="date-311" ng-model="filter.date" value="2017-03-11"> <label for="date-311">Saturday 3/11 </label>
-            <input type="radio" name="date-312" id="date-312" ng-model="filter.date" value="2017-03-12"> <label for="date-312">Sunday 3/12 </label>
-            <input type="radio" name="date-313" id="date-313" ng-model="filter.date" value="2017-03-13"> <label for="date-313">Monday 3/13 </label>
-            <input type="radio" name="date-314" id="date-314" ng-model="filter.date" value="2017-03-14"> <label for="date-314">Tuesday 3/14 </label>
-            <input type="radio" name="date-315" id="date-315" ng-model="filter.date" value="2017-03-15"> <label for="date-315">Wednesday 3/15 </label>
-            <input type="radio" name="date-316" id="date-316" ng-model="filter.date" value="2017-03-16"> <label for="date-316">Thursday 3/16 </label>
-            <input type="radio" name="date-317" id="date-317" ng-model="filter.date" value="2017-03-17"> <label for="date-317">Friday 3/17 </label>
-            <input type="radio" name="date-318" id="date-318" ng-model="filter.date" value="2017-03-18"> <label for="date-318">Saturday 3/18 </label>
-            <input type="radio" name="date-319" id="date-319" ng-model="filter.date" value="2017-03-19"> <label for="date-319">Sunday 3/19 </label>
-            <input type="radio" name="date-320" id="date-320" ng-model="filter.date" value="2017-03-20"> <label for="date-320">Monday 3/20 </label>
-            <input type="radio" name="date-321" id="date-321" ng-model="filter.date" value="2017-03-21"> <label for="date-321">Tuesday 3/21 </label>
-            <input type="radio" name="date-322" id="date-322" ng-model="filter.date" value="2017-03-22"> <label for="date-322">Wednesday 3/22 </label>
+            <input ng-repeat="date in demoDates" type="radio" id="{date.name}" value="{date.val}" ng-model="filter.date"> <label for="{date.name}">{date.pretty}</label>
             <input type="radio" name="date-now" id="date-now" ng-model="filter.date" value="now"> <label for="date-now">Happening Now </label>
           </fieldset>
         </div>
 
         <div class="filterset filters-closed">
-          <div class="title purple-bg" ng-click="toggleFilter($event,'filters-closed')">Favorites <div class="arrow pull-right"></div></div>
+          <div class="title purple-bg" ng-click="toggleFilter($event)">Favorites <div class="arrow pull-right"></div></div>
           <fieldset class="form-group form-inline">
             <input type="radio" name="all-faves" id="all-faves" ng-model="filter.faves" value="all"> <label for="all-faves">Any </label>
             <input type="radio" name="faves" id="faves" ng-model="filter.faves" value="yes"> <label for="faves">Favorited</label>
@@ -83,7 +68,7 @@
         </div>
 
         <div class="filterset filters-closed">
-          <div class="title purple-bg" ng-click="toggleFilter($event,'filters-closed')">RSVP'd <div class="arrow pull-right"></div></div>
+          <div class="title purple-bg" ng-click="toggleFilter($event)">RSVP'd <div class="arrow pull-right"></div></div>
           <fieldset class="form-group form-inline">
             <input type="radio" name="all-rsvp" id="all-rsvp" ng-model="filter.rsvp" value="all"> <label for="all-rsvp">Any </label>
             <input type="radio" name="rsvp" id="rsvp" ng-model="filter.rsvp" value="yes"> <label for="rsvp">RSVP'd</label>
@@ -92,7 +77,7 @@
         </div>
 
         <div class="filterset filters-closed">
-          <div class="title purple-bg" ng-click="toggleFilter($event,'filters-closed')">Badge Level <div class="arrow pull-right"></div></div>
+          <div class="title purple-bg" ng-click="toggleFilter($event)">Badge Level <div class="arrow pull-right"></div></div>
           <fieldset class="form-group form-inline">
             <input type="radio" ng-model="filter.badge" name="badgeLevel" id="badge-any" value="-1"> <label for="badge-any">All</label>
             <input type="radio" ng-model="filter.badge" name="badgeLevel" id="badge-walk-in" value="0"> <label for="badge-walk-in">Walk In</label>
@@ -102,7 +87,7 @@
         </div>
 
         <div class="filterset filters-closed">
-          <div class="title purple-bg" ng-click="toggleFilter($event,'filters-closed')">Music Tags <div class="arrow pull-right"></div></div>
+          <div class="title purple-bg" ng-click="toggleFilter($event)">Music Tags <div class="arrow pull-right"></div></div>
           <fieldset class="form-group form-inline">
             <p><span class="music-tag" ng-repeat="tag in exampleTags">
               <a class="btn btn-outline" ng-click="addMusicTags(tag)" ng-class="{'added':e.inMusicTags(tag) >= 0}">{{tag | uppercase}}</a>
@@ -111,7 +96,7 @@
         </div>
 
         <div class="filterset filters-closed">
-          <div class="title purple-bg" ng-click="toggleFilter($event,'filters-closed')">Order By <div class="arrow pull-right"></div></div>
+          <div class="title purple-bg" ng-click="toggleFilter($event)">Order By <div class="arrow pull-right"></div></div>
           <fieldset class="form-group form-inline">
             <input type="radio" ng-model="sortEventsBy" name="sortEventsBy" id="sort-any" value=""> <label for="sort-any">Date &amp; Time</label>
             <input type="radio" ng-model="sortEventsBy" name="sortEventsBy" id="sort-walk-in" value="title"> <label for="sort-walk-in">Title</label>
@@ -119,8 +104,8 @@
           </fieldset>
         </div>
 
-        <button class="pull-right btn btn-small btn-outline" ng-click="e.filterReset()">Clear</button>
-        <button class="btn btn-danger btn-small text-center" ng-show="filterMenu" ng-click="toggleFilters()">Done</button>
+        <button class="pull-right btn btn-small btn-outline" ng-click="filterReset()">Clear</button>
+        <button class="btn btn-danger btn-small text-center" ng-show="showFilterMenu" ng-click="showFilterMenu = !showFilterMenu">Done</button>
         <div class="clearfix"></div>
       </div>
     </div>
@@ -132,11 +117,14 @@
           <div ng-if="currentUserIsAdmin === true" style="position:absolute;top:0px;right:0px;" class="hide-for-print"><a ui-sref="editEvent({ eid: event.eid })">Edit</a></div>
           <div class="card__header">
             <h3 class="purple-text">{{event.title | uppercase}}</h3>
+            <!-- TO-DO:  printDateDisplayStart()
             <p class="card-date show-for-print-only"><small>{{printDateDisplayStart(event.days) | date: 'MMMM d • h:mma'}}–{{printDateDisplayEnd(event.days) | date: 'h:mma'}}</small></p>
+            -->
           </div>
           <div class="card__body">
             <free-icons food="event.food" drink="event.drink" swag="event.swag" recharge="event.recharge" music="event.music"></free-icons>
             <card-location name="event.locationName" addr="event.locationAddress"></card-location>
+            [CARD DATE]
             <!--<p class="card-date hide-for-print"><small>{{cardDateDisplay(event.days) | date:'MMMM d'}}</small></p>-->
             <p class="text-right purple-text hide-for-print"><small><a>Read more</a></small></p>
             <div class="card__bottom hide-for-print">
@@ -154,68 +142,12 @@
         <div class="col-sm-12" ng-if="filteredEvents.length == 0">
           <h4 ng-hide="filter.date === 'now'" class="text-center martop-2">Womp womp, nothing matched! :( <br/>Try using different filters</h4>
           <h4 ng-show="filter.date === 'now'" class="text-center martop-2">Silly goose! SXSW hasn't event started yet!</h4>
-          <p class="text-center"><a class="btn btn-outline" ng-click="$demoCtrl.filterReset()">Clear filters</a></p>
+          <p class="text-center"><a class="btn btn-outline" ng-click="filterReset()">Clear filters</a></p>
           <img ng-show="filter.date === 'now'" class="img-max-300 img-center" src="http://www.canadagoosetapes.com/wp-content/themes/cgt/library/images/goosehead.gif" alt="You are a goose" />
         </div>
         <div class="col-sm-12 card-outer" ng-if="bootStatus">
           <!-- TO-DO LATER
-          <div class="card info" ng-controller="mailchimpCtrl as $ctrl">
-            <h2 class="text-center special-text"><strong>Ready to be ready for the festival?</strong></h2>
-            <section class="martop-1" ng-controller="registerCtrl as rc">
-              <div class="row">
-                <div class="col-sm-6">
-                  <div class="text-center">
-                    <p class="special-text marbot-1 dk-gray-text"><strong>Sign up with email…</strong></p>
-                  </div>
-                  <form class="reg-form" name="registerForm" ng-submit="registerUser(register)" novalidate>
-                    <div ng-show="errMessage.loginRedirect" class="form-alert pink-bg white-text"><button type="button" class="close" ng-click="errMessage.loginRedirect = false" aria-label="Close"><span aria-hidden="true">&times;</span></button>Hey friend, no need to register again! That email already has an account. <a class="purple-text" ui-sref="login">Log in now &rsaquo;</a></div>
-                    <div ng-show="errMessage.generic" class="form-alert pink-bg white-text"><button type="button" class="close" ng-click="errMessage.generic = false" aria-label="Close"><span aria-hidden="true">&times;</span></button>{{errMessage.generic}}</div>
-                    <div class="fsg-field-group inline">
-                      <label class="sr-only">First Name</label>
-                      <input type="text" name="FName" placeholder="FIRST NAME" ng-model="register.firstname" ng-required="true" ng-model-options="{ debounce: 500 }" ng-class="{ 'valid' : (registerForm.FName.$valid && registerForm.FName.$dirty), 'invalid' : (registerForm.FName.$invalid && !registerForm.FName.$pristine) }"/>
-                      <label class="sr-only">Last Name</label>
-                      <input type="text" name="LName" class="pull-right" placeholder="LAST NAME" ng-model="register.lastname" ng-required="true" ng-model-options="{ debounce: 500 }" ng-class="{ 'valid' : (registerForm.LName.$valid && registerForm.LName.$dirty), 'invalid' : (registerForm.LName.$invalid && !registerForm.LName.$pristine) }"/>
-                    </div>
-                    <div class="fsg-field-group">
-                      <label class="sr-only">Email Address</label>
-                      <input type="email" name="email" placeholder="EMAIL ADDRESS" ng-model="register.email" ng-required="true" ng-model-options="{ debounce: 300 }" ng-class="{ 'valid' : (registerForm.email.$valid && registerForm.email.$dirty), 'invalid' : (registerForm.email.$invalid && !registerForm.email.$pristine) }"/>
-                    </div>
-                    <div class="fsg-field-outer" ng-class="{ 'valid' : (registerForm.password.$valid && !registerForm.password.$pristine), 'invalid' : (registerForm.password.$invalid && !registerForm.password.$pristine) }">
-                      <label for="reg-pass">PASSWORD</label>
-                      <input type="password" id="reg-pass" name="password" ng-model="register.password" ng-minlength="9" ng-model-options="{ debounce: 300 }" pattern="[a-zA-Z0-9\!\?\~\%\$\#\+\-\_\*]+" ng-required="true" />
-                    </div>
-                    <p class="pink-text">
-                      <span ng-show="registerForm.email.$invalid && !registerForm.email.$pristine">
-                        <small><em>Hey, your email doesn't look right!</em></small><br/>
-                      </span>
-                      <span ng-show="registerForm.password.$invalid && !registerForm.password.$pristine" class="pink-text">
-                        <small><em><span ng-show="registerForm.password.$error.minlength">Password must be at least 9 characters long. </span>Numbers, letters, and these characters are allowed: ! ? ~ % $ # + - _ *</em></small>
-                      </span>
-                    </p>
-                    <button type="submit" class="btn btn-purple pull-right" ng-disabled="registerForm.$invalid || register.processing">Hells yes!</button>
-                    <div class="clearfix marbot-1"></div>
-                  </form>
-                  <div class="text-center form-alert pink-bg white-text" ng-show="regError">
-                    <button type="button" class="close" ng-click="regError=false" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    {{regError}}
-                  </div>
-                </div>
-                <div class="col-sm-6">
-                  <div class="text-center">
-                    <p class="special-text dk-gray-text marbot-1"><strong>or social media!</strong></p>
-                  </div>
-                  <div class="social-btns text-center">
-                    <a class="btn btn-social btn-facebook marbot-1" ng-click="logInFB()">
-                      <span class="fa fa-facebook"></span> Sign up with Facebook
-                    </a>
-                    <a class="btn btn-social btn-twitter marbot-1" ng-click="logInTwitter()">
-                      <span class="fa fa-twitter"></span> Sign up with Twitter
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </section>
-          </div>
+          <register-modal></register-modal>
           -->
         </div>
       </div>

@@ -1,7 +1,18 @@
 <div id="pop-down" class="col-xs-12 marbot-1">
   <div class="arrow {{activeCard.arrow}}"></div>
   <div class="navy-bg white-text padtop-1 padbot-1">
-    <button type="button" class="popout--close" aria-label="Close" ng-click="destroyPopout($event)">&times;</button>
+    <button type="button" class="popout--close" aria-label="Close" ng-click="destroyPopout()">&times;</button>
+    <div class="row">
+      <div class="col-sm-6 popdown-content--left">
+        <div class="card-header">
+          <h3 class="white-text">{{activeCard.title}}</h3>
+        </div>
+      </div>
+      <div class="col-sm-6 popdown-content--right">
+        <p class="white-text">{{activeCard.eid}}</p>
+      </div>
+    </div>
+    <!--
     <div class="row">
       <div class="col-sm-6 popdown-content--left">
         <div class="card-header">
@@ -9,16 +20,7 @@
         </div>
         <div class="visible-xs-block">
           <p class="white-text"><strong>Event Details and Times</strong></p>
-          <div ng-if="dataYear == '2016'">
-          <!-- 2016 -->
-            <fieldset class="form-group" ng-if="checkLength(activeCard.eventInfo.days)">
-              <select id="soflow-color" class="form-control" ng-model="activeCard.daySelected" ng-options="id as day.start_0|date:'MMMM dd' for (id, day) in activeCard.eventInfo.days"
-                required>
-              </select>
-            </fieldset>
-          </div>
           <div ng-if="dataYear == '2017'">
-            <!-- 2017 -->
             <fieldset class="form-group" ng-if="checkLength(activeCard.eventInfo.days)">
               <select id="soflow-color" class="form-control uppercase" ng-model="activeCard.daySelected" ng-options="id as (popoutDateDisplay(id,day)) for (id, day) in activeCard.eventInfo.days"
                 required>
@@ -43,16 +45,7 @@
       <div class="col-sm-6 popdown-content--right">
         <div class="hidden-xs">
           <p class="white-text"><strong>Event Details and Times</strong></p>
-          <div ng-if="dataYear == '2016'">
-          <!-- 2016 -->
-            <fieldset class="form-group" ng-if="checkLength(activeCard.eventInfo.days)">
-              <select id="soflow-color" class="form-control" ng-model="activeCard.daySelected" ng-options="id as day.start_0|date:'MMMM dd' for (id, day) in activeCard.eventInfo.days"
-                required>
-              </select>
-            </fieldset>
-          </div>
           <div ng-if="dataYear == '2017'">
-            <!-- 2017 -->
             <fieldset class="form-group" ng-if="checkLength(activeCard.eventInfo.days)">
               <select id="soflow-color" class="form-control uppercase" ng-model="activeCard.daySelected" ng-options="id as (popoutDateDisplay(id,day)) for (id, day) in activeCard.eventInfo.days"
                 required>
@@ -70,5 +63,6 @@
         <p ng-show="activeCard.eventInfo.music === true" class="white-text"><em>Lineup to be announced.</em></p>
       </div>
     </div>
+    -->
   </div>
 </div>

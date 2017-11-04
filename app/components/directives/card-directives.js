@@ -36,6 +36,9 @@ angular.module('app.cards', [])
   }
 
 }])
+.controller('cardUserButtonsController', ['$scope', function($scope){
+
+}])
 .directive('fsgCard', function() {
   // DEFUNCT
   return {
@@ -46,7 +49,7 @@ angular.module('app.cards', [])
       //transclude: true,
       //popout: '&onPopout'
     },
-    templateUrl: 'views/directives/event-card.html?version=2'
+    templateUrl: 'views/directives/event-card-template.html'
   };
 })
 .directive('freeIcons',[function(){
@@ -59,7 +62,7 @@ angular.module('app.cards', [])
       recharge: '=',
       music: '='
     },
-    templateUrl: 'views/directives/free-icons.html'
+    templateUrl: 'views/directives/free-icons-template.html'
   };
 }])
 .directive('cardLocation',[function(){
@@ -69,7 +72,7 @@ angular.module('app.cards', [])
       name: '=',
       addr: '='
     },
-    templateUrl: 'views/directives/event-location.html'
+    templateUrl: 'views/directives/event-location-template.html'
   };
 }])
 .directive('cardDisclaimer', [function(){
@@ -100,4 +103,14 @@ angular.module('app.cards', [])
       end: '='
     }
   };
+}])
+.directive('cardPopout',[function(){
+  return {
+    restrict: 'E',
+    scope: true,
+    //controller: function($scope){
+    //  console.log('cardPopout Controller loaded');
+    //},
+    templateUrl: 'views/directives/card-popout-template.html'
+  }
 }]);
