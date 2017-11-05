@@ -15,7 +15,9 @@
       return false;
     }
   }])
-
+  .run(['$anchorScroll', function($anchorScroll) {
+    $anchorScroll.yOffset = 70;   // always scroll by 50 extra pixels
+  }])
   // Added fetchService
   .run(['$log','$rootScope','$state','getReferralCode','userStatus','fetchService', function ($log,$rootScope,$state,getReferralCode,userStatus,fetchService) {
     // Set Referral for visit

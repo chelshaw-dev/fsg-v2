@@ -13,7 +13,7 @@
     var homeState = {
       name: 'home',
       url: '/',
-      templateUrl: "views/homepage/landingView.html",
+      templateUrl: "views/homepage/homepage.html",
       controller: 'homeCtrl',
       data: {
         requireLogin: false,
@@ -21,11 +21,23 @@
         requireAdmin:false
       }
     };
+    var demoMap = {
+      name: 'demoMap',
+      url: '/demo/map',
+      templateUrl: 'views/demo_map/demo-map.html',
+      controller: 'demoMapController',
+      controllerAs: '$demoCtrl',
+      data: {
+        requireLogin: false,
+        requirePayment:false,
+        requireAdmin:false
+      }
+    }
     var demoEvents = {
       name: 'demoEvents',
       url: "/demo/events",
       templateUrl: "views/demo_cards/demo-events.html",
-      controller: 'demoCardController',
+      controller: 'demoPageController',
       controllerAs: "$demoCtrl",
       data: {
         requireLogin: false,

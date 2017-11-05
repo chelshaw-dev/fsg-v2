@@ -1,4 +1,4 @@
-angular.module('app.cards', [])
+angular.module('app.cards', ['ngMap','app.helper'])
 .controller('eventsCardsController', ['$scope','$log', function($scope,$log) {
 
   $scope.toggleRSVP = function(evt,eid,RSVPLink,title){
@@ -36,8 +36,8 @@ angular.module('app.cards', [])
   }
 
 }])
-.controller('cardUserButtonsController', ['$scope', function($scope){
-
+.controller('cardUserButtonsController', ['$scope','$log', function($scope,$log){
+  $log.debug('TO DO: CARD USER BUTTONS CTRL');
 }])
 .directive('fsgCard', function() {
   // DEFUNCT
@@ -108,9 +108,20 @@ angular.module('app.cards', [])
   return {
     restrict: 'E',
     scope: true,
-    //controller: function($scope){
-    //  console.log('cardPopout Controller loaded');
-    //},
+    controller: ['$scope','NgMap','mapOptions', function($scope,NgMap,mapOptions){
+      $ctrl = this;
+      $ctrl.checkCoords = function(coord){
+        console.log(coord);
+        if(typeof coord !== 'object'){
+          return false;
+        } else {
+          return true;
+        }
+      };
+      $scope.mapOptions = mapOptions.standard;
+      $scope.mapStyle = mapOptions.style;
+    }],
+    controllerAs: '$popCtrl',
     templateUrl: 'views/directives/card-popout-template.html'
   }
 }]);

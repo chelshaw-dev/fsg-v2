@@ -53,7 +53,9 @@
           <div class="title purple-bg" ng-click="toggleFilter($event)">Date <div class="arrow pull-right"></div></div>
           <fieldset class="form-group form-inline">
             <input type="radio" name="date-all" id="date-all" ng-model="filter.date" value="all"> <label for="date-all">All </label>
-            <input ng-repeat="date in demoDates" type="radio" id="{date.name}" value="{date.val}" ng-model="filter.date"> <label for="{date.name}">{date.pretty}</label>
+            <span ng-repeat="date in demoDates">
+              <input type="radio" id="{{date.name}}" name="{{date.value}}" value="{{date.value}}" ng-model="filter.date"> <label for="{{date.name}}">{{date.pretty}}</label>
+            </span>
             <input type="radio" name="date-now" id="date-now" ng-model="filter.date" value="now"> <label for="date-now">Happening Now </label>
           </fieldset>
         </div>
@@ -110,9 +112,9 @@
       </div>
     </div>
 
-    <div id="events-container">
+    <div id="events-container" ng-controller="demoCardsController as cardsCtrl">
       <!-- NG-REPEAT: event in events | searchAll:filter.search | favesFilter:filter.faves | RSVPFilter:filter.rsvp | foodFilter:filter.food | drinkFilter:filter.drink | swagFilter:filter.swag | rechargeFilter:filter.recharge | musicFilter:filter.music | credentialFilter:filter.badge  | musicTagFilter:filter.musicTags | dateFilter:filter.date | idFilter:e.paramId | orderBy:sortEventsBy | startFrom:(currentPage * pageSize)  | limitTo:pageSize -->
-      <div class="xs-width col-sm-4 card-outer" id="eid-{{event.eid}}" data-row="{{findRow($index)}}" data-col="{{findCol($index)}}" ng-repeat="event in events | limitTo: 60"> <!-- orderBy:'-createdOn' -->
+      <div class="xs-width col-sm-4 card-outer" id="eid-{{event.eid}}" data-row="{{findRow($index)}}" data-col="{{findCol($index)}}" ng-repeat="event in events | limitTo: pageSize"> <!-- orderBy:'-createdOn' -->
         <div class="card" ng-click="expandCard(findRow($index),findCol($index),event)" ng-class="{'card--active':activeCard.eid===event.eid}"><!-- ng-click="expandCard(findRow($index),findCol($index),event)"  -->
           <div ng-if="currentUserIsAdmin === true" style="position:absolute;top:0px;right:0px;" class="hide-for-print"><a ui-sref="editEvent({ eid: event.eid })">Edit</a></div>
           <div class="card__header">

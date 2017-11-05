@@ -1,20 +1,100 @@
 (function(){
   'use strict';
 
-  var demo = angular.module('app.demo', ['app.cards','demo.data','data.fetch']);
+  var demo = angular.module('app.demo', [
+    'app.cards',
+    'demo.data',
+    'data.fetch',
+  ]);
+  demo.controller('demoCardsController', ['$scope','$log','$compile','$location','$anchorScroll','$window', function($scope,$log,$compile,$location,$anchorScroll,$window){
+    var $ctrl = this;
+    // Popout Functions
+    $scope.destroyPopout = function(){
+      var oldPopout = document.getElementById('pop-down');
+      if(oldPopout){
+        oldPopout.style.display = 'none';
+        $scope.activeCard.eid = '';
+      }
+    }
+    // Get data for event selected and open popout
+    var updatePopout = function(info,row,col){
+      var numPerRow = $window.innerWidth >= 768 ? 3 : 1;
+      var arrowClass = 'arrow__'+col+'-'+numPerRow;
 
-  demo.controller('demoCardController', ['$scope','formattedData','$log','$compile', function($scope,formattedData,$log,$compile){
-    $log.debug('demo controller');
+      $scope.activeCard = {
+        info: info,
+        eid: info.eid,
+        title: info.title,
+        description: info.description,
+        coords: info.locationCoord,
+        //days: days,
+        //daySelected: selected,
+        col: col,
+        row: row,
+        arrow: arrowClass
+      };
+    }
+
+    $ctrl.firstCompile = true;
+    $ctrl.popout;
+
+    // Open Popout
+    $scope.expandCard = function(row,col,info){
+      var eventId = info.eid;
+      if($scope.activeCard && $scope.activeCard.eid === eventId){
+        $scope.destroyPopout();
+      } else {
+        $scope.destroyPopout();
+        // Update info for popout
+        updatePopout(info,row,col);
+
+        var cardParent = document.getElementById('eid-'+eventId);
+        // get row/col data from parent
+        var activeRow = cardParent.dataset.row;
+        // Identify reference node to add element after
+        var nodes = document.querySelectorAll("[data-row='"+activeRow+"']");
+        // lastChild not working: workaround
+        var referenceNode = nodes[nodes.length-1];
+
+        // Add new element
+        if($ctrl.firstCompile === true){
+          $ctrl.popout = $compile('<card-popout eid="'+eventId+'" arrow="'+$scope.activeCard.arrowClass+'" class="clearfix"></card-popout>')($scope)
+          angular.element(referenceNode).after($ctrl.popout);
+          $ctrl.firstCompile = false;
+        } else {
+          angular.element(referenceNode).after($ctrl.popout);
+          var popout = document.getElementById('pop-down');
+          popout.style.display = 'block';
+          $location.hash('pop-down');
+          $anchorScroll();
+        }
+      }
+    }
+  }])
+  demo.controller('paginationController', ['$location','$anchorScroll', function($location,$anchorScroll){
+    console.log('pagination controller');
+    // Pagination
+    $scope.setCurrentPage = function(nextPage) {
+      $scope.currentPage = nextPage;
+      //$location.hash('top');
+      //$anchorScroll();
+    }
+  }])
+  demo.controller('demoPageController', ['$scope','formattedData','$window','$log', function($scope,formattedData,$window,$log){
     var $ctrl = this;
     $scope.bootStatus = false;
-
-    $scope.testFn = function(id){
-      $log.debug('eid' + id);
-    };
-    // Filters
+    // DATA
+    formattedData.getData().then(function(data){
+      $scope.events = data;
+      $scope.bootStatus = true;
+    });
+    // PAGINATION
+    $scope.currentPage = 0;
+    $scope.pageSize = 45;
+    // FILTERS
     $scope.showFilterMenu = false;
-    $scope.filter = {};
     $scope.sortEventsBy = '';
+    $scope.filter = {};
     $scope.filterReset = function(){
       $scope.filter = {
         search: '',
@@ -32,32 +112,6 @@
       }
     }
     $scope.filterReset();
-
-    /* OLD FIND COL/ROW
-    $scope.findRow = function(num){
-      var numPerRow = windowService >= 768 ? 3 : 1;
-      return (Math.floor(num/numPerRow))+1;
-    }
-    $scope.findCol = function(num){
-      var numPerRow = windowService >= 768 ? 3 : 1;
-      return (num%numPerRow)+1;
-    }
-    */
-    $scope.findRow = function(index){
-      var numPerRow = 3
-      return (Math.floor(index/numPerRow))+1;
-    }
-    $scope.findCol = function(index){
-      var numPerRow = 3
-      return (index%numPerRow)+1;
-    }
-
-    formattedData.getData().then(function(data){
-      $log.debug('done getting data');
-      $scope.events = data;
-      $scope.bootStatus = true;
-    });
-
     $scope.toggleFilter = function(evt,className){
       $log.warn('TO-DO: FILTER TOGGLE');
     }
@@ -152,75 +206,25 @@
         pretty: 'Wednesday 3/22'
       }
     ];
-
-    // Popout Functions
-    $scope.destroyPopout = function(){
-      var oldPopout = document.getElementById('pop-down');
-      if(oldPopout){
-        oldPopout.style.display = 'none';
-      }
+    // Grid
+    var numPerRow = $window.innerWidth >= 768 ? 3 : 1;
+    $scope.findRow = function(index){
+      return (Math.floor(index/numPerRow))+1;
     }
-    // Get data for event selected and open popout
-    var updatePopout = function(info,row,col){
-      //var days = info.days;
-      //var selected = getFirstKey(days);
-      var numPerRow = 3; // windowService >= 768 ? 3 : 1;
-      var arrowClass = 'arrow__'+col+'-'+numPerRow;
-
-      $scope.activeCard = {
-        eventInfo: info,
-        eid: info.eid,
-        title: info.title,
-        //days: days,
-        //daySelected: selected,
-        col: col,
-        row: row,
-        arrow: arrowClass,
-        //data: data
-      };
+    $scope.findCol = function(index){
+      return (index%numPerRow)+1;
     }
 
-    $ctrl.firstCompile = true;
-    $ctrl.popout;
-
-    // Open Popout
-    $scope.expandCard = function(row,col,info){
-      $log.debug('expanding');
-      $log.debug(row,col);
-
-      var eventId = info.eid;
-      $log.debug(eventId);
-      // Destroy all other popout instances
-      $scope.destroyPopout();
-
-      if($scope.activeCard && $scope.activeCard.eid === eventId){
-        $scope.activeCard = {};
-      } else {
-        // Update info for popout
-        updatePopout(info,row,col);
-
-        var cardParent = document.getElementById('eid-'+eventId);
-        // get row/col data from parent
-        var activeRow = cardParent.dataset.row;
-        //var activeCol = cardParent.dataset.col;
-        // Identify reference node to add element after
-        var nodes = document.querySelectorAll("[data-row='"+activeRow+"']");
-        // lastChild not working: workaround
-        var referenceNode = nodes[nodes.length-1];
-
-        // Add new element
-        if($ctrl.firstCompile === true){
-          $ctrl.popout = $compile('<card-popout eid="'+eventId+'" arrow="'+$scope.activeCard.arrowClass+'" class="clearfix"></card-popout>')($scope)
-          angular.element(referenceNode).after($ctrl.popout);
-          $ctrl.firstCompile = false;
+    if($window.innerWidth >= 992){
+      angular.element($window).bind("scroll", function() {
+        var sidebar = document.getElementById('filter-sidebar--inner');
+        if (this.pageYOffset >= 390) {
+          angular.element(sidebar).addClass('fixed');
         } else {
-          angular.element(referenceNode).after($ctrl.popout);
-          var popout = document.getElementById('pop-down');
-          popout.style.display = 'block';
+          angular.element(sidebar).removeClass('fixed');
         }
-      }
+      });
     }
-
   }]);
 
 })();

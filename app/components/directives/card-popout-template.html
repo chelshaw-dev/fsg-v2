@@ -7,9 +7,20 @@
         <div class="card-header">
           <h3 class="white-text">{{activeCard.title}}</h3>
         </div>
+        <p class="white-text date-time">[DATE TIME]</p>
+        <p class="white-text">[description]</p>
       </div>
       <div class="col-sm-6 popdown-content--right">
-        <p class="white-text">{{activeCard.eid}}</p>
+        <card-location class="white-text" name="activeCard.info.locationName" addr="activeCard.info.locationAddress"></card-location>
+        <div id="map" ng-if="$popCtrl.checkCoords(activeCard.coords)">
+          <ng-map center="{{activeCard.coords.lat}},{{activeCard.coords.lng}}" options="{{mapOptions}}" styles="{{mapStyle}}">
+            <custom-marker position="{{activeCard.coords.lat}},{{activeCard.coords.lng}}">
+              <div class="map-pin pin__active" data-pin-id="event-loc">
+                <svg id="pin-img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30.54 67.27"><g><path d="M15.27,19.07A14.27,14.27,0,0,0,1,33.35c0,7.88,14.27,33.92,14.27,33.92s14.27-26,14.27-33.92A14.27,14.27,0,0,0,15.27,19.07Zm0,19a4.19,4.19,0,1,1,4.19-4.19A4.19,4.19,0,0,1,15.27,38Z" stroke="#0f1e3d" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/></g></svg>
+              </div>
+            </custom-marker>
+          </ng-map>
+        </div>
       </div>
     </div>
     <!--
