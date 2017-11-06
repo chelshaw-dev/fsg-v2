@@ -32,7 +32,7 @@
         requirePayment:false,
         requireAdmin:false
       }
-    }
+    };
     var demoEvents = {
       name: 'demoEvents',
       url: "/demo/events",
@@ -95,6 +95,7 @@
     $urlRouterProvider.otherwise("/");
     $stateProvider.state(homeState);
     $stateProvider.state(demoEvents);
+    $stateProvider.state(demoMap);
     //$stateProvider.state(registerState);
     $stateProvider.state(errorState);
     $stateProvider.state(addDemoEvents);

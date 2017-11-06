@@ -1,24 +1,21 @@
 (function() {
   'use strict';
 
-  angular.module('app.core', ['app.users','data.fetch'])
+  angular.module('app.core', [
+    'app.users',
+    'data.fetch',
+    'core.helper',
+    'app.homepage'
+  ])
 
   .config(function($logProvider){
     $logProvider.debugEnabled(true);
   })
 
-  .factory('getReferralCode', ['$location',function($location){
-    var taor = $location.search().taor;
-    if(undefined !== taor){
-      return taor.toLowerCase().replace(/[^a-zA-Z0-9]/g,'-');
-    } else {
-      return false;
-    }
-  }])
   .run(['$anchorScroll', function($anchorScroll) {
     $anchorScroll.yOffset = 70;   // always scroll by 50 extra pixels
   }])
-  // Added fetchService
+
   .run(['$log','$rootScope','$state','getReferralCode','userStatus','fetchService', function ($log,$rootScope,$state,getReferralCode,userStatus,fetchService) {
     // Set Referral for visit
     $rootScope.globalError = false;
@@ -114,5 +111,5 @@
     });
 
   }]);
-  /* end core.module.js */
+
 })();

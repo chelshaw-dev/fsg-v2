@@ -6,15 +6,16 @@
           <svg id="pin-img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30.54 67.27"><g><path d="M15.27,19.07A14.27,14.27,0,0,0,1,33.35c0,7.88,14.27,33.92,14.27,33.92s14.27-26,14.27-33.92A14.27,14.27,0,0,0,15.27,19.07Zm0,19a4.19,4.19,0,1,1,4.19-4.19A4.19,4.19,0,0,1,15.27,38Z" stroke="#0f1e3d" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/></g></svg>
         </div>
       </custom-marker>
-      <custom-marker ng-repeat="pin in events | dateFilter:$demoCtrl.filter.date | onMap:bounds | searchAll:$demoCtrl.filter.search | foodFilter:$demoCtrl.filter.food | drinkFilter:$demoCtrl.filter.drink | swagFilter:$demoCtrl.filter.swag | rechargeFilter:$demoCtrl.filter.recharge | musicFilter:$demoCtrl.filter.music | credentialFilter:$demoCtrl.filter.badge | musicTagFilter:$demoCtrl.filter.musicTags | demoFavesFilter:$demoCtrl.filter.faves:userFaves | demoRSVPFilter:$demoCtrl.filter.rsvp:userRSVP" id="pin-{{pin.eid}}"
+      <!-- NG-REPEAT: dateFilter:$demoCtrl.filter.date | onMap:bounds | searchAll:$demoCtrl.filter.search | foodFilter:$demoCtrl.filter.food | drinkFilter:$demoCtrl.filter.drink | swagFilter:$demoCtrl.filter.swag | rechargeFilter:$demoCtrl.filter.recharge | musicFilter:$demoCtrl.filter.music | credentialFilter:$demoCtrl.filter.badge | musicTagFilter:$demoCtrl.filter.musicTags | demoFavesFilter:$demoCtrl.filter.faves:userFaves | demoRSVPFilter:$demoCtrl.filter.rsvp:userRSVP -->
+      <custom-marker ng-repeat="pin in events | limitTo:15" id="pin-{{pin.eid}}"
       position="{{pin.locationCoord.lat}},{{pin.locationCoord.lng}}"
       title="{{pin.title}}">
-          <div class="map-pin" ng-click="$demoCtrl.fooPin(pin.eid)" data-pin-id="{{pin.eid}}" ng-class="{'pin__active': selectedEvent===pin.eid}">
-            <svg id="pin-img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30.54 67.27">
-              <g><path id="map-pin" d="M15.27,19.07A14.27,14.27,0,0,0,1,33.35c0,7.88,14.27,33.92,14.27,33.92s14.27-26,14.27-33.92A14.27,14.27,0,0,0,15.27,19.07Z" stroke="#0f1e3d" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
-              <text transform="translate(6.32 39.59) scale(0.99 1)" font-size="16.57" fill="#0f1e3d" font-family="Roboto-Bold, Roboto" font-weight="700" letter-spacing="-0.05em">{{$index+1}}</text></g>
-            </svg>
-          </div>
+        <div class="map-pin" ng-click="updateSelectedEvent(pin.eid)" data-pin-id="{{pin.eid}}" ng-class="{'pin__active': selectedEvent===pin.eid}">
+          <svg id="pin-img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30.54 67.27">
+            <g><path id="map-pin" d="M15.27,19.07A14.27,14.27,0,0,0,1,33.35c0,7.88,14.27,33.92,14.27,33.92s14.27-26,14.27-33.92A14.27,14.27,0,0,0,15.27,19.07Z" stroke="#0f1e3d" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+            <text transform="translate(6.32 39.59) scale(0.99 1)" font-size="16.57" fill="#0f1e3d" font-family="Roboto-Bold, Roboto" font-weight="700" letter-spacing="-0.05em">{{$index+1}}</text></g>
+          </svg>
+        </div>
       </custom-marker>
     </ng-map>
     <!-- To Do: add center btn
@@ -129,41 +130,36 @@
           <p><a class="btn btn-outline" ui-sref="demoEvents">Play with the card view, too</a></p>
         </div>
       </div>
-      <div class="map-card info" ng-if="bootStatus && (events | onMap:bounds | dateFilter:$demoCtrl.filter.date | searchAll:$demoCtrl.filter.search | foodFilter:$demoCtrl.filter.food | drinkFilter:$demoCtrl.filter.drink | swagFilter:$demoCtrl.filter.swag | rechargeFilter:$demoCtrl.filter.recharge | musicFilter:$demoCtrl.filter.music | credentialFilter:$demoCtrl.filter.badge | musicTagFilter:$demoCtrl.filter.musicTags | demoFavesFilter:$demoCtrl.filter.faves:userFaves | demoRSVPFilter:$demoCtrl.filter.rsvp:userRSVP).length == 0">
+      <!-- NG-IF  && (events | onMap:bounds | dateFilter:$demoCtrl.filter.date | searchAll:$demoCtrl.filter.search | foodFilter:$demoCtrl.filter.food | drinkFilter:$demoCtrl.filter.drink | swagFilter:$demoCtrl.filter.swag | rechargeFilter:$demoCtrl.filter.recharge | musicFilter:$demoCtrl.filter.music | credentialFilter:$demoCtrl.filter.badge | musicTagFilter:$demoCtrl.filter.musicTags | demoFavesFilter:$demoCtrl.filter.faves:userFaves | demoRSVPFilter:$demoCtrl.filter.rsvp:userRSVP).length == 0 -->
+      <div class="map-card info" ng-if="bootStatus">
         <div class="inner">
-          <p ng-hide="$demoCtrl.filter.date === 'now'" class="padtop-1 text-center"><strong>Darn, nothing matched! <br/>Try zooming out or using different filters</strong><br/><a class="btn btn-small btn-white-bg btn-outline martop-1" ng-click="$demoCtrl.filterReset()">Clear</a></p>
-          <p ng-show="$demoCtrl.filter.date === 'now'" class="padtop-1 text-center"><strong>Silly goose!<br/>SXSW hasn't event started yet!</strong></p>
-          <p ng-show="$demoCtrl.filter.date === 'now'" class="padtop-1 text-center"><a class="btn btn-outline" ng-click="$demoCtrl.filterReset()">Clear Filters</a></p>
+          <p ng-hide="filter.date === 'now'" class="padtop-1 text-center">
+            <strong>Darn, nothing matched! <br/>Try zooming out or using different filters</strong><br/>
+            <a class="btn btn-small btn-white-bg btn-outline martop-1" ng-click="filterReset()">Clear Filters</a>
+          </p>
+          <p ng-show="filter.date === 'now'" class="padtop-1 text-center">
+            <strong>Silly goose!<br/>SXSW hasn't event started yet!</strong><br/>
+            <a class="btn btn-small btn-white-bg btn-outline martop-1" ng-click="filterReset()">Clear Filters</a>
+          </p>
         </div>
       </div>
-      <div class="map-card" id="detail-{{event.eid}}" ng-class="{'detail__active': selectedEvent==event.eid}" ng-click="updateSelected(event.eid)" ng-repeat="event in events | onMap:bounds | dateFilter:$demoCtrl.filter.date | searchAll:$demoCtrl.filter.search | foodFilter:$demoCtrl.filter.food | drinkFilter:$demoCtrl.filter.drink | swagFilter:$demoCtrl.filter.swag | rechargeFilter:$demoCtrl.filter.recharge | musicFilter:$demoCtrl.filter.music | credentialFilter:$demoCtrl.filter.badge | musicTagFilter:$demoCtrl.filter.musicTags | demoFavesFilter:$demoCtrl.filter.faves:userFaves | demoRSVPFilter:$demoCtrl.filter.rsvp:userRSVP" >
+      <!-- NG-REPEAT: | onMap:bounds | dateFilter:$demoCtrl.filter.date | searchAll:$demoCtrl.filter.search | foodFilter:$demoCtrl.filter.food | drinkFilter:$demoCtrl.filter.drink | swagFilter:$demoCtrl.filter.swag | rechargeFilter:$demoCtrl.filter.recharge | musicFilter:$demoCtrl.filter.music | credentialFilter:$demoCtrl.filter.badge | musicTagFilter:$demoCtrl.filter.musicTags | demoFavesFilter:$demoCtrl.filter.faves:userFaves | demoRSVPFilter:$demoCtrl.filter.rsvp:userRSVP -->
+      <div class="map-card" id="detail-{{event.eid}}" ng-class="{'detail__active': selectedEvent==event.eid}" ng-click="updateSelectedEvent(event.eid)" ng-repeat="event in events | limitTo: 15" >
         <div class="number">{{$index+1}}</div>
         <div class="inner">
           <strong>{{event.title}}</strong>
-          <free-icons></free-icons>
+          <free-icons food="event.food" drink="event.drink" swag="event.swag" recharge="event.recharge" music="event.music"></free-icons>
           <div class="detail--more" ng-show="selectedEvent==event.eid">
             <div>
-              <event-location></event-location>
+              <card-location name="event.locationName" addr="event.locationAddress"></card-location>
             </div>
             <div class="pull-left">
-              <p class="card-date">
-                <small>{{cardDateDisplay(event.days) | date:'MMMM d'}}</small>
-                <span ng-if="$demoCtrl.filter.date !== 'now' && $demoCtrl.filter.date !== 'all'"><br/><small>{{event.days[$demoCtrl.filter.date].start | date:'h:mm a'}} – {{event.days[$demoCtrl.filter.date].end | date:'h:mm a'}}</small></span>
+              <p class="card-date"><small>
+                <date-display days="event.days"></date-display>
+              </small></p>
               </p>
             </div>
-            <!--<p class="details-link pull-left"><a ui-sref="events/{{eid}}">See full details &raquo;</a></p>
-            <div class="card-buttons">
-              <span ng-if="!event.RSVPLink" class="credential-level gray-text pull-right text-right">
-                <em>No RSVP<br/>Required</em>
-              </span>
-              <div ng-if="event.RSVPLink" class="pull-right rsvp-btn" ng-class="inRSVP(event.eid) ? 'active' : 'non-active'" ng-click="toggleRSVP($event,event.eid,event.RSVPLink,event.title)">
-                <span>&check;</span>RSVP
-              </div>
-              <div class="fave-btn pull-left" ng-class="inFavorites(event.eid) ? 'active' : ''" ng-click="toggleFavorite($event,event.eid)">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30"><g><circle id="fave-circle" cx="15" cy="15" r="14.09" stroke-miterlimit="10"/><path id="fave-heart" d="M23.12,12s0-.07,0-.09A4.67,4.67,0,0,0,18.7,8h-.15A4.69,4.69,0,0,0,15,9.65a4.69,4.69,0,0,0-8.25,3.07A4.65,4.65,0,0,0,8.05,16s6.43,7.17,6.92,7.17S21.91,16,21.91,16l.09-.1A4.62,4.62,0,0,0,23.12,12Z" stroke-miterlimit="10"/></g></svg>
-              </div>
-            </div>
-            -->
+            <!--<p class="details-link pull-left"><a ui-sref="events/{{eid}}">See full details &raquo;</a></p>-->
             <div class="card-buttons pull-right">
               <span ng-if="!event.RSVPLink" class="credential-level gray-text pull-right text-right">
                 <em>No RSVP<br/>Required</em>

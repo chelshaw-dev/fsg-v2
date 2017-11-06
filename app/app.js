@@ -6,6 +6,7 @@
     'app.routes',
     'app.homepage',
     'app.register',
+    'demo.map',
     //'app.mailingList',
     'app.login',
     'app.demo',

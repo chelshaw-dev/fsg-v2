@@ -91,7 +91,7 @@
         <div class="filterset filters-closed">
           <div class="title purple-bg" ng-click="toggleFilter($event)">Music Tags <div class="arrow pull-right"></div></div>
           <fieldset class="form-group form-inline">
-            <p><span class="music-tag" ng-repeat="tag in exampleTags">
+            <p><span class="music-tag" ng-repeat="tag in genres">
               <a class="btn btn-outline" ng-click="addMusicTags(tag)" ng-class="{'added':e.inMusicTags(tag) >= 0}">{{tag | uppercase}}</a>
             </span></p>
           </fieldset>
@@ -113,8 +113,9 @@
     </div>
 
     <div id="events-container" ng-controller="demoCardsController as cardsCtrl">
-      <!-- NG-REPEAT: event in events | searchAll:filter.search | favesFilter:filter.faves | RSVPFilter:filter.rsvp | foodFilter:filter.food | drinkFilter:filter.drink | swagFilter:filter.swag | rechargeFilter:filter.recharge | musicFilter:filter.music | credentialFilter:filter.badge  | musicTagFilter:filter.musicTags | dateFilter:filter.date | idFilter:e.paramId | orderBy:sortEventsBy | startFrom:(currentPage * pageSize)  | limitTo:pageSize -->
-      <div class="xs-width col-sm-4 card-outer" id="eid-{{event.eid}}" data-row="{{findRow($index)}}" data-col="{{findCol($index)}}" ng-repeat="event in events | limitTo: pageSize"> <!-- orderBy:'-createdOn' -->
+      <!-- NG-REPEAT: searchAll:filter.search | food:filter.food | drink:filter.drink | swag:filter.swag | recharge:filter.recharge | music:filter.music | genres:filter.musicTags | credentials:filter.badge | genres:filter.musicTags | date:filter.date | favesFilter:filter.faves | RSVPFilter:filter.rsvp | idFilter:e.paramId | orderBy:sortEventsBy | startFrom:(currentPage * pageSize)  -->
+      <div class="xs-width col-sm-4 card-outer" id="eid-{{event.eid}}" data-row="{{findRow($index)}}" data-col="{{findCol($index)}}"
+            ng-repeat="event in events | food:filter.food | drinks:filter.drink | swag:filter.swag | recharge:filter.recharge | music:filter.music | limitTo: pageSize">
         <div class="card" ng-click="expandCard(findRow($index),findCol($index),event)" ng-class="{'card--active':activeCard.eid===event.eid}"><!-- ng-click="expandCard(findRow($index),findCol($index),event)"  -->
           <div ng-if="currentUserIsAdmin === true" style="position:absolute;top:0px;right:0px;" class="hide-for-print"><a ui-sref="editEvent({ eid: event.eid })">Edit</a></div>
           <div class="card__header">
@@ -126,9 +127,10 @@
           <div class="card__body">
             <free-icons food="event.food" drink="event.drink" swag="event.swag" recharge="event.recharge" music="event.music"></free-icons>
             <card-location name="event.locationName" addr="event.locationAddress"></card-location>
-            [CARD DATE]
-            <!--<p class="card-date hide-for-print"><small>{{cardDateDisplay(event.days) | date:'MMMM d'}}</small></p>-->
-            <p class="text-right purple-text hide-for-print"><small><a>Read more</a></small></p>
+            <p class="card-date hide-for-print"><small>
+              <date-display days="event.days"></date-display>
+            </small></p>
+            <p class="text-left purple-text hide-for-print"><small><a>Read more</a></small></p>
             <div class="card__bottom hide-for-print">
               <card-disclaimer credential="event.credentialLevel" age="event.age"></card-disclaimer>
               <card-user-buttons rsvp="event.RSVPLink" eid="event.eid"></card-user-buttons>
